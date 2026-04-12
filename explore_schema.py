@@ -42,3 +42,20 @@ for r in cur.fetchall():
     print(f"  {r}")
 
 conn.close()
+
+# 加在 conn.close() 之前
+print("\n=== draft_history columns ===")
+cur.execute("PRAGMA table_info(draft_history)")
+for row in cur.fetchall():
+    print(f"  {row[1]:30s} {row[2]}")
+
+print("\n=== draft_history sample row ===")
+cur.execute("SELECT * FROM draft_history LIMIT 1")
+cols = [d[0] for d in cur.description]
+for c, v in zip(cols, cur.fetchone()):
+    print(f"  {c:30s} = {v}")
+
+print("\n=== team_details columns ===")
+cur.execute("PRAGMA table_info(team_details)")
+for row in cur.fetchall():
+    print(f"  {row[1]:30s} {row[2]}")

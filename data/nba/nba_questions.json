@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "db_id": "nba",
+    "question": "How many teams are in the NBA?",
+    "query": "SELECT COUNT(*) FROM team;",
+    "difficulty": "easy",
+    "tables_used": ["team"],
+    "sql_components": ["count"]
+  },
+  {
+    "id": 2,
+    "db_id": "nba",
+    "question": "List all team names from California.",
+    "query": "SELECT full_name FROM team WHERE state = 'California';",
+    "difficulty": "easy",
+    "tables_used": ["team"],
+    "sql_components": ["where"]
+  },
+  {
+    "id": 11,
+    "db_id": "nba",
+    "question": "Which team had the highest average home points per game in 2023-24?",
+    "query": "SELECT team_name_home, AVG(pts_home) AS avg_pts FROM game WHERE season_id = '22023' AND season_type = 'Regular Season' GROUP BY team_name_home ORDER BY avg_pts DESC LIMIT 1;",
+    "difficulty": "hard",
+    "tables_used": ["game"],
+    "sql_components": ["group_by", "order_by", "limit", "aggregate"]
+  }
+]

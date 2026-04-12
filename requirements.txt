@@ -1,0 +1,13 @@
+# Core ML / NLP (see README Tech Stack)
+torch>=2.1.0
+transformers>=4.38.0
+peft>=0.10.0
+datasets>=2.18.0
+accelerate>=0.28.0
+sentence-transformers>=2.6.0
+faiss-cpu>=1.8.0
+gradio>=4.0.0
+sqlparse>=0.4.4
+
+# QLoRA / 4-bit training (CUDA; skip on CPU-only or if wheel unavailable for your platform)
+bitsandbytes>=0.43.0

@@ -30,4 +30,6 @@ for table in tables_to_check:
         for c, v in zip(col_names, row):
             print(f"  {c:35s} = {v}")
 
+
+
 conn.close()

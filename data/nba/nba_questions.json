@@ -56,8 +56,8 @@
   {
     "id": 7,
     "db_id": "nba",
-    "question": "What is the average points scored by the Warriors at home in the 2023-24 season?",
-    "query": "SELECT AVG(pts_home) FROM game WHERE team_name_home = 'Golden State Warriors' AND season_id = '22023' AND season_type = 'Regular Season';",
+    "question": "What is the average points scored by the Warriors at home in the 2022-23 regular season?",
+    "query": "SELECT AVG(pts_home) FROM game WHERE team_name_home = 'Golden State Warriors' AND season_id = '22022' AND season_type = 'Regular Season';",
     "difficulty": "medium",
     "tables_used": ["game"],
     "sql_components": ["aggregate", "where"]
@@ -74,8 +74,8 @@
   {
     "id": 9,
     "db_id": "nba",
-    "question": "List the top 5 teams by total home wins in the 2023-24 regular season.",
-    "query": "SELECT team_name_home, COUNT(*) AS wins FROM game WHERE wl_home = 'W' AND season_id = '22023' AND season_type = 'Regular Season' GROUP BY team_name_home ORDER BY wins DESC LIMIT 5;",
+    "question": "List the top 5 teams by total home wins in the 2022-23 regular season.",
+    "query": "SELECT team_name_home, COUNT(*) AS wins FROM game WHERE wl_home = 'W' AND season_id = '22022' AND season_type = 'Regular Season' GROUP BY team_name_home ORDER BY wins DESC LIMIT 5;",
     "difficulty": "medium",
     "tables_used": ["game"],
     "sql_components": ["count", "group_by", "order_by", "limit"]
@@ -92,8 +92,8 @@
   {
     "id": 11,
     "db_id": "nba",
-    "question": "Which team had the highest average home points per game in 2023-24?",
-    "query": "SELECT team_name_home, AVG(pts_home) AS avg_pts FROM game WHERE season_id = '22023' AND season_type = 'Regular Season' GROUP BY team_name_home ORDER BY avg_pts DESC LIMIT 1;",
+    "question": "Which team had the highest average home points per game in the 2022-23 regular season?",
+    "query": "SELECT team_name_home, AVG(pts_home) AS avg_pts FROM game WHERE season_id = '22022' AND season_type = 'Regular Season' GROUP BY team_name_home ORDER BY avg_pts DESC LIMIT 1;",
     "difficulty": "hard",
     "tables_used": ["game"],
     "sql_components": ["aggregate", "group_by", "order_by", "limit"]
@@ -110,8 +110,8 @@
   {
     "id": 13,
     "db_id": "nba",
-    "question": "Which teams had a home win rate above 70% in the 2023-24 regular season?",
-    "query": "SELECT team_name_home, SUM(CASE WHEN wl_home = 'W' THEN 1 ELSE 0 END) * 1.0 / COUNT(*) AS win_rate FROM game WHERE season_id = '22023' AND season_type = 'Regular Season' GROUP BY team_name_home HAVING win_rate > 0.7;",
+    "question": "Which teams had a home win rate above 70% in the 2022-23 regular season?",
+    "query": "SELECT team_name_home, SUM(CASE WHEN wl_home = 'W' THEN 1 ELSE 0 END) * 1.0 / COUNT(*) AS win_rate FROM game WHERE season_id = '22022' AND season_type = 'Regular Season' GROUP BY team_name_home HAVING win_rate > 0.7;",
     "difficulty": "hard",
     "tables_used": ["game"],
     "sql_components": ["aggregate", "group_by", "having"]
@@ -155,8 +155,8 @@
   {
     "id": 18,
     "db_id": "nba",
-    "question": "Find teams whose average home points in the 2023-24 season exceeded their own average home points in the 2022-23 season.",
-    "query": "SELECT a.team_name_home FROM (SELECT team_name_home, AVG(pts_home) AS avg_pts FROM game WHERE season_id = '22023' AND season_type = 'Regular Season' GROUP BY team_name_home) a JOIN (SELECT team_name_home, AVG(pts_home) AS avg_pts FROM game WHERE season_id = '22022' AND season_type = 'Regular Season' GROUP BY team_name_home) b ON a.team_name_home = b.team_name_home WHERE a.avg_pts > b.avg_pts;",
+    "question": "Find teams whose average home points in the 2022-23 regular season exceeded their own average home points in the 2021-22 season.",
+    "query": "SELECT a.team_name_home FROM (SELECT team_name_home, AVG(pts_home) AS avg_pts FROM game WHERE season_id = '22022' AND season_type = 'Regular Season' GROUP BY team_name_home) a JOIN (SELECT team_name_home, AVG(pts_home) AS avg_pts FROM game WHERE season_id = '22021' AND season_type = 'Regular Season' GROUP BY team_name_home) b ON a.team_name_home = b.team_name_home WHERE a.avg_pts > b.avg_pts;",
     "difficulty": "extra_hard",
     "tables_used": ["game"],
     "sql_components": ["subquery", "join", "aggregate", "group_by"]
@@ -173,8 +173,8 @@
   {
     "id": 20,
     "db_id": "nba",
-    "question": "For the 2023-24 regular season, which team had the largest average point differential when playing at home?",
-    "query": "SELECT team_name_home, AVG(pts_home - pts_away) AS avg_diff FROM game WHERE season_id = '22023' AND season_type = 'Regular Season' GROUP BY team_name_home ORDER BY avg_diff DESC LIMIT 1;",
+    "question": "For the 2022-23 regular season, which team had the largest average point differential when playing at home?",
+    "query": "SELECT team_name_home, AVG(pts_home - pts_away) AS avg_diff FROM game WHERE season_id = '22022' AND season_type = 'Regular Season' GROUP BY team_name_home ORDER BY avg_diff DESC LIMIT 1;",
     "difficulty": "extra_hard",
     "tables_used": ["game"],
     "sql_components": ["aggregate", "group_by", "order_by", "limit"]

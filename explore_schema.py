@@ -41,8 +41,6 @@ cur.execute("SELECT * FROM player LIMIT 5")
 for r in cur.fetchall():
     print(f"  {r}")
 
-conn.close()
-
 # 加在 conn.close() 之前
 print("\n=== draft_history columns ===")
 cur.execute("PRAGMA table_info(draft_history)")
@@ -59,3 +57,6 @@ print("\n=== team_details columns ===")
 cur.execute("PRAGMA table_info(team_details)")
 for row in cur.fetchall():
     print(f"  {row[1]:30s} {row[2]}")
+    
+conn.close()
+

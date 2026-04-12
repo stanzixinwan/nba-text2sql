@@ -18,12 +18,165 @@
     "sql_components": ["where"]
   },
   {
+    "id": 3,
+    "db_id": "nba",
+    "question": "What is LeBron James's height?",
+    "query": "SELECT height FROM common_player_info WHERE display_first_last = 'LeBron James';",
+    "difficulty": "easy",
+    "tables_used": ["common_player_info"],
+    "sql_components": ["where"]
+  },
+  {
+    "id": 4,
+    "db_id": "nba",
+    "question": "How many players are currently active?",
+    "query": "SELECT COUNT(*) FROM player WHERE is_active = 1;",
+    "difficulty": "easy",
+    "tables_used": ["player"],
+    "sql_components": ["count", "where"]
+  },
+  {
+    "id": 5,
+    "db_id": "nba",
+    "question": "What year was the Boston Celtics founded?",
+    "query": "SELECT year_founded FROM team WHERE full_name = 'Boston Celtics';",
+    "difficulty": "easy",
+    "tables_used": ["team"],
+    "sql_components": ["where"]
+  },
+  {
+    "id": 6,
+    "db_id": "nba",
+    "question": "How many home games did the Lakers play in the 2022-23 regular season?",
+    "query": "SELECT COUNT(*) FROM game WHERE team_name_home = 'Los Angeles Lakers' AND season_id = '22022' AND season_type = 'Regular Season';",
+    "difficulty": "medium",
+    "tables_used": ["game"],
+    "sql_components": ["count", "where"]
+  },
+  {
+    "id": 7,
+    "db_id": "nba",
+    "question": "What is the average points scored by the Warriors at home in the 2023-24 season?",
+    "query": "SELECT AVG(pts_home) FROM game WHERE team_name_home = 'Golden State Warriors' AND season_id = '22023' AND season_type = 'Regular Season';",
+    "difficulty": "medium",
+    "tables_used": ["game"],
+    "sql_components": ["aggregate", "where"]
+  },
+  {
+    "id": 8,
+    "db_id": "nba",
+    "question": "How many players were drafted in 2003?",
+    "query": "SELECT COUNT(*) FROM draft_history WHERE season = '2003';",
+    "difficulty": "medium",
+    "tables_used": ["draft_history"],
+    "sql_components": ["count", "where"]
+  },
+  {
+    "id": 9,
+    "db_id": "nba",
+    "question": "List the top 5 teams by total home wins in the 2023-24 regular season.",
+    "query": "SELECT team_name_home, COUNT(*) AS wins FROM game WHERE wl_home = 'W' AND season_id = '22023' AND season_type = 'Regular Season' GROUP BY team_name_home ORDER BY wins DESC LIMIT 5;",
+    "difficulty": "medium",
+    "tables_used": ["game"],
+    "sql_components": ["count", "group_by", "order_by", "limit"]
+  },
+  {
+    "id": 10,
+    "db_id": "nba",
+    "question": "How many active players have their position listed as Center?",
+    "query": "SELECT COUNT(*) FROM common_player_info WHERE position = 'Center' AND rosterstatus = 'Active';",
+    "difficulty": "medium",
+    "tables_used": ["common_player_info"],
+    "sql_components": ["count", "where"]
+  },
+  {
     "id": 11,
     "db_id": "nba",
     "question": "Which team had the highest average home points per game in 2023-24?",
     "query": "SELECT team_name_home, AVG(pts_home) AS avg_pts FROM game WHERE season_id = '22023' AND season_type = 'Regular Season' GROUP BY team_name_home ORDER BY avg_pts DESC LIMIT 1;",
     "difficulty": "hard",
     "tables_used": ["game"],
-    "sql_components": ["group_by", "order_by", "limit", "aggregate"]
+    "sql_components": ["aggregate", "group_by", "order_by", "limit"]
+  },
+  {
+    "id": 12,
+    "db_id": "nba",
+    "question": "List all players drafted in the first round of 2018 along with their current team.",
+    "query": "SELECT d.player_name, c.team_name FROM draft_history d JOIN common_player_info c ON CAST(d.person_id AS TEXT) = c.person_id WHERE d.season = '2018' AND d.round_number = '1';",
+    "difficulty": "hard",
+    "tables_used": ["draft_history", "common_player_info"],
+    "sql_components": ["join", "where"]
+  },
+  {
+    "id": 13,
+    "db_id": "nba",
+    "question": "Which teams had a home win rate above 70% in the 2023-24 regular season?",
+    "query": "SELECT team_name_home, SUM(CASE WHEN wl_home = 'W' THEN 1 ELSE 0 END) * 1.0 / COUNT(*) AS win_rate FROM game WHERE season_id = '22023' AND season_type = 'Regular Season' GROUP BY team_name_home HAVING win_rate > 0.7;",
+    "difficulty": "hard",
+    "tables_used": ["game"],
+    "sql_components": ["aggregate", "group_by", "having"]
+  },
+  {
+    "id": 14,
+    "db_id": "nba",
+    "question": "Find active players who were the number one overall pick in the draft.",
+    "query": "SELECT c.display_first_last FROM common_player_info c JOIN draft_history d ON c.person_id = CAST(d.person_id AS TEXT) WHERE d.overall_pick = '1' AND c.rosterstatus = 'Active';",
+    "difficulty": "hard",
+    "tables_used": ["common_player_info", "draft_history"],
+    "sql_components": ["join", "where"]
+  },
+  {
+    "id": 15,
+    "db_id": "nba",
+    "question": "How many regular season games did the Celtics win against the Lakers since 2010?",
+    "query": "SELECT COUNT(*) FROM game WHERE ((team_name_home = 'Boston Celtics' AND team_name_away = 'Los Angeles Lakers' AND wl_home = 'W') OR (team_name_away = 'Boston Celtics' AND team_name_home = 'Los Angeles Lakers' AND wl_away = 'W')) AND CAST(SUBSTR(season_id, 2) AS INTEGER) >= 2010 AND season_type = 'Regular Season';",
+    "difficulty": "hard",
+    "tables_used": ["game"],
+    "sql_components": ["count", "where", "subquery"]
+  },
+  {
+    "id": 16,
+    "db_id": "nba",
+    "question": "Which team had the highest 3-point shooting percentage at home across all playoff games?",
+    "query": "SELECT team_name_home, AVG(fg3_pct_home) AS avg_3p FROM game WHERE season_type = 'Playoffs' AND fg3_pct_home IS NOT NULL GROUP BY team_name_home ORDER BY avg_3p DESC LIMIT 1;",
+    "difficulty": "extra_hard",
+    "tables_used": ["game"],
+    "sql_components": ["aggregate", "group_by", "order_by", "limit", "where"]
+  },
+  {
+    "id": 17,
+    "db_id": "nba",
+    "question": "List the 10 highest-scoring home games in NBA history.",
+    "query": "SELECT game_date, team_name_home, pts_home, team_name_away, pts_away FROM game WHERE pts_home IS NOT NULL ORDER BY pts_home DESC LIMIT 10;",
+    "difficulty": "extra_hard",
+    "tables_used": ["game"],
+    "sql_components": ["order_by", "limit", "where"]
+  },
+  {
+    "id": 18,
+    "db_id": "nba",
+    "question": "Find teams whose average home points in the 2023-24 season exceeded their own average home points in the 2022-23 season.",
+    "query": "SELECT a.team_name_home FROM (SELECT team_name_home, AVG(pts_home) AS avg_pts FROM game WHERE season_id = '22023' AND season_type = 'Regular Season' GROUP BY team_name_home) a JOIN (SELECT team_name_home, AVG(pts_home) AS avg_pts FROM game WHERE season_id = '22022' AND season_type = 'Regular Season' GROUP BY team_name_home) b ON a.team_name_home = b.team_name_home WHERE a.avg_pts > b.avg_pts;",
+    "difficulty": "extra_hard",
+    "tables_used": ["game"],
+    "sql_components": ["subquery", "join", "aggregate", "group_by"]
+  },
+  {
+    "id": 19,
+    "db_id": "nba",
+    "question": "Which top 5 draft picks between 2015 and 2020 are no longer active?",
+    "query": "SELECT DISTINCT c.display_first_last, d.season, d.overall_pick FROM draft_history d JOIN common_player_info c ON CAST(d.person_id AS TEXT) = c.person_id WHERE CAST(d.overall_pick AS INTEGER) <= 5 AND CAST(d.season AS INTEGER) BETWEEN 2015 AND 2020 AND c.rosterstatus != 'Active';",
+    "difficulty": "extra_hard",
+    "tables_used": ["draft_history", "common_player_info"],
+    "sql_components": ["join", "where"]
+  },
+  {
+    "id": 20,
+    "db_id": "nba",
+    "question": "For the 2023-24 regular season, which team had the largest average point differential when playing at home?",
+    "query": "SELECT team_name_home, AVG(pts_home - pts_away) AS avg_diff FROM game WHERE season_id = '22023' AND season_type = 'Regular Season' GROUP BY team_name_home ORDER BY avg_diff DESC LIMIT 1;",
+    "difficulty": "extra_hard",
+    "tables_used": ["game"],
+    "sql_components": ["aggregate", "group_by", "order_by", "limit"]
   }
 ]

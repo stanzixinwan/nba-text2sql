@@ -22,7 +22,6 @@ Usage:
 
 import json
 import sqlite3
-from pathlib import Path
 from typing import Optional
 
 
@@ -140,6 +139,28 @@ def format_example(question: str, schema: dict, sql: str,
 # 3. Spider loader
 # ──────────────────────────────────────────────
 
+SPIDER_DATASET_NAME = "SuperMax991/spider-text2sql"
+
+
+def _schema_from_spider_tables(table_examples: list[dict]) -> dict:
+    """Convert Spider tables.json records into this module's schema format."""
+    schemas = {}
+    for ex in table_examples:
+        table_names = ex["table_names_original"]
+        column_types = ex.get("column_types", [])
+        schema = {t: [] for t in table_names}
+
+        for col_idx, (table_idx, col_name) in enumerate(ex["column_names_original"]):
+            if table_idx < 0:
+                continue
+            table_name = table_names[table_idx]
+            col_type = column_types[col_idx] if col_idx < len(column_types) else ""
+            schema[table_name].append({"column": col_name, "type": col_type})
+
+        schemas[ex["db_id"]] = schema
+    return schemas
+
+
 def _load_spider_schemas(spider_dataset) -> dict:
     """
     Extract per-database schemas from Spider's HuggingFace dataset.
@@ -147,6 +168,15 @@ def _load_spider_schemas(spider_dataset) -> dict:
     Spider stores schema info in each example. We deduplicate by db_id.
     Returns: {db_id: schema_dict}
     """
+    first_split = next(iter(spider_dataset))
+    first_example = spider_dataset[first_split][0]
+
+    if "table_names_original" not in first_example:
+        raise ValueError(
+            "Spider dataset does not include schema metadata. Use a dataset with "
+            "db_schema or table_names_original fields."
+        )
+
     schemas = {}
     for split in spider_dataset:
         for ex in spider_dataset[split]:
@@ -154,20 +184,7 @@ def _load_spider_schemas(spider_dataset) -> dict:
             if db_id in schemas:
                 continue
 
-            # Spider schema format: table_names_original, column_names_original
-            # column_names_original: list of [table_idx, column_name]
-            # table_idx = -1 means it's the wildcard "*" column, skip it
-            table_names = ex["table_names_original"]
-            schema = {t: [] for t in table_names}
-
-            for table_idx, col_name in ex["column_names_original"]:
-                if table_idx < 0:
-                    continue
-                table_name = table_names[table_idx]
-                # Spider doesn't provide types in a clean way, so we skip types
-                schema[table_name].append({"column": col_name, "type": ""})
-
-            schemas[db_id] = schema
+            schemas[db_id] = _schema_from_spider_tables([ex])[db_id]
     return schemas
 
 
@@ -186,20 +203,27 @@ def load_spider_splits(include_types: bool = False, max_examples: Optional[int] 
         - difficulty: str (Spider's difficulty label)
     """
     from datasets import load_dataset
-    spider = load_dataset("xlangai/spider")
-    schemas = _load_spider_schemas(spider)
+    spider = load_dataset(SPIDER_DATASET_NAME)
+    has_db_schema = "db_schema" in spider["train"].column_names
+    schemas = {} if has_db_schema else _load_spider_schemas(spider)
 
     def process_split(split_name):
         data = []
         for ex in spider[split_name]:
             db_id = ex["db_id"]
-            schema = schemas.get(db_id, {})
-            formatted = format_example(
-                question=ex["question"],
-                schema=schema,
-                sql=ex["query"],
-                include_types=include_types,
-            )
+            if "db_schema" in ex:
+                formatted = {
+                    "input_text": format_input(ex["question"], ex["db_schema"]),
+                    "target_text": format_target(ex["query"]),
+                }
+            else:
+                schema = schemas.get(db_id, {})
+                formatted = format_example(
+                    question=ex["question"],
+                    schema=schema,
+                    sql=ex["query"],
+                    include_types=include_types,
+                )
             formatted["db_id"] = db_id
             formatted["difficulty"] = ex.get("difficulty", "unknown")
             data.append(formatted)
@@ -208,7 +232,8 @@ def load_spider_splits(include_types: bool = False, max_examples: Optional[int] 
         return data
 
     train_data = process_split("train")
-    dev_data = process_split("validation")
+    dev_split = "validation" if "validation" in spider else "test"
+    dev_data = process_split(dev_split)
     return train_data, dev_data
 
 

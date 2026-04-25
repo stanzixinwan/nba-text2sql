@@ -1,0 +1,1602 @@
+[
+  {
+    "question": "translate to SQL: what is the biggest city in wyoming | state: state_name (text), population (number",
+    "gold": "SELECT city_name FROM city WHERE population  =  ( SELECT MAX ( population ) FROM city WHERE state_name  =  \"wyoming\" ) AND state_name  =  \"wyoming\"",
+    "pred": "SQL: what is the biggest city in wyoming | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text),",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what wyoming city has the largest population | state: state_name (text), populatio",
+    "gold": "SELECT city_name FROM city WHERE population  =  ( SELECT MAX ( population ) FROM city WHERE state_name  =  \"wyoming\" ) AND state_name  =  \"wyoming\"",
+    "pred": "SQL: which wyoming city has the largest population | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text),",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the largest city in wyoming | state: state_name (text), population (number",
+    "gold": "SELECT city_name FROM city WHERE population  =  ( SELECT MAX ( population ) FROM city WHERE state_name  =  \"wyoming\" ) AND state_name  =  \"wyoming\"",
+    "pred": "SQL: what is the largest city in wyoming | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text),",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: where is the most populated area of wyoming | state: state_name (text), population",
+    "gold": "SELECT city_name FROM city WHERE population  =  ( SELECT MAX ( population ) FROM city WHERE state_name  =  \"wyoming\" ) AND state_name  =  \"wyoming\"",
+    "pred": "SQL: where is the most populated area of wyoming | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: which city in wyoming has the largest population | state: state_name (text), popul",
+    "gold": "SELECT city_name FROM city WHERE population  =  ( SELECT MAX ( population ) FROM city WHERE state_name  =  \"wyoming\" ) AND state_name  =  \"wyoming\"",
+    "pred": "SQL: which city in wyoming has the largest population | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what cities in wyoming have the highest number of citizens | state: state_name (te",
+    "gold": "SELECT city_name FROM city WHERE population  =  ( SELECT MAX ( population ) FROM city WHERE state_name  =  \"wyoming\" ) AND state_name  =  \"wyoming\"",
+    "pred": "SQL: what cities in wyoming have the highest number of citizens | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what cities in wyoming have the highest populations | state: state_name (text), po",
+    "gold": "SELECT city_name FROM city WHERE population  =  ( SELECT MAX ( population ) FROM city WHERE state_name  =  \"wyoming\" ) AND state_name  =  \"wyoming\"",
+    "pred": "SQL: what cities in wyoming have the highest populations | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the most populous city in wyoming | state: state_name (text), population (",
+    "gold": "SELECT city_name FROM city WHERE population  =  ( SELECT MAX ( population ) FROM city WHERE state_name  =  \"wyoming\" ) AND state_name  =  \"wyoming\"",
+    "pred": "SQL: what is the most populous city in wyoming | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the largest city in wyoming by population | state: state_name (text), popu",
+    "gold": "SELECT city_name FROM city WHERE population  =  ( SELECT MAX ( population ) FROM city WHERE state_name  =  \"wyoming\" ) AND state_name  =  \"wyoming\"",
+    "pred": "SQL: what is the largest city in wyoming by population | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the largest city of wyoming | state: state_name (text), population (number",
+    "gold": "SELECT city_name FROM city WHERE population  =  ( SELECT MAX ( population ) FROM city WHERE state_name  =  \"wyoming\" ) AND state_name  =  \"wyoming\"",
+    "pred": "SQL: what is the largest city of wyoming | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text),",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the city in wyoming with the largest population | state: state_name (text)",
+    "gold": "SELECT city_name FROM city WHERE population  =  ( SELECT MAX ( population ) FROM city WHERE state_name  =  \"wyoming\" ) AND state_name  =  \"wyoming\"",
+    "pred": "SQL: what is the city in wyoming with the largest population | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: which rivers run through the state with the largest city in the us | state: state_",
+    "gold": "SELECT river_name FROM river WHERE traverse IN ( SELECT state_name FROM city WHERE population  =  ( SELECT MAX ( population ) FROM city ) )",
+    "pred": "SQL: which rivers run through the state with the largest city in the us | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: how big is new mexico | state: state_name (text), population (number), area (numbe",
+    "gold": "SELECT area FROM state WHERE state_name  =  \"new mexico\"",
+    "pred": "SQL: how big is new mexico | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the area of new mexico | state: state_name (text), population (number), ar",
+    "gold": "SELECT area FROM state WHERE state_name  =  \"new mexico\"",
+    "pred": "SQL: what is the area of new mexico | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: how large is new mexico | state: state_name (text), population (number), area (num",
+    "gold": "SELECT area FROM state WHERE state_name  =  \"new mexico\"",
+    "pred": "SQL: how large is new mexico | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the area of the new mexico state | state: state_name (text), population (n",
+    "gold": "SELECT area FROM state WHERE state_name  =  \"new mexico\"",
+    "pred": "SQL: what is the area of the new mexico state | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the size of new mexico | state: state_name (text), population (number), ar",
+    "gold": "SELECT area FROM state WHERE state_name  =  \"new mexico\"",
+    "pred": "SQL: what is the size of new mexico | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the area of new mexico in square kilometers | state: state_name (text), po",
+    "gold": "SELECT area FROM state WHERE state_name  =  \"new mexico\"",
+    "pred": "SQL: what is the area of new mexico in square kilometers | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text),",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: how many people live in california | state: state_name (text), population (number)",
+    "gold": "SELECT population FROM state WHERE state_name  =  \"california\"",
+    "pred": "SQL: how many people live in california | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: how many people reside in california | state: state_name (text), population (numbe",
+    "gold": "SELECT population FROM state WHERE state_name  =  \"california\"",
+    "pred": "SQL: how many people reside in california | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: how many residents live in california | state: state_name (text), population (numb",
+    "gold": "SELECT population FROM state WHERE state_name  =  \"california\"",
+    "pred": "SQL: how many residents live in california | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: how much population does california have | state: state_name (text), population (n",
+    "gold": "SELECT population FROM state WHERE state_name  =  \"california\"",
+    "pred": "SQL: how much population does california have | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what are the population of california | state: state_name (text), population (numb",
+    "gold": "SELECT population FROM state WHERE state_name  =  \"california\"",
+    "pred": "SQL: what are the population of california | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the population of california | state: state_name (text), population (numbe",
+    "gold": "SELECT population FROM state WHERE state_name  =  \"california\"",
+    "pred": "SQL: what is the population of california | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: how many people are in the state of california | state: state_name (text), populat",
+    "gold": "SELECT population FROM state WHERE state_name  =  \"california\"",
+    "pred": "SQL: how many people are in the state of california | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what can you tell me about the population of california | state: state_name (text)",
+    "gold": "SELECT population FROM state WHERE state_name  =  \"california\"",
+    "pred": "SQL: what can you tell me about the population of california | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: how many people are there in california | state: state_name (text), population (nu",
+    "gold": "SELECT population FROM state WHERE state_name  =  \"california\"",
+    "pred": "SQL: how many people are there in california | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text),",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: how many citizens in california | state: state_name (text), population (number), a",
+    "gold": "SELECT population FROM state WHERE state_name  =  \"california\"",
+    "pred": "SQL: how many citizens in california | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: how many people stay in california | state: state_name (text), population (number)",
+    "gold": "SELECT population FROM state WHERE state_name  =  \"california\"",
+    "pred": "SQL: how many people stay in california | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: how many citizens live in california | state: state_name (text), population (numbe",
+    "gold": "SELECT population FROM state WHERE state_name  =  \"california\"",
+    "pred": "SQL: how many citizens live in california | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what state has the smallest population | state: state_name (text), population (num",
+    "gold": "SELECT state_name FROM state WHERE population  =  ( SELECT MIN ( population ) FROM state )",
+    "pred": "SQL: which state has the smallest population | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the least populous state | state: state_name (text), population (number), ",
+    "gold": "SELECT state_name FROM state WHERE population  =  ( SELECT MIN ( population ) FROM state )",
+    "pred": "SQL: what is the least populous state | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the state with the lowest population | state: state_name (text), populatio",
+    "gold": "SELECT state_name FROM state WHERE population  =  ( SELECT MIN ( population ) FROM state )",
+    "pred": "SQL: what is the state with the lowest population | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: give me the cities in texas | state: state_name (text), population (number), area ",
+    "gold": "SELECT city_name FROM city WHERE state_name  =  \"texas\"",
+    "pred": "SQL: give me the cities in texas | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: tell me what cities are in texas | state: state_name (text), population (number), ",
+    "gold": "SELECT city_name FROM city WHERE state_name  =  \"texas\"",
+    "pred": "SQL: tell me what cities are in texas | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what cities are located in texas | state: state_name (text), population (number), ",
+    "gold": "SELECT city_name FROM city WHERE state_name  =  \"texas\"",
+    "pred": "SQL: what cities are located in texas | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what are the cities in texas | state: state_name (text), population (number), area",
+    "gold": "SELECT city_name FROM city WHERE state_name  =  \"texas\"",
+    "pred": "SQL: what are the cities in texas | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what cities in texas | state: state_name (text), population (number), area (number",
+    "gold": "SELECT city_name FROM city WHERE state_name  =  \"texas\"",
+    "pred": "SQL: what cities in texas | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: give me the cities which are in texas | state: state_name (text), population (numb",
+    "gold": "SELECT city_name FROM city WHERE state_name  =  \"texas\"",
+    "pred": "SQL: give me the cities which are in texas | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the area of the state with the capital albany | state: state_name (text), ",
+    "gold": "SELECT area FROM state WHERE capital  =  \"albany\"",
+    "pred": "SQL: what is the area of the state with the capital albany | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text),",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: give me the lakes in california | state: state_name (text), population (number), a",
+    "gold": "SELECT lake_name FROM lake WHERE state_name  =  \"california\"",
+    "pred": "SQL: give me the lakes in california | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: name the major lakes in michigan | state: state_name (text), population (number), ",
+    "gold": "SELECT lake_name FROM lake WHERE area  >  750 AND state_name  =  \"michigan\"",
+    "pred": "SQL: name the major lakes in michigan | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what are the states | state: state_name (text), population (number), area (number)",
+    "gold": "SELECT state_name FROM state",
+    "pred": "SQL: what are the states | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text), highest_",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: list the states | state: state_name (text), population (number), area (number), co",
+    "gold": "SELECT state_name FROM state",
+    "pred": "SQL: list the states | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text), highest_e",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: give me all the states of usa | state: state_name (text), population (number), are",
+    "gold": "SELECT state_name FROM state",
+    "pred": "SQL: give me all the states of usa | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: which states do ohio river flow through | state: state_name (text), population (nu",
+    "gold": "SELECT traverse FROM river WHERE river_name  =  \"ohio\"",
+    "pred": "SQL: which states do ohio river flow through | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what states does the ohio river run through | state: state_name (text), population",
+    "gold": "SELECT traverse FROM river WHERE river_name  =  \"ohio\"",
+    "pred": "SQL: what states does the ohio river run through | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text),",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what states border the ohio river | state: state_name (text), population (number),",
+    "gold": "SELECT traverse FROM river WHERE river_name  =  \"ohio\"",
+    "pred": "SQL: what states border the ohio river | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: which states border the ohio river | state: state_name (text), population (number)",
+    "gold": "SELECT traverse FROM river WHERE river_name  =  \"ohio\"",
+    "pred": "SQL: which states border the ohio river | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what states does the ohio run through | state: state_name (text), population (numb",
+    "gold": "SELECT traverse FROM river WHERE river_name  =  \"ohio\"",
+    "pred": "SQL: what states does the ohio run through | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: where is the ohio river | state: state_name (text), population (number), area (num",
+    "gold": "SELECT traverse FROM river WHERE river_name  =  \"ohio\"",
+    "pred": "SQL: where is the ohio river | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: which states does the ohio river run through | state: state_name (text), populatio",
+    "gold": "SELECT traverse FROM river WHERE river_name  =  \"ohio\"",
+    "pred": "SQL: which states does the ohio river run through | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text),",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: which states does the ohio run through | state: state_name (text), population (num",
+    "gold": "SELECT traverse FROM river WHERE river_name  =  \"ohio\"",
+    "pred": "SQL: which states does the ohio run through | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: which states does the ohio river pass through | state: state_name (text), populati",
+    "gold": "SELECT traverse FROM river WHERE river_name  =  \"ohio\"",
+    "pred": "SQL: which states does the ohio river pass through | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text),",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what are the states that the ohio run through | state: state_name (text), populati",
+    "gold": "SELECT traverse FROM river WHERE river_name  =  \"ohio\"",
+    "pred": "SQL: what are the states that the ohio run through | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: which state has the ohio river | state: state_name (text), population (number), ar",
+    "gold": "SELECT traverse FROM river WHERE river_name  =  \"ohio\"",
+    "pred": "SQL: which state has the ohio river | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what states have rivers named ohio | state: state_name (text), population (number)",
+    "gold": "SELECT traverse FROM river WHERE river_name  =  \"ohio\"",
+    "pred": "SQL: what states have rivers named ohio | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: through which states does the ohio flow | state: state_name (text), population (nu",
+    "gold": "SELECT traverse FROM river WHERE river_name  =  \"ohio\"",
+    "pred": "SQL through which states does the ohio flow | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what states are next to the ohio | state: state_name (text), population (number), ",
+    "gold": "SELECT traverse FROM river WHERE river_name  =  \"ohio\"",
+    "pred": "SQL: what states are next to the ohio | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: through which states does the ohio run | state: state_name (text), population (num",
+    "gold": "SELECT traverse FROM river WHERE river_name  =  \"ohio\"",
+    "pred": "SQL through which states does the ohio run | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what states does the ohio river go through | state: state_name (text), population ",
+    "gold": "SELECT traverse FROM river WHERE river_name  =  \"ohio\"",
+    "pred": "SQL: what states does the ohio river go through | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text),",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what state has the largest population | state: state_name (text), population (numb",
+    "gold": "SELECT state_name FROM state WHERE population  =  ( SELECT MAX ( population ) FROM state )",
+    "pred": "SQL: which state has the largest population | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text),",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the most populous state | state: state_name (text), population (number), a",
+    "gold": "SELECT state_name FROM state WHERE population  =  ( SELECT MAX ( population ) FROM state )",
+    "pred": "SQL: what is the most populous state | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what state is the largest in population | state: state_name (text), population (nu",
+    "gold": "SELECT state_name FROM state WHERE population  =  ( SELECT MAX ( population ) FROM state )",
+    "pred": "SQL: which state is the largest in population | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: which state has the biggest population | state: state_name (text), population (num",
+    "gold": "SELECT state_name FROM state WHERE population  =  ( SELECT MAX ( population ) FROM state )",
+    "pred": "SQL: which state has the biggest population | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text),",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: which state has the greatest population | state: state_name (text), population (nu",
+    "gold": "SELECT state_name FROM state WHERE population  =  ( SELECT MAX ( population ) FROM state )",
+    "pred": "SQL: which state has the greatest population | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text),",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: which state has the most population | state: state_name (text), population (number",
+    "gold": "SELECT state_name FROM state WHERE population  =  ( SELECT MAX ( population ) FROM state )",
+    "pred": "SQL: which state has the most population | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text),",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what state has the most people | state: state_name (text), population (number), ar",
+    "gold": "SELECT state_name FROM state WHERE population  =  ( SELECT MAX ( population ) FROM state )",
+    "pred": "SQL: which state has the most people | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text),",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: which state has the most people | state: state_name (text), population (number), a",
+    "gold": "SELECT state_name FROM state WHERE population  =  ( SELECT MAX ( population ) FROM state )",
+    "pred": "SQL: which state has the most people | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text),",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the most populous state in the us | state: state_name (text), population (",
+    "gold": "SELECT state_name FROM state WHERE population  =  ( SELECT MAX ( population ) FROM state )",
+    "pred": "SQL: what is the most populous state in the us | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what state has the highest population | state: state_name (text), population (numb",
+    "gold": "SELECT state_name FROM state WHERE population  =  ( SELECT MAX ( population ) FROM state )",
+    "pred": "SQL: which state has the highest population | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text),",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the lowest elevation in pennsylvania | state: state_name (text), populatio",
+    "gold": "SELECT lowest_elevation FROM highlow WHERE state_name  =  \"pennsylvania\"",
+    "pred": "SQL: what is the lowest elevation in pennsylvania | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the highest point in each state whose lowest point is sea level | state: s",
+    "gold": "SELECT highest_point  ,  state_name FROM highlow WHERE lowest_elevation  =  0",
+    "pred": "SQL: what is the highest point in each state whose lowest point is sea level | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the length of the longest river in the usa | state: state_name (text), pop",
+    "gold": "SELECT LENGTH FROM river WHERE LENGTH  =  ( SELECT MAX ( LENGTH ) FROM river )",
+    "pred": "SQL: what is the length of the longest river in the usa | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text),",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: how long is the longest river in the usa | state: state_name (text), population (n",
+    "gold": "SELECT LENGTH FROM river WHERE LENGTH  =  ( SELECT MAX ( LENGTH ) FROM river )",
+    "pred": "SQL: how long is the longest river in the usa | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the longest river flowing through texas | state: state_name (text), popula",
+    "gold": "SELECT river_name FROM river WHERE LENGTH  =  ( SELECT MAX ( LENGTH ) FROM river WHERE traverse  =  \"texas\" ) AND traverse  =  \"texas\"",
+    "pred": "SQL: what is the longest river flowing through texas | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the largest river in texas state | state: state_name (text), population (n",
+    "gold": "SELECT river_name FROM river WHERE LENGTH  =  ( SELECT MAX ( LENGTH ) FROM river WHERE traverse  =  \"texas\" ) AND traverse  =  \"texas\"",
+    "pred": "SQL: what is the largest river in texas state | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the longest river in texas | state: state_name (text), population (number)",
+    "gold": "SELECT river_name FROM river WHERE LENGTH  =  ( SELECT MAX ( LENGTH ) FROM river WHERE traverse  =  \"texas\" ) AND traverse  =  \"texas\"",
+    "pred": "SQL: what is the longest river in texas | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the biggest river in texas | state: state_name (text), population (number)",
+    "gold": "SELECT river_name FROM river WHERE LENGTH  =  ( SELECT MAX ( LENGTH ) FROM river WHERE traverse  =  \"texas\" ) AND traverse  =  \"texas\"",
+    "pred": "SQL: what is the biggest river in texas | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the longest river that flows through texas | state: state_name (text), pop",
+    "gold": "SELECT river_name FROM river WHERE LENGTH  =  ( SELECT MAX ( LENGTH ) FROM river WHERE traverse  =  \"texas\" ) AND traverse  =  \"texas\"",
+    "pred": "SQL: what is the longest river that flows through texas | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text),",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what are the biggest rivers in texas | state: state_name (text), population (numbe",
+    "gold": "SELECT river_name FROM river WHERE LENGTH  =  ( SELECT MAX ( LENGTH ) FROM river WHERE traverse  =  \"texas\" ) AND traverse  =  \"texas\"",
+    "pred": "SQL: what are the biggest rivers in texas | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: how many rivers are in idaho | state: state_name (text), population (number), area",
+    "gold": "SELECT COUNT ( river_name ) FROM river WHERE traverse  =  \"idaho\"",
+    "pred": "SQL: how many rivers are in idaho | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: give me the number of rivers in idaho | state: state_name (text), population (numb",
+    "gold": "SELECT COUNT ( river_name ) FROM river WHERE traverse  =  \"idaho\"",
+    "pred": "SQL: give me the number of rivers in idaho | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: how many rivers does idaho have | state: state_name (text), population (number), a",
+    "gold": "SELECT COUNT ( river_name ) FROM river WHERE traverse  =  \"idaho\"",
+    "pred": "SQL: how many rivers does idaho have | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: how many rivers are there in idaho | state: state_name (text), population (number)",
+    "gold": "SELECT COUNT ( river_name ) FROM river WHERE traverse  =  \"idaho\"",
+    "pred": "SQL: how many rivers are there in idaho | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text),",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: how many rivers run through idaho | state: state_name (text), population (number),",
+    "gold": "SELECT COUNT ( river_name ) FROM river WHERE traverse  =  \"idaho\"",
+    "pred": "SQL: how many rivers run through idaho | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: how many rivers are found in idaho | state: state_name (text), population (number)",
+    "gold": "SELECT COUNT ( river_name ) FROM river WHERE traverse  =  \"idaho\"",
+    "pred": "SQL: how many rivers are found in idaho | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text),",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: how many rivers in idaho | state: state_name (text), population (number), area (nu",
+    "gold": "SELECT COUNT ( river_name ) FROM river WHERE traverse  =  \"idaho\"",
+    "pred": "SQL: how many rivers in idaho | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what states neighbor kentucky | state: state_name (text), population (number), are",
+    "gold": "SELECT border FROM border_info WHERE state_name  =  \"kentucky\"",
+    "pred": "SQL: what states neighbor kentucky | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: which states border kentucky | state: state_name (text), population (number), area",
+    "gold": "SELECT border FROM border_info WHERE state_name  =  \"kentucky\"",
+    "pred": "SQL: which states border kentucky | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what states border kentucky | state: state_name (text), population (number), area ",
+    "gold": "SELECT border FROM border_info WHERE state_name  =  \"kentucky\"",
+    "pred": "SQL: what states border kentucky | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: give me the states that border kentucky | state: state_name (text), population (nu",
+    "gold": "SELECT border FROM border_info WHERE state_name  =  \"kentucky\"",
+    "pred": "SQL: give me the states that border kentucky | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what state borders kentucky | state: state_name (text), population (number), area ",
+    "gold": "SELECT border FROM border_info WHERE state_name  =  \"kentucky\"",
+    "pred": "SQL: what state borders kentucky | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what states are next to kentucky | state: state_name (text), population (number), ",
+    "gold": "SELECT border FROM border_info WHERE state_name  =  \"kentucky\"",
+    "pred": "SQL: what states are next to kentucky | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what states surround kentucky | state: state_name (text), population (number), are",
+    "gold": "SELECT border FROM border_info WHERE state_name  =  \"kentucky\"",
+    "pred": "SQL: what states surround kentucky | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: which state borders kentucky | state: state_name (text), population (number), area",
+    "gold": "SELECT border FROM border_info WHERE state_name  =  \"kentucky\"",
+    "pred": "SQL: which state borders kentucky | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what are the neighboring states for kentucky | state: state_name (text), populatio",
+    "gold": "SELECT border FROM border_info WHERE state_name  =  \"kentucky\"",
+    "pred": "SQL: what are the neighboring states for kentucky | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text),",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: which states adjoin kentucky | state: state_name (text), population (number), area",
+    "gold": "SELECT border FROM border_info WHERE state_name  =  \"kentucky\"",
+    "pred": "SQL: which states adjoin kentucky | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: states bordering kentucky | state: state_name (text), population (number), area (n",
+    "gold": "SELECT border FROM border_info WHERE state_name  =  \"kentucky\"",
+    "pred": "SQL: states bordering kentucky | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: which state border kentucky | state: state_name (text), population (number), area ",
+    "gold": "SELECT border FROM border_info WHERE state_name  =  \"kentucky\"",
+    "pred": "SQL: which state border kentucky | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the adjacent state of kentucky | state: state_name (text), population (num",
+    "gold": "SELECT border FROM border_info WHERE state_name  =  \"kentucky\"",
+    "pred": "SQL: what is the adjacent state of kentucky | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: name all the rivers in illinois | state: state_name (text), population (number), a",
+    "gold": "SELECT river_name FROM river WHERE traverse  =  \"illinois\"",
+    "pred": "SQL: name all the rivers in illinois | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: rivers in illinois | state: state_name (text), population (number), area (number),",
+    "gold": "SELECT river_name FROM river WHERE traverse  =  \"illinois\"",
+    "pred": "SQL: rivers in illinois | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what are all the rivers in illinois | state: state_name (text), population (number",
+    "gold": "SELECT river_name FROM river WHERE traverse  =  \"illinois\"",
+    "pred": "SQL: what are all the rivers in illinois | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what are the rivers in illinois | state: state_name (text), population (number), a",
+    "gold": "SELECT river_name FROM river WHERE traverse  =  \"illinois\"",
+    "pred": "SQL: what are the rivers in illinois | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what rivers are in illinois | state: state_name (text), population (number), area ",
+    "gold": "SELECT river_name FROM river WHERE traverse  =  \"illinois\"",
+    "pred": "SQL: what rivers are in illinois | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what rivers are there in illinois | state: state_name (text), population (number),",
+    "gold": "SELECT river_name FROM river WHERE traverse  =  \"illinois\"",
+    "pred": "SQL: what rivers are there in illinois | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what rivers run through illinois | state: state_name (text), population (number), ",
+    "gold": "SELECT river_name FROM river WHERE traverse  =  \"illinois\"",
+    "pred": "SQL: what rivers run through illinois | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what rivers flow through illinois | state: state_name (text), population (number),",
+    "gold": "SELECT river_name FROM river WHERE traverse  =  \"illinois\"",
+    "pred": "SQL: what rivers flow through illinois | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what river flows through illinois | state: state_name (text), population (number),",
+    "gold": "SELECT river_name FROM river WHERE traverse  =  \"illinois\"",
+    "pred": "SQL: what river flows through illinois | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what are the rivers in the state of illinois | state: state_name (text), populatio",
+    "gold": "SELECT river_name FROM river WHERE traverse  =  \"illinois\"",
+    "pred": "SQL: what are the rivers in the state of illinois | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: name the rivers in illinois | state: state_name (text), population (number), area ",
+    "gold": "SELECT river_name FROM river WHERE traverse  =  \"illinois\"",
+    "pred": "SQL: name the rivers in illinois | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what are the rivers of illinois | state: state_name (text), population (number), a",
+    "gold": "SELECT river_name FROM river WHERE traverse  =  \"illinois\"",
+    "pred": "SQL: what are the rivers of illinois | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: which rivers are in illinois | state: state_name (text), population (number), area",
+    "gold": "SELECT river_name FROM river WHERE traverse  =  \"illinois\"",
+    "pred": "SQL: which rivers are in illinois | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: which rivers flow through illinois | state: state_name (text), population (number)",
+    "gold": "SELECT river_name FROM river WHERE traverse  =  \"illinois\"",
+    "pred": "SQL: which rivers flow through illinois | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the river that cross over illinois | state: state_name (text), population ",
+    "gold": "SELECT river_name FROM river WHERE traverse  =  \"illinois\"",
+    "pred": "SQL: what is the river that cross over illinois | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text),",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what river runs through illinois | state: state_name (text), population (number), ",
+    "gold": "SELECT river_name FROM river WHERE traverse  =  \"illinois\"",
+    "pred": "SQL: what river runs through illinois | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what state is springfield in | state: state_name (text), population (number), area",
+    "gold": "SELECT state_name FROM city WHERE city_name  =  \"springfield\"",
+    "pred": "SQL: what state is springfield in | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text),",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: where is springfield | state: state_name (text), population (number), area (number",
+    "gold": "SELECT state_name FROM city WHERE city_name  =  \"springfield\"",
+    "pred": "SQL: where is springfield | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text), highest_",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: springfield is in what state | state: state_name (text), population (number), area",
+    "gold": "SELECT state_name FROM city WHERE city_name  =  \"springfield\"",
+    "pred": "SQL: springfield is in what state | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text),",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what states have cities named springfield | state: state_name (text), population (",
+    "gold": "SELECT state_name FROM city WHERE city_name  =  \"springfield\"",
+    "pred": "SQL: what states have cities named springfield | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: which states have cities named springfield | state: state_name (text), population ",
+    "gold": "SELECT state_name FROM city WHERE city_name  =  \"springfield\"",
+    "pred": "SQL: which states have cities named springfield | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: which state is springfield in | state: state_name (text), population (number), are",
+    "gold": "SELECT state_name FROM city WHERE city_name  =  \"springfield\"",
+    "pred": "SQL: which state is springfield in | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text),",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what states have a city named springfield | state: state_name (text), population (",
+    "gold": "SELECT state_name FROM city WHERE city_name  =  \"springfield\"",
+    "pred": "SQL: what states have a city named springfield | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what state has the city springfield | state: state_name (text), population (number",
+    "gold": "SELECT state_name FROM city WHERE city_name  =  \"springfield\"",
+    "pred": "SQL: what state has the city springfield | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what states have towns named springfield | state: state_name (text), population (n",
+    "gold": "SELECT state_name FROM city WHERE city_name  =  \"springfield\"",
+    "pred": "SQL: what states have towns named springfield | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what state is springfield located in | state: state_name (text), population (numbe",
+    "gold": "SELECT state_name FROM city WHERE city_name  =  \"springfield\"",
+    "pred": "SQL: in welchem Zustand befindet sich springfield | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: in which state is springfield | state: state_name (text), population (number), are",
+    "gold": "SELECT state_name FROM city WHERE city_name  =  \"springfield\"",
+    "pred": "SQL: in welchem Zustand springfield | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text),",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: which state is the city springfield located in | state: state_name (text), populat",
+    "gold": "SELECT state_name FROM city WHERE city_name  =  \"springfield\"",
+    "pred": "SQL: which state is the city springfield located in | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what states in the united states have a city of springfield | state: state_name (t",
+    "gold": "SELECT state_name FROM city WHERE city_name  =  \"springfield\"",
+    "pred": "SQL: what states in the united states have a city of springfield | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the population of the state with the largest area | state: state_name (tex",
+    "gold": "SELECT population FROM state WHERE area  =  ( SELECT MAX ( area ) FROM state )",
+    "pred": "SQL: what is the population of the state with the largest area | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the population of the largest state | state: state_name (text), population",
+    "gold": "SELECT population FROM state WHERE area  =  ( SELECT MAX ( area ) FROM state )",
+    "pred": "SQL: what is the population of the largest state | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: how many people live in boulder | state: state_name (text), population (number), a",
+    "gold": "SELECT population FROM city WHERE city_name  =  \"boulder\"",
+    "pred": "SQL: how many people live in boulder | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text),",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the population of boulder | state: state_name (text), population (number),",
+    "gold": "SELECT population FROM city WHERE city_name  =  \"boulder\"",
+    "pred": "SQL: what is the population of boulder | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text),",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: how many people lived in boulder | state: state_name (text), population (number), ",
+    "gold": "SELECT population FROM city WHERE city_name  =  \"boulder\"",
+    "pred": "SQL: how many people lived in boulder | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text),",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: number of people in boulder | state: state_name (text), population (number), area ",
+    "gold": "SELECT population FROM city WHERE city_name  =  \"boulder\"",
+    "pred": "SQL: Anzahl der Menschen in Boulder | state: state_name (Text), Bevölkerung (Nummer), Fläche (Nummer), country_name (Text), capital (Text), Densität (Nummer) | city: city_name (Text), Bevölkerung (Nummer), country_name (Text), state_name (Text) | border_info: state_name (Text), border (Text) | highlow: state_name (Text), highest_elevation (Text), lowest_point (Tex",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the population of boulder city | state: state_name (text), population (num",
+    "gold": "SELECT population FROM city WHERE city_name  =  \"boulder\"",
+    "pred": "SQL: what is the population of boulder city | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: how big is the city of boulder | state: state_name (text), population (number), ar",
+    "gold": "SELECT population FROM city WHERE city_name  =  \"boulder\"",
+    "pred": "SQL: how big is the city of boulder | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: population of boulder | state: state_name (text), population (number), area (numbe",
+    "gold": "SELECT population FROM city WHERE city_name  =  \"boulder\"",
+    "pred": "SQL: Population of boulder | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text), highest_e",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the population in boulder | state: state_name (text), population (number),",
+    "gold": "SELECT population FROM city WHERE city_name  =  \"boulder\"",
+    "pred": "SQL: what is the population in boulder | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text),",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: people in boulder | state: state_name (text), population (number), area (number), ",
+    "gold": "SELECT population FROM city WHERE city_name  =  \"boulder\"",
+    "pred": "SQL: people in boulder | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text), highest_e",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: how many people in boulder | state: state_name (text), population (number), area (",
+    "gold": "SELECT population FROM city WHERE city_name  =  \"boulder\"",
+    "pred": "SQL: how many people in boulder | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text), highest",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: how many inhabitants does boulder have | state: state_name (text), population (num",
+    "gold": "SELECT population FROM city WHERE city_name  =  \"boulder\"",
+    "pred": "SQL: how many inhabitants does boulder have | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text),",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: number of citizens in boulder | state: state_name (text), population (number), are",
+    "gold": "SELECT population FROM city WHERE city_name  =  \"boulder\"",
+    "pred": "SQL: Anzahl der Bürger in Boulder | state: state_name (Text), Bevölkerung (Nummer), Fläche (Nummer), country_name (Text), capital (Text), Densität (Nummer) | city: city_name (Text), Bevölkerung (Nummer), country_name (Text), state_name (Text) | border_info: state_name (Text), border (Text) | highlow: state_name (Text), highest_elevation (Text), lowest_point (Tex",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: how many citizens in boulder | state: state_name (text), population (number), area",
+    "gold": "SELECT population FROM city WHERE city_name  =  \"boulder\"",
+    "pred": "SQL: how many citizens in boulder | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text), highest",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the smallest city in alaska | state: state_name (text), population (number",
+    "gold": "SELECT city_name FROM city WHERE population  =  ( SELECT MIN ( population ) FROM city WHERE state_name  =  \"alaska\" ) AND state_name  =  \"alaska\"",
+    "pred": "SQL: what is the smallest city in alaska | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: which states lie on the largest river in the united states | state: state_name (te",
+    "gold": "SELECT traverse FROM river WHERE LENGTH  =  ( SELECT MAX ( LENGTH ) FROM river )",
+    "pred": "SQL: which states lie on the largest river in the united states | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: which states does the longest river run through | state: state_name (text), popula",
+    "gold": "SELECT traverse FROM river WHERE LENGTH  =  ( SELECT MAX ( LENGTH ) FROM river )",
+    "pred": "SQL: which states does the longest river run through | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: which state has the longest river | state: state_name (text), population (number),",
+    "gold": "SELECT traverse FROM river WHERE LENGTH  =  ( SELECT MAX ( LENGTH ) FROM river )",
+    "pred": "SQL: which state has the longest river | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text),",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what are the states through which the longest river runs | state: state_name (text",
+    "gold": "SELECT traverse FROM river WHERE LENGTH  =  ( SELECT MAX ( LENGTH ) FROM river )",
+    "pred": "SQL: what are the states through which the longest river runs | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: which states does the longest river cross | state: state_name (text), population (",
+    "gold": "SELECT traverse FROM river WHERE LENGTH  =  ( SELECT MAX ( LENGTH ) FROM river )",
+    "pred": "SQL: which states does the longest river cross | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the population density of the state with the smallest area | state: state_",
+    "gold": "SELECT density FROM state WHERE area  =  ( SELECT MIN ( area ) FROM state )",
+    "pred": "SQL: what is the population density of the state with the smallest area | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the population density of the smallest state | state: state_name (text), p",
+    "gold": "SELECT density FROM state WHERE area  =  ( SELECT MIN ( area ) FROM state )",
+    "pred": "SQL: what is the population density of the smallest state | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: which states have points higher than the highest point in colorado | state: state_",
+    "gold": "SELECT state_name FROM highlow WHERE highest_elevation  >  ( SELECT highest_elevation FROM highlow WHERE state_name  =  \"colorado\" )",
+    "pred": "SQL which states have points higher than the highest point in colorado | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: which states have points that are higher than the highest point in colorado | stat",
+    "gold": "SELECT state_name FROM highlow WHERE highest_elevation  >  ( SELECT highest_elevation FROM highlow WHERE state_name  =  \"colorado\" )",
+    "pred": "SQL which states have points that are higher than the highest point in colorado | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what states high point are higher than that of colorado | state: state_name (text)",
+    "gold": "SELECT state_name FROM highlow WHERE highest_elevation  >  ( SELECT highest_elevation FROM highlow WHERE state_name  =  \"colorado\" )",
+    "pred": "SQL: what states high point are higher than that of colorado | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the highest elevation in delaware | state: state_name (text), population (",
+    "gold": "SELECT highest_elevation FROM highlow WHERE state_name  =  \"delaware\"",
+    "pred": "SQL: what is the highest elevation in delaware | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: how high is the highest point of delaware | state: state_name (text), population (",
+    "gold": "SELECT highest_elevation FROM highlow WHERE state_name  =  \"delaware\"",
+    "pred": "SQL: how high is the highest point of delaware | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: how tall is the highest point in delaware | state: state_name (text), population (",
+    "gold": "SELECT highest_elevation FROM highlow WHERE state_name  =  \"delaware\"",
+    "pred": "SQL: how tall is the highest point in delaware | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the highest point in delaware in meters | state: state_name (text), popula",
+    "gold": "SELECT highest_elevation FROM highlow WHERE state_name  =  \"delaware\"",
+    "pred": "SQL: what is the highest point in delaware in meters | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: how high is the highest point in delaware | state: state_name (text), population (",
+    "gold": "SELECT highest_elevation FROM highlow WHERE state_name  =  \"delaware\"",
+    "pred": "SQL: how high is the highest point in delaware | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: give me the longest river that passes through the us | state: state_name (text), p",
+    "gold": "SELECT river_name FROM river WHERE LENGTH  =  ( SELECT MAX ( LENGTH ) FROM river )",
+    "pred": "SQL: give me the longest river that passes through the us | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: which is the longest river in usa | state: state_name (text), population (number),",
+    "gold": "SELECT river_name FROM river WHERE LENGTH  =  ( SELECT MAX ( LENGTH ) FROM river )",
+    "pred": "SQL: which is the longest river in usa | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the longest river in america | state: state_name (text), population (numbe",
+    "gold": "SELECT river_name FROM river WHERE LENGTH  =  ( SELECT MAX ( LENGTH ) FROM river )",
+    "pred": "SQL: what is the longest river in america | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: name the longest river in us | state: state_name (text), population (number), area",
+    "gold": "SELECT river_name FROM river WHERE LENGTH  =  ( SELECT MAX ( LENGTH ) FROM river )",
+    "pred": "SQL: name the longest river in us | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text),",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what river is the longest one in the united states | state: state_name (text), pop",
+    "gold": "SELECT river_name FROM river WHERE LENGTH  =  ( SELECT MAX ( LENGTH ) FROM river )",
+    "pred": "SQL: which river is the longest one in the united states | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the longest river in the us | state: state_name (text), population (number",
+    "gold": "SELECT river_name FROM river WHERE LENGTH  =  ( SELECT MAX ( LENGTH ) FROM river )",
+    "pred": "SQL: what is the longest river in the us | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the longest river | state: state_name (text), population (number), area (n",
+    "gold": "SELECT river_name FROM river WHERE LENGTH  =  ( SELECT MAX ( LENGTH ) FROM river )",
+    "pred": "SQL: what is the longest river | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text), lowest",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the longest river in the united states | state: state_name (text), populat",
+    "gold": "SELECT river_name FROM river WHERE LENGTH  =  ( SELECT MAX ( LENGTH ) FROM river )",
+    "pred": "SQL: what is the longest river in the united states | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what state has the city with the largest population | state: state_name (text), po",
+    "gold": "SELECT state_name FROM city WHERE population  =  ( SELECT MAX ( population ) FROM city )",
+    "pred": "SQL: welcher Staat hat die Stadt mit der größten Bevölkerung | state: state_name (text), Bevölkerung (Nummer), Fläche (Nummer), country_name (text), capital (text), density (Nummer) | city: city_name (text), population (Nummer), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what state has the largest city | state: state_name (text), population (number), a",
+    "gold": "SELECT state_name FROM city WHERE population  =  ( SELECT MAX ( population ) FROM city )",
+    "pred": "SQL: which state has the largest city | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text),",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: which state has the largest city | state: state_name (text), population (number), ",
+    "gold": "SELECT state_name FROM city WHERE population  =  ( SELECT MAX ( population ) FROM city )",
+    "pred": "SQL: which state has the largest city | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text),",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what state has the city with the most population | state: state_name (text), popul",
+    "gold": "SELECT state_name FROM city WHERE population  =  ( SELECT MAX ( population ) FROM city )",
+    "pred": "SQL: welcher Staat hat die Stadt mit der größten Bevölkerung | state: state_name (text), Bevölkerung (Nummer), Fläche (Nummer), country_name (text), capital (text), density (Nummer) | city: city_name (text), population (Nummer), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the smallest city in the largest state | state: state_name (text), populat",
+    "gold": "SELECT city_name FROM city WHERE population  =  ( SELECT MIN ( population ) FROM city WHERE state_name IN ( SELECT state_name FROM state WHERE area  =  ( SELECT MAX ( area ) FROM state ) ) ) AND state_name IN ( SELECT state_name FROM state WHERE area  =  ( SELECT MAX ( area ) FROM state ) )",
+    "pred": "SQL: what is the smallest city in the largest state | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what state is the biggest | state: state_name (text), population (number), area (n",
+    "gold": "SELECT state_name FROM state WHERE area  =  ( SELECT MAX ( area ) FROM state )",
+    "pred": "SQL: which state is the biggest | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text), lowest",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the state with the largest area | state: state_name (text), population (nu",
+    "gold": "SELECT state_name FROM state WHERE area  =  ( SELECT MAX ( area ) FROM state )",
+    "pred": "SQL: what is the state with the largest area | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what state has the largest area | state: state_name (text), population (number), a",
+    "gold": "SELECT state_name FROM state WHERE area  =  ( SELECT MAX ( area ) FROM state )",
+    "pred": "SQL: which state has the largest area | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text),",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the biggest state in continental us | state: state_name (text), population",
+    "gold": "SELECT state_name FROM state WHERE area  =  ( SELECT MAX ( area ) FROM state )",
+    "pred": "SQL: what is the biggest state in continental us | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: state the state with the largest area | state: state_name (text), population (numb",
+    "gold": "SELECT state_name FROM state WHERE area  =  ( SELECT MAX ( area ) FROM state )",
+    "pred": "SQL: state the state with the largest area | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the largest state in usa | state: state_name (text), population (number), ",
+    "gold": "SELECT state_name FROM state WHERE area  =  ( SELECT MAX ( area ) FROM state )",
+    "pred": "SQL: what is the largest state in usa | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the biggest state | state: state_name (text), population (number), area (n",
+    "gold": "SELECT state_name FROM state WHERE area  =  ( SELECT MAX ( area ) FROM state )",
+    "pred": "SQL: what is the biggest state | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text), highest",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the biggest state in the usa | state: state_name (text), population (numbe",
+    "gold": "SELECT state_name FROM state WHERE area  =  ( SELECT MAX ( area ) FROM state )",
+    "pred": "SQL: what is the biggest state in the usa | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: give me the largest state | state: state_name (text), population (number), area (n",
+    "gold": "SELECT state_name FROM state WHERE area  =  ( SELECT MAX ( area ) FROM state )",
+    "pred": "SQL: give me the largest state | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text), highest",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the largest state in the us | state: state_name (text), population (number",
+    "gold": "SELECT state_name FROM state WHERE area  =  ( SELECT MAX ( area ) FROM state )",
+    "pred": "SQL: what is the largest state in the us | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the largest state | state: state_name (text), population (number), area (n",
+    "gold": "SELECT state_name FROM state WHERE area  =  ( SELECT MAX ( area ) FROM state )",
+    "pred": "SQL: what is the largest state | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text), highest",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what are the highest points of states surrounding mississippi | state: state_name ",
+    "gold": "SELECT highest_point FROM highlow WHERE state_name IN ( SELECT border FROM border_info WHERE state_name  =  \"mississippi\" )",
+    "pred": "SQL: what are the highest points of states surrounding mississippi | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what are the high points of states surrounding mississippi | state: state_name (te",
+    "gold": "SELECT highest_point FROM highlow WHERE state_name IN ( SELECT border FROM border_info WHERE state_name  =  \"mississippi\" )",
+    "pred": "SQL: what are the high points of states surrounding mississippi | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the highest point in states bordering colorado | state: state_name (text),",
+    "gold": "SELECT highest_point FROM highlow WHERE state_name IN ( SELECT border FROM border_info WHERE state_name  =  \"colorado\" ) ORDER BY highest_elevation DESC LIMIT 1",
+    "pred": "SQL: what is the highest point in states bordering colorado | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the highest point in the states bordering colorado | state: state_name (te",
+    "gold": "SELECT highest_point FROM highlow WHERE state_name IN ( SELECT border FROM border_info WHERE state_name  =  \"colorado\" ) ORDER BY highest_elevation DESC LIMIT 1",
+    "pred": "SQL: what is the highest point in the states bordering colorado | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the state with the lowest population density | state: state_name (text), p",
+    "gold": "SELECT state_name FROM state WHERE density  =  ( SELECT MIN ( density ) FROM state )",
+    "pred": "SQL: what is the state with the lowest population density | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what state has the lowest population density | state: state_name (text), populatio",
+    "gold": "SELECT state_name FROM state WHERE density  =  ( SELECT MIN ( density ) FROM state )",
+    "pred": "SQL: which state has the lowest population density | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: which state has the lowest population density | state: state_name (text), populati",
+    "gold": "SELECT state_name FROM state WHERE density  =  ( SELECT MIN ( density ) FROM state )",
+    "pred": "SQL: which state has the lowest population density | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: which state has the smallest population density | state: state_name (text), popula",
+    "gold": "SELECT state_name FROM state WHERE density  =  ( SELECT MIN ( density ) FROM state )",
+    "pred": "SQL: which state has the smallest population density | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what state has the sparsest population density | state: state_name (text), populat",
+    "gold": "SELECT state_name FROM state WHERE density  =  ( SELECT MIN ( density ) FROM state )",
+    "pred": "SQL: which state has the sparsest population density | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: which state has the sparsest population density | state: state_name (text), popula",
+    "gold": "SELECT state_name FROM state WHERE density  =  ( SELECT MIN ( density ) FROM state )",
+    "pred": "SQL: which state has the sparsest population density | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what state has the least population density | state: state_name (text), population",
+    "gold": "SELECT state_name FROM state WHERE density  =  ( SELECT MIN ( density ) FROM state )",
+    "pred": "SQL: which state has the least population density | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: which state has the least population density | state: state_name (text), populatio",
+    "gold": "SELECT state_name FROM state WHERE density  =  ( SELECT MIN ( density ) FROM state )",
+    "pred": "SQL: which state has the least population density | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (text",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what state has the smallest population density | state: state_name (text), populat",
+    "gold": "SELECT state_name FROM state WHERE density  =  ( SELECT MIN ( density ) FROM state )",
+    "pred": "SQL: which state has the smallest population density | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_point (",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: where is the highest point in texas | state: state_name (text), population (number",
+    "gold": "SELECT highest_point FROM highlow WHERE state_name  =  \"texas\"",
+    "pred": "SQL: where is the highest point in texas | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  },
+  {
+    "question": "translate to SQL: what is the highest point in texas | state: state_name (text), population (number)",
+    "gold": "SELECT highest_point FROM highlow WHERE state_name  =  \"texas\"",
+    "pred": "SQL: what is the highest point in texas | state: state_name (text), population (number), area (number), country_name (text), capital (text), density (number) | city: city_name (text), population (number), country_name (text), state_name (text) | border_info: state_name (text), border (text) | highlow: state_name (text), highest_elevation (text), lowest_point (text), lowest_",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "unknown"
+  }
+]

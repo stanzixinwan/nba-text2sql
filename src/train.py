@@ -134,7 +134,7 @@ def main():
         per_device_eval_batch_size=args.batch_size,
         gradient_accumulation_steps=args.grad_accum,
         learning_rate=args.lr,
-        warmup_ratio=0.1,
+        warmup_steps=100,
         logging_steps=50,
         eval_strategy="epoch",
         save_strategy="epoch",
@@ -152,7 +152,7 @@ def main():
         args=training_args,
         train_dataset=train_ds,
         eval_dataset=dev_ds,
-        tokenizer=tokenizer,
+        processing_class=tokenizer,
         data_collator=collator,
     )
  

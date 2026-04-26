@@ -59,38 +59,41 @@ def get_sqlite_schema(db_path: str, tables: Optional[list[str]] = None) -> dict:
     conn.close()
     return schema
 
-
 def _normalize_type(sqlite_type: str) -> str:
     """Map SQLite types to Spider-style simplified types."""
+    if not sqlite_type:
+        return "text"
     t = sqlite_type.upper()
     if any(x in t for x in ["INT", "REAL", "NUMERIC", "DOUBLE", "FLOAT"]):
         return "number"
     return "text"
 
+
 def serialize_schema(schema: dict, include_types: bool = True) -> str:
-    """Serialize schema in Spider-compatible format."""
+    """Spider-compatible: 'table1: col1 (type), col2 (type) | table2: ...'"""
     parts = []
     for table_name, columns in schema.items():
         col_strs = []
         for c in columns:
-            if include_types and c.get("type"):
-                col_strs.append(f"{c['column']} ({_normalize_type(c['type'])})")
+            if include_types:
+                col_strs.append(f"{c['column']} ({_normalize_type(c.get('type', ''))})")
             else:
                 col_strs.append(c["column"])
         parts.append(f"{table_name}: {', '.join(col_strs)}")
     return " | ".join(parts)
 
 
-def serialize_schema_for_table(schema: dict, table_name: str, include_types: bool = False) -> str:
-    """Serialize schema for a single table."""
+def serialize_schema_for_table(schema: dict, table_name: str, include_types: bool = True) -> str:
     if table_name not in schema:
         return ""
     columns = schema[table_name]
-    if include_types:
-        col_strs = [f"{c['column']} ({c['type']})" for c in columns]
-    else:
-        col_strs = [c["column"] for c in columns]
-    return f"{table_name} : {' , '.join(col_strs)}"
+    col_strs = []
+    for c in columns:
+        if include_types:
+            col_strs.append(f"{c['column']} ({_normalize_type(c.get('type', ''))})")
+        else:
+            col_strs.append(c["column"])
+    return f"{table_name}: {', '.join(col_strs)}"
 
 
 # ──────────────────────────────────────────────

@@ -60,23 +60,24 @@ def get_sqlite_schema(db_path: str, tables: Optional[list[str]] = None) -> dict:
     return schema
 
 
-def serialize_schema(schema: dict, include_types: bool = False) -> str:
-    """
-    Convert schema dict to a flat text string for model input.
+def _normalize_type(sqlite_type: str) -> str:
+    """Map SQLite types to Spider-style simplified types."""
+    t = sqlite_type.upper()
+    if any(x in t for x in ["INT", "REAL", "NUMERIC", "DOUBLE", "FLOAT"]):
+        return "number"
+    return "text"
 
-    Example output (include_types=False):
-        "team : id , full_name , abbreviation , city , state , year_founded | game : season_id , ..."
-
-    Example output (include_types=True):
-        "team : id (TEXT) , full_name (TEXT) | game : season_id (TEXT) , ..."
-    """
+def serialize_schema(schema: dict, include_types: bool = True) -> str:
+    """Serialize schema in Spider-compatible format."""
     parts = []
     for table_name, columns in schema.items():
-        if include_types:
-            col_strs = [f"{c['column']} ({c['type']})" for c in columns]
-        else:
-            col_strs = [c["column"] for c in columns]
-        parts.append(f"{table_name} : {' , '.join(col_strs)}")
+        col_strs = []
+        for c in columns:
+            if include_types and c.get("type"):
+                col_strs.append(f"{c['column']} ({_normalize_type(c['type'])})")
+            else:
+                col_strs.append(c["column"])
+        parts.append(f"{table_name}: {', '.join(col_strs)}")
     return " | ".join(parts)
 
 

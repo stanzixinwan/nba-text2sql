@@ -244,12 +244,7 @@ def load_spider_splits(include_types: bool = False, max_examples: Optional[int] 
 # Tables to include in the NBA schema for model input.
 # Excluding play_by_play (too many columns, rarely needed for most queries)
 # and team_info_common (empty table).
-NBA_CORE_TABLES = [
-    "team", "player", "common_player_info", "game",
-    "draft_history", "draft_combine_stats", "team_details",
-    "game_summary", "line_score", "officials",
-    "inactive_players", "other_stats", "game_info", "team_history",
-]
+NBA_CORE_TABLES = ["team", "player", "common_player_info", "game", "draft_history"]
 
 
 def load_nba_dataset(

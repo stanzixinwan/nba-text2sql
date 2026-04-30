@@ -93,6 +93,8 @@ def main():
     parser.add_argument("--nba-db", default="data/raw/nba.sqlite")
     parser.add_argument("--max-examples", type=int, default=None)
     parser.add_argument("--output-dir", default="eval")
+    parser.add_argument("--oracle-tables", action="store_true",
+                    help="Restrict NBA schema to gold-relevant tables (mimics perfect RAG)")
     args = parser.parse_args()
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -105,7 +107,7 @@ def main():
     run_name = Path(args.checkpoint).parent.name
 
     if args.eval in ("nba", "both"):
-        nba = load_nba_dataset(args.nba_questions, args.nba_db, use_oracle_tables=True)
+        nba = load_nba_dataset(args.nba_questions, args.nba_db, use_oracle_tables=args.oracle_tables)
         if args.max_examples:
             nba = nba[:args.max_examples]
         results = evaluate(model, tokenizer, nba, args.nba_db, device, f"NBA / {run_name}")

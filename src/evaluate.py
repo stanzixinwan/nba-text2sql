@@ -105,7 +105,7 @@ def main():
     run_name = Path(args.checkpoint).parent.name
 
     if args.eval in ("nba", "both"):
-        nba = load_nba_dataset(args.nba_questions, args.nba_db)
+        nba = load_nba_dataset(args.nba_questions, args.nba_db, use_oracle_tables=True)
         if args.max_examples:
             nba = nba[:args.max_examples]
         results = evaluate(model, tokenizer, nba, args.nba_db, device, f"NBA / {run_name}")

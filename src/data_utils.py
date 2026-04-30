@@ -1,23 +1,11 @@
 """
 data_utils.py — Unified data pipeline for Spider + NBA text-to-SQL.
 
-Core responsibilities:
-1. Serialize database schemas into text strings for model input
-2. Format (question, schema) → input_text and SQL → target_text
-3. Provide a unified loader so training/eval code doesn't care about data source
-
-Usage:
-    from src.data_utils import load_spider_splits, load_nba_dataset, format_example
-
-    # Spider
-    train, dev = load_spider_splits()
-
-    # NBA
-    nba = load_nba_dataset("data/nba/nba_questions.json", "data/raw/nba.sqlite")
-
-    # Both return list[dict] with keys: input_text, target_text, db_id, difficulty
-    print(train[0]["input_text"])
-    print(train[0]["target_text"])
+Key fix in this version:
+    - load_nba_dataset() now supports use_oracle_tables=True, which restricts
+      each example's schema to only the tables in `tables_used`. This brings
+      NBA input length close to Spider's training distribution and isolates
+      "model can't handle long schemas" from "model can't handle NBA domain".
 """
 
 import json
@@ -30,18 +18,7 @@ from typing import Optional
 # ──────────────────────────────────────────────
 
 def get_sqlite_schema(db_path: str, tables: Optional[list[str]] = None) -> dict:
-    """
-    Extract schema from a SQLite database.
-
-    Returns:
-        {
-            "table_name": [
-                {"column": "col_name", "type": "TEXT"},
-                ...
-            ],
-            ...
-        }
-    """
+    """Extract schema from a SQLite database."""
     conn = sqlite3.connect(db_path)
     cur = conn.cursor()
 
@@ -59,8 +36,9 @@ def get_sqlite_schema(db_path: str, tables: Optional[list[str]] = None) -> dict:
     conn.close()
     return schema
 
+
 def _normalize_type(sqlite_type: str) -> str:
-    """Map SQLite types to Spider-style simplified types."""
+    """Map SQLite types to Spider-style: 'number' or 'text'."""
     if not sqlite_type:
         return "text"
     t = sqlite_type.upper()
@@ -83,7 +61,8 @@ def serialize_schema(schema: dict, include_types: bool = True) -> str:
     return " | ".join(parts)
 
 
-def serialize_schema_for_table(schema: dict, table_name: str, include_types: bool = True) -> str:
+def serialize_schema_for_table(schema: dict, table_name: str,
+                                include_types: bool = True) -> str:
     if table_name not in schema:
         return ""
     columns = schema[table_name]
@@ -101,23 +80,10 @@ def serialize_schema_for_table(schema: dict, table_name: str, include_types: boo
 # ──────────────────────────────────────────────
 
 def format_input(question: str, schema_text: str) -> str:
-    """
-    Create the model input string.
-
-    Format:
-        "translate to SQL: {question} | {schema_text}"
-
-    This prefix style works well with T5/CodeT5 seq2seq models.
-    """
     return f"translate to SQL: {question} | {schema_text}"
 
 
 def format_target(sql: str) -> str:
-    """
-    Normalize the target SQL string.
-    - Strip whitespace
-    - Remove trailing semicolons (T5 tokenizer handles this better without them)
-    """
     sql = sql.strip()
     if sql.endswith(";"):
         sql = sql[:-1].strip()
@@ -125,13 +91,9 @@ def format_target(sql: str) -> str:
 
 
 def format_example(question: str, schema: dict, sql: str,
-                   include_types: bool = False) -> dict:
-    """
-    Format a single (question, schema, sql) triple into model-ready strings.
-
-    Returns:
-        {"input_text": "translate to SQL: ...", "target_text": "SELECT ..."}
-    """
+                   include_types: bool = True) -> dict:
+    """Format (question, schema, sql) into model-ready strings.
+    Default include_types=True to match Spider training format."""
     schema_text = serialize_schema(schema, include_types=include_types)
     return {
         "input_text": format_input(question, schema_text),
@@ -147,7 +109,6 @@ SPIDER_DATASET_NAME = "SuperMax991/spider-text2sql"
 
 
 def _schema_from_spider_tables(table_examples: list[dict]) -> dict:
-    """Convert Spider tables.json records into this module's schema format."""
     schemas = {}
     for ex in table_examples:
         table_names = ex["table_names_original"]
@@ -166,12 +127,6 @@ def _schema_from_spider_tables(table_examples: list[dict]) -> dict:
 
 
 def _load_spider_schemas(spider_dataset) -> dict:
-    """
-    Extract per-database schemas from Spider's HuggingFace dataset.
-
-    Spider stores schema info in each example. We deduplicate by db_id.
-    Returns: {db_id: schema_dict}
-    """
     first_split = next(iter(spider_dataset))
     first_example = spider_dataset[first_split][0]
 
@@ -187,25 +142,12 @@ def _load_spider_schemas(spider_dataset) -> dict:
             db_id = ex["db_id"]
             if db_id in schemas:
                 continue
-
             schemas[db_id] = _schema_from_spider_tables([ex])[db_id]
     return schemas
 
 
-def load_spider_splits(include_types: bool = False, max_examples: Optional[int] = None):
-    """
-    Load Spider train and validation splits, formatted for model input.
-
-    Returns:
-        train_data: list[dict]  — each has input_text, target_text, db_id, difficulty
-        dev_data:   list[dict]
-
-    Each dict has keys:
-        - input_text: str
-        - target_text: str
-        - db_id: str
-        - difficulty: str (Spider's difficulty label)
-    """
+def load_spider_splits(include_types: bool = True, max_examples: Optional[int] = None):
+    """Load Spider train and dev splits, formatted for model input."""
     from datasets import load_dataset
     spider = load_dataset(SPIDER_DATASET_NAME)
     has_db_schema = "db_schema" in spider["train"].column_names
@@ -230,6 +172,8 @@ def load_spider_splits(include_types: bool = False, max_examples: Optional[int] 
                 )
             formatted["db_id"] = db_id
             formatted["difficulty"] = ex.get("difficulty", "unknown")
+            formatted["question"] = ex["question"]
+            formatted["gold_sql"] = ex["query"]
             data.append(formatted)
             if max_examples and len(data) >= max_examples:
                 break
@@ -245,39 +189,63 @@ def load_spider_splits(include_types: bool = False, max_examples: Optional[int] 
 # 4. NBA loader
 # ──────────────────────────────────────────────
 
-# Tables to include in the NBA schema for model input.
-# Excluding play_by_play (too many columns, rarely needed for most queries)
-# and team_info_common (empty table).
-NBA_CORE_TABLES = ["team", "player", "common_player_info", "game", "draft_history"]
+# All tables that NBA gold SQL queries can reference.
+# Verified against tables_used field in nba_questions.json.
+NBA_CORE_TABLES = [
+    "team",
+    "player",
+    "common_player_info",
+    "game",
+    "draft_history",
+    "draft_combine_stats",
+    "team_details",
+    "team_history",
+    "game_summary",
+    "game_info",
+    "line_score",
+    "other_stats",
+    "officials",
+    "inactive_players",
+    "play_by_play",  # used in Q89 only; included so that query has its schema
+]
 
 
 def load_nba_dataset(
     questions_path: str = "data/nba/nba_questions.json",
     db_path: str = "data/raw/nba.sqlite",
-    include_types: bool = False,
+    include_types: bool = True,
     tables: Optional[list[str]] = None,
+    use_oracle_tables: bool = False,
 ) -> list[dict]:
     """
     Load NBA question/SQL pairs, formatted for model input.
 
+    Args:
+        use_oracle_tables: If True, each example only sees schemas of tables
+            listed in its `tables_used` field. This mimics perfect RAG
+            retrieval and brings input length close to Spider distribution.
+            Use this to validate that the trained model actually learned
+            text-to-SQL (not just memorized Spider patterns).
+
     Returns list[dict] with keys:
-        - input_text: str
-        - target_text: str
-        - db_id: "nba"
-        - difficulty: str
-        - tables_used: list[str]
-        - sql_components: list[str]
-        - question: str  (original question, useful for error analysis)
-        - gold_sql: str  (original SQL, useful for execution accuracy eval)
+        input_text, target_text, db_id, difficulty, tables_used,
+        sql_components, question, gold_sql
     """
     tables = tables or NBA_CORE_TABLES
-    schema = get_sqlite_schema(db_path, tables=tables)
+    full_schema = get_sqlite_schema(db_path, tables=tables)
 
     with open(questions_path, "r", encoding="utf-8") as f:
         questions = json.load(f)
 
     data = []
     for q in questions:
+        if use_oracle_tables and q.get("tables_used"):
+            schema = {t: full_schema[t] for t in q["tables_used"] if t in full_schema}
+            if not schema:  # safety net
+                schema = full_schema
+        else:
+            schema = full_schema
+
         formatted = format_example(
             question=q["question"],
             schema=schema,
@@ -296,63 +264,60 @@ def load_nba_dataset(
 
 
 # ──────────────────────────────────────────────
-# 5. NBA schema document (for RAG embedding)
+# 5. NBA schema documents for RAG
 # ──────────────────────────────────────────────
 
 def build_nba_schema_documents(
     db_path: str = "data/raw/nba.sqlite",
     tables: Optional[list[str]] = None,
 ) -> list[dict]:
-    """
-    Build per-table schema documents for RAG retrieval.
-
-    Each document is a dict:
-        {"table": "game", "text": "game : season_id , team_id_home , ..."}
-
-    These documents will be embedded with sentence-transformers and stored in FAISS.
-    At inference time, the user's question is encoded, top-k tables are retrieved,
-    and only those tables' schemas are injected into the prompt.
-    """
+    """One document per table, ready for sentence-transformer embedding."""
     tables = tables or NBA_CORE_TABLES
     schema = get_sqlite_schema(db_path, tables=tables)
-
-    documents = []
-    for table_name in schema:
-        text = serialize_schema_for_table(schema, table_name, include_types=True)
-        documents.append({"table": table_name, "text": text})
-
-    return documents
+    return [
+        {"table": t, "text": serialize_schema_for_table(schema, t, include_types=True)}
+        for t in schema
+    ]
 
 
 # ──────────────────────────────────────────────
-# 6. CLI: quick test
+# 6. CLI: quick tests
 # ──────────────────────────────────────────────
 
 if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument("--test-nba", action="store_true", help="Test NBA data loading")
-    parser.add_argument("--test-spider", action="store_true", help="Test Spider data loading")
+    parser.add_argument("--test-nba", action="store_true")
+    parser.add_argument("--test-spider", action="store_true")
+    parser.add_argument("--test-oracle", action="store_true",
+                        help="Compare full-schema vs oracle-tables NBA input lengths")
     parser.add_argument("--nba-questions", default="data/nba/nba_questions.json")
     parser.add_argument("--nba-db", default="data/raw/nba.sqlite")
     args = parser.parse_args()
 
     if args.test_nba:
-        print("Loading NBA dataset...")
         nba = load_nba_dataset(args.nba_questions, args.nba_db)
-        print(f"  Loaded {len(nba)} examples")
-        print(f"\n  Sample input (first 200 chars):\n    {nba[0]['input_text'][:200]}...")
-        print(f"\n  Sample target:\n    {nba[0]['target_text']}")
+        print(f"Loaded {len(nba)} NBA examples")
+        print(f"\nSample input (first 300 chars):\n  {nba[0]['input_text'][:300]}...")
+        print(f"\nSample target:\n  {nba[0]['target_text']}")
+        avg_len = sum(len(e['input_text']) for e in nba) / len(nba)
+        print(f"\nAverage input length: {avg_len:.0f} chars")
 
-        print("\n  NBA schema documents for RAG:")
-        docs = build_nba_schema_documents(args.nba_db)
-        for d in docs[:3]:
-            print(f"    [{d['table']}] {d['text'][:80]}...")
+    if args.test_oracle:
+        full = load_nba_dataset(args.nba_questions, args.nba_db, use_oracle_tables=False)
+        oracle = load_nba_dataset(args.nba_questions, args.nba_db, use_oracle_tables=True)
+        full_avg = sum(len(e['input_text']) for e in full) / len(full)
+        oracle_avg = sum(len(e['input_text']) for e in oracle) / len(oracle)
+        print(f"=== Schema length comparison ===")
+        print(f"  Full schema mode:   avg {full_avg:.0f} chars")
+        print(f"  Oracle tables mode: avg {oracle_avg:.0f} chars")
+        print(f"  Reduction: {(1 - oracle_avg/full_avg)*100:.0f}%")
+        print(f"\nQ1 oracle input:\n  {oracle[0]['input_text'][:300]}...")
 
     if args.test_spider:
-        print("Loading Spider dataset (this downloads ~100MB on first run)...")
         train, dev = load_spider_splits(max_examples=5)
-        print(f"  Train: {len(train)} examples (showing first 5)")
-        print(f"  Dev:   {len(dev)} examples (showing first 5)")
-        print(f"\n  Sample input (first 200 chars):\n    {train[0]['input_text'][:200]}...")
-        print(f"\n  Sample target:\n    {train[0]['target_text']}")
+        print(f"Spider train: {len(train)} examples (showing 5)")
+        print(f"\nSample input (first 300 chars):\n  {train[0]['input_text'][:300]}...")
+        print(f"\nSample target:\n  {train[0]['target_text']}")
+        avg_len = sum(len(e['input_text']) for e in train) / len(train)
+        print(f"\nAverage input length over 5: {avg_len:.0f} chars")

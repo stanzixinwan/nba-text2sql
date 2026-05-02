@@ -105,7 +105,7 @@ def format_example(question: str, schema: dict, sql: str,
 # 3. Spider loader
 # ──────────────────────────────────────────────
 
-SPIDER_DATASET_NAME = "SuperMax991/spider-text2sql"
+SPIDER_DATASET_NAME = "xlangai/spider"
 
 
 def _schema_from_spider_tables(table_examples: list[dict]) -> dict:

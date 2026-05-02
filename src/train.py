@@ -80,7 +80,7 @@ def setup_model(model_name: str, method: str, lora_rank: int = 16):
             r=lora_rank,
             lora_alpha=lora_rank * 2,
             lora_dropout=0.1,
-            target_modules=["q", "v"],  # T5 attention projections
+            target_modules=["q", "k", "v", "o", "wi", "wo"],  # T5 attention projections
         )
         model = get_peft_model(model, peft_config)
         model.print_trainable_parameters()

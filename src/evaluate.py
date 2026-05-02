@@ -7,6 +7,7 @@ Usage:
 """
 
 import argparse
+from email import parser
 import json
 from pathlib import Path
 from collections import defaultdict
@@ -95,6 +96,10 @@ def main():
     parser.add_argument("--output-dir", default="eval")
     parser.add_argument("--oracle-tables", action="store_true",
                     help="Restrict NBA schema to gold-relevant tables (mimics perfect RAG)")
+    parser.add_argument("--use-rag", action="store_true",
+                    help="Use RAG retrieval instead of full/oracle schema")
+    parser.add_argument("--top-k", type=int, default=3)
+                    
     args = parser.parse_args()
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -125,6 +130,16 @@ def main():
             json.dump(results, f, indent=2, ensure_ascii=False)
         print(f"  Saved → {out}")
 
+    if args.use_rag:
+        from src.rag import load_nba_dataset_with_rag
+        nba = load_nba_dataset_with_rag(
+            args.nba_questions, args.nba_db, top_k=args.top_k
+        )
+    elif args.oracle_tables:
+        nba = load_nba_dataset(args.nba_questions, args.nba_db,
+                            use_oracle_tables=True)
+    else:
+        nba = load_nba_dataset(args.nba_questions, args.nba_db)    
 
 if __name__ == "__main__":
     main()

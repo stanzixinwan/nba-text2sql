@@ -38,3 +38,5 @@ htmlcov/
 Thumbs.db
 *.swp
 *.swo
+
+.tmp.driveupload

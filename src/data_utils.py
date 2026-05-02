@@ -106,6 +106,8 @@ def format_example(question: str, schema: dict, sql: str,
 # ──────────────────────────────────────────────
 
 SPIDER_DATASET_NAME = "xlangai/spider"
+SPIDER_SCHEMA_DATASET_NAME = "richardr1126/spider-schema"
+SPIDER_LEGACY_SCHEMA_DATASET_NAME = "SuperMax991/spider-text2sql"
 
 
 def _schema_from_spider_tables(table_examples: list[dict]) -> dict:
@@ -146,12 +148,39 @@ def _load_spider_schemas(spider_dataset) -> dict:
     return schemas
 
 
+def _load_spider_schema_texts() -> dict:
+    """Load db_id -> serialized schema text for Spider datasets without schemas."""
+    from datasets import load_dataset
+
+    schema_dataset = load_dataset(SPIDER_SCHEMA_DATASET_NAME)
+    schemas = {}
+    for split in schema_dataset:
+        for ex in schema_dataset[split]:
+            if "Schema (values (type))" in ex:
+                schemas.setdefault(ex["db_id"], ex["Schema (values (type))"])
+
+    legacy_dataset = load_dataset(SPIDER_LEGACY_SCHEMA_DATASET_NAME)
+    for split in legacy_dataset:
+        for ex in legacy_dataset[split]:
+            if "db_schema" in ex:
+                schemas.setdefault(ex["db_id"], ex["db_schema"])
+
+    if not schemas:
+        raise ValueError(
+            f"Spider dataset does not include schema metadata, and "
+            f"{SPIDER_SCHEMA_DATASET_NAME} did not provide schema fields."
+        )
+    return schemas
+
+
 def load_spider_splits(include_types: bool = True, max_examples: Optional[int] = None):
     """Load Spider train and dev splits, formatted for model input."""
     from datasets import load_dataset
     spider = load_dataset(SPIDER_DATASET_NAME)
     has_db_schema = "db_schema" in spider["train"].column_names
-    schemas = {} if has_db_schema else _load_spider_schemas(spider)
+    has_table_schema = "table_names_original" in spider["train"].column_names
+    schema_texts = {} if has_db_schema or has_table_schema else _load_spider_schema_texts()
+    schemas = {} if has_db_schema or schema_texts else _load_spider_schemas(spider)
 
     def process_split(split_name):
         data = []
@@ -160,6 +189,11 @@ def load_spider_splits(include_types: bool = True, max_examples: Optional[int] =
             if "db_schema" in ex:
                 formatted = {
                     "input_text": format_input(ex["question"], ex["db_schema"]),
+                    "target_text": format_target(ex["query"]),
+                }
+            elif db_id in schema_texts:
+                formatted = {
+                    "input_text": format_input(ex["question"], schema_texts[db_id]),
                     "target_text": format_target(ex["query"]),
                 }
             else:

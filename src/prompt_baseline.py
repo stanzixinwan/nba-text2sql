@@ -51,7 +51,7 @@ def exact_match(pred_sql: str, gold_sql: str) -> bool:
     return norm(pred_sql) == norm(gold_sql)
 
 
-def generate_sql(model, tokenizer, input_text: str, device, max_length: int = 256) -> str:
+def generate_sql(model, tokenizer, input_text: str, device, max_length: int = 512) -> str:
     """Run a single forward pass to generate SQL from input."""
     inputs = tokenizer(input_text, return_tensors="pt",
                        max_length=1024, truncation=True).to(device)
@@ -59,7 +59,9 @@ def generate_sql(model, tokenizer, input_text: str, device, max_length: int = 25
         outputs = model.generate(
             **inputs,
             max_length=max_length,
-            num_beams=4,
+            num_beams=8,
+            length_penalty=1.0,              # 鼓励生成完整SQL
+            no_repeat_ngram_size=0,          # SQL允许重复
             early_stopping=True,
         )
     return tokenizer.decode(outputs[0], skip_special_tokens=True)

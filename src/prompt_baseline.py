@@ -124,7 +124,7 @@ def main():
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Device: {device}")
     print(f"Loading {args.model}...")
-    tokenizer = AutoTokenizer.from_pretrained(args.model)
+    tokenizer = AutoTokenizer.from_pretrained(args.model, use_fast=False)
     model = AutoModelForSeq2SeqLM.from_pretrained(args.model).to(device)
     model.eval()
 

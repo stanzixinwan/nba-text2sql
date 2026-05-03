@@ -47,13 +47,13 @@ def load_checkpoint(checkpoint_path: str, base_model: str = "t5-base"):
     if is_peft:
         from peft import PeftModel
         print(f"Loading PEFT adapter from {checkpoint_path} on top of {base_model}")
-        tokenizer = AutoTokenizer.from_pretrained(base_model)
+        tokenizer = AutoTokenizer.from_pretrained(base_model, use_fast=False)
         model = AutoModelForSeq2SeqLM.from_pretrained(base_model)
         model = PeftModel.from_pretrained(model, checkpoint_path)
         model = model.merge_and_unload()
     else:
         print(f"Loading full model from {checkpoint_path}")
-        tokenizer = AutoTokenizer.from_pretrained(checkpoint_path)
+        tokenizer = AutoTokenizer.from_pretrained(checkpoint_path, use_fast=False)
         model = AutoModelForSeq2SeqLM.from_pretrained(checkpoint_path)
 
     return model, tokenizer

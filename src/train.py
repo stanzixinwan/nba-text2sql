@@ -115,7 +115,7 @@ def main():
     tokenizer = AutoTokenizer.from_pretrained(args.model, use_fast=False)
 
     print("Loading Spider data...")
-    train, dev = load_spider_splits(max_examples=args.max_train, use_fast=False)
+    train, dev = load_spider_splits(max_examples=args.max_train)
     print(f"  Train: {len(train)} | Dev: {len(dev)}")
 
     print("Tokenizing...")

@@ -42,9 +42,9 @@ from src.data_utils import load_nba_dataset
 SPLIT_PATH = Path("data/nba/nba_split.json")
 
 
-def make_or_load_split(nba_examples, test_size=30, seed=42):
+def make_or_load_split(nba_examples, test_size=50, seed=42):
     """
-    Deterministic 70/30 train/test split. Saves to disk so all NBA experiments
+    Deterministic 150/50 train/test split. Saves to disk so all NBA experiments
     use the same split (critical for valid comparison across models/configs).
     """
     if SPLIT_PATH.exists():

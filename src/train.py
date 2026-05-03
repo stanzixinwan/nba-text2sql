@@ -144,6 +144,7 @@ def main():
         greater_is_better=False,
         predict_with_generate=False,
         fp16=torch.cuda.is_available() and args.method != "qlora",
+        fp16=False,
         report_to="none",
     )
 

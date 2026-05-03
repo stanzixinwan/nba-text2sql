@@ -1,19 +1,33 @@
 """
-evaluate.py — Evaluate a fine-tuned checkpoint on NBA and/or Spider dev.
+evaluate.py — Evaluate a fine-tuned checkpoint on NBA and/or Spider.
+
+Supports any encoder-decoder model (t5, flan-t5, codet5) for both full
+fine-tuning and PEFT/LoRA checkpoints. Three NBA evaluation modes:
+  - default:        full NBA schema in prompt
+  - --oracle-tables: only schemas of gold tables (perfect retrieval upper bound)
+  - --use-rag:       sentence-transformer + FAISS retrieval (top-k tables)
 
 Usage:
-    python -m src.evaluate --checkpoint models/lora_t5-base_r16/final --eval nba
-    python -m src.evaluate --checkpoint models/lora_t5-base_r16/final --eval spider --max-examples 500
+    # T5-base LoRA, RAG retrieval
+    python -m src.evaluate --checkpoint models/lora_t5-base_r16/final \
+        --eval nba --use-rag --top-k 3
+
+    # Flan-T5-large LoRA — must pass --base-model so the adapter loads
+    python -m src.evaluate --checkpoint models/lora_flan-t5-large_r16/final \
+        --base-model google/flan-t5-large --eval nba --oracle-tables
+
+    # Full fine-tune (no --base-model needed)
+    python -m src.evaluate --checkpoint models/full_flan-t5-base/final \
+        --eval both --max-examples 200
 """
 
 import argparse
-from email import parser
 import json
 from pathlib import Path
 from collections import defaultdict
 
 import torch
-from transformers import T5ForConditionalGeneration, T5Tokenizer
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 from tqdm import tqdm
 
 from src.data_utils import load_nba_dataset, load_spider_splits
@@ -22,22 +36,25 @@ from src.prompt_baseline import execution_accuracy, exact_match, generate_sql
 
 def load_checkpoint(checkpoint_path: str, base_model: str = "t5-base"):
     """
-    Load a checkpoint. Auto-detects whether it's a full fine-tune or PEFT/LoRA.
+    Load a checkpoint. Auto-detects PEFT vs full fine-tune.
+
+    For PEFT: base_model must match the model the adapter was trained on
+    (e.g. google/flan-t5-large for a flan-t5-large LoRA adapter).
     """
     ckpt = Path(checkpoint_path)
     is_peft = (ckpt / "adapter_config.json").exists()
 
-    tokenizer = T5Tokenizer.from_pretrained(checkpoint_path if not is_peft else base_model)
-
     if is_peft:
         from peft import PeftModel
         print(f"Loading PEFT adapter from {checkpoint_path} on top of {base_model}")
-        model = T5ForConditionalGeneration.from_pretrained(base_model)
+        tokenizer = AutoTokenizer.from_pretrained(base_model)
+        model = AutoModelForSeq2SeqLM.from_pretrained(base_model)
         model = PeftModel.from_pretrained(model, checkpoint_path)
-        model = model.merge_and_unload()  # merge LoRA weights for faster inference
+        model = model.merge_and_unload()
     else:
         print(f"Loading full model from {checkpoint_path}")
-        model = T5ForConditionalGeneration.from_pretrained(checkpoint_path)
+        tokenizer = AutoTokenizer.from_pretrained(checkpoint_path)
+        model = AutoModelForSeq2SeqLM.from_pretrained(checkpoint_path)
 
     return model, tokenizer
 
@@ -65,6 +82,7 @@ def evaluate(model, tokenizer, examples, db_path, device, eval_name: str):
             "exec_match": ex_exec,
             "exact_match": ex_exact,
             "difficulty": diff,
+            "retrieved_tables": ex.get("retrieved_tables"),  # only set in RAG mode
         })
 
     n = len(results)
@@ -84,23 +102,43 @@ def evaluate(model, tokenizer, examples, db_path, device, eval_name: str):
     return results
 
 
+def load_nba_examples(args):
+    """Pick the NBA loader based on flags. Mutually exclusive: oracle vs RAG."""
+    if args.use_rag:
+        from src.rag import load_nba_dataset_with_rag
+        print(f"NBA mode: RAG retrieval (top-{args.top_k})")
+        return load_nba_dataset_with_rag(
+            args.nba_questions, args.nba_db, top_k=args.top_k
+        )
+    elif args.oracle_tables:
+        print("NBA mode: oracle tables (gold tables_used only)")
+        return load_nba_dataset(args.nba_questions, args.nba_db,
+                                use_oracle_tables=True)
+    else:
+        print("NBA mode: full schema")
+        return load_nba_dataset(args.nba_questions, args.nba_db)
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--checkpoint", required=True)
     parser.add_argument("--base-model", default="t5-base",
-                        help="For PEFT, the base model the adapter was trained on")
+                        help="For PEFT, the base model the adapter was trained on. "
+                             "Examples: t5-base, google/flan-t5-base, google/flan-t5-large")
     parser.add_argument("--eval", choices=["nba", "spider", "both"], required=True)
     parser.add_argument("--nba-questions", default="data/nba/nba_questions.json")
     parser.add_argument("--nba-db", default="data/raw/nba.sqlite")
     parser.add_argument("--max-examples", type=int, default=None)
     parser.add_argument("--output-dir", default="eval")
     parser.add_argument("--oracle-tables", action="store_true",
-                    help="Restrict NBA schema to gold-relevant tables (mimics perfect RAG)")
+                        help="Restrict NBA schema to gold tables (perfect retrieval)")
     parser.add_argument("--use-rag", action="store_true",
-                    help="Use RAG retrieval instead of full/oracle schema")
+                        help="Use RAG retrieval instead of full/oracle schema")
     parser.add_argument("--top-k", type=int, default=3)
-                    
     args = parser.parse_args()
+
+    if args.use_rag and args.oracle_tables:
+        parser.error("--use-rag and --oracle-tables are mutually exclusive")
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Device: {device}")
@@ -111,35 +149,35 @@ def main():
     Path(args.output_dir).mkdir(parents=True, exist_ok=True)
     run_name = Path(args.checkpoint).parent.name
 
+    # Filename suffix to distinguish runs
+    if args.use_rag:
+        suffix = f"_rag_k{args.top_k}"
+    elif args.oracle_tables:
+        suffix = "_oracle"
+    else:
+        suffix = "_full"
+
     if args.eval in ("nba", "both"):
-        nba = load_nba_dataset(args.nba_questions, args.nba_db, use_oracle_tables=args.oracle_tables)
+        nba = load_nba_examples(args)
         if args.max_examples:
             nba = nba[:args.max_examples]
-        results = evaluate(model, tokenizer, nba, args.nba_db, device, f"NBA / {run_name}")
-        out = f"{args.output_dir}/{run_name}_nba.json"
+        results = evaluate(model, tokenizer, nba, args.nba_db, device,
+                           f"NBA / {run_name}{suffix}")
+        out = f"{args.output_dir}/{run_name}_nba{suffix}.json"
         with open(out, "w", encoding="utf-8") as f:
             json.dump(results, f, indent=2, ensure_ascii=False)
         print(f"  Saved → {out}")
 
     if args.eval in ("spider", "both"):
         _, dev = load_spider_splits(max_examples=args.max_examples)
-        # Spider exec acc requires per-db sqlite paths; skip for now, exact match only
-        results = evaluate(model, tokenizer, dev, None, device, f"Spider / {run_name}")
+        # Spider exec acc would need per-db SQLite paths; using exact match only.
+        results = evaluate(model, tokenizer, dev, None, device,
+                           f"Spider / {run_name}")
         out = f"{args.output_dir}/{run_name}_spider.json"
         with open(out, "w", encoding="utf-8") as f:
             json.dump(results, f, indent=2, ensure_ascii=False)
         print(f"  Saved → {out}")
 
-    if args.use_rag:
-        from src.rag import load_nba_dataset_with_rag
-        nba = load_nba_dataset_with_rag(
-            args.nba_questions, args.nba_db, top_k=args.top_k
-        )
-    elif args.oracle_tables:
-        nba = load_nba_dataset(args.nba_questions, args.nba_db,
-                            use_oracle_tables=True)
-    else:
-        nba = load_nba_dataset(args.nba_questions, args.nba_db)    
 
 if __name__ == "__main__":
     main()

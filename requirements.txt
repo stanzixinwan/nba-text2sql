@@ -11,4 +11,4 @@ sqlparse>=0.4.4
 tqdm
 
 # QLoRA / 4-bit training (CUDA; skip on CPU-only or if wheel unavailable for your platform)
-bitsandbytes>=0.43.0
+bitsandbytes>=0.45.0

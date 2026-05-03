@@ -26,7 +26,31 @@ from transformers import (
 )
 from datasets import Dataset
 
-from src.data_utils import load_spider_splits
+try:
+    from src.data_utils import load_spider_splits
+except ModuleNotFoundError:
+    from data_utils import load_spider_splits
+
+
+def _cuda_bf16_supported() -> bool:
+    return (
+        torch.cuda.is_available()
+        and hasattr(torch.cuda, "is_bf16_supported")
+        and torch.cuda.is_bf16_supported()
+    )
+
+
+def _mixed_precision_flags() -> tuple[bool, bool]:
+    if not torch.cuda.is_available():
+        return False, False
+    bf16 = _cuda_bf16_supported()
+    return bf16, not bf16
+
+
+def _preferred_cuda_dtype():
+    if _cuda_bf16_supported():
+        return torch.bfloat16
+    return torch.float16
 
 
 def tokenize_dataset(examples, tokenizer, max_input=1024, max_target=256):
@@ -60,7 +84,7 @@ def setup_model(model_name: str, method: str, lora_rank: int = 16):
         from transformers import BitsAndBytesConfig
         bnb = BitsAndBytesConfig(
             load_in_4bit=True,
-            bnb_4bit_compute_dtype=torch.float16,
+            bnb_4bit_compute_dtype=_preferred_cuda_dtype(),
             bnb_4bit_quant_type="nf4",
         )
         model = AutoModelForSeq2SeqLM.from_pretrained(
@@ -112,7 +136,7 @@ def main():
     print(f"Output: {output_dir}\n")
 
     print(f"Loading tokenizer: {args.model}")
-    tokenizer = AutoTokenizer.from_pretrained(args.model, use_fast=False)
+    tokenizer = AutoTokenizer.from_pretrained(args.model)
 
     print("Loading Spider data...")
     train, dev = load_spider_splits(max_examples=args.max_train)
@@ -126,6 +150,9 @@ def main():
     model = setup_model(args.model, args.method, args.rank)
 
     collator = DataCollatorForSeq2Seq(tokenizer, model=model, padding=True)
+    bf16, fp16 = _mixed_precision_flags()
+    precision = "bf16" if bf16 else "fp16" if fp16 else "off"
+    print(f"Mixed precision: {precision}")
 
     training_args = Seq2SeqTrainingArguments(
         output_dir=output_dir,
@@ -143,8 +170,8 @@ def main():
         metric_for_best_model="eval_loss",
         greater_is_better=False,
         predict_with_generate=False,
-        bf16=torch.cuda.is_available() and args.method != "qlora",
-        fp16=False,
+        bf16=bf16,
+        fp16=fp16,
         report_to="none",
     )
 

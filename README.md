@@ -99,11 +99,12 @@ python src/prompt_baseline.py --model t5-base --mode zero_shot --eval spider
 python src/prompt_baseline.py --model t5-base --mode few_shot --eval nba
 
 # Full fine-tune
-python src/train.py --model t5-base --method full --dataset spider --epochs 3
+python -m src.train --method full --model t5-base --epochs 3
+python -m src.train --method full --model google/flan-t5-base --epochs 3
 
 # LoRA with rank sweep
 for rank in 4 8 16 32; do
-    python src/train.py --model t5-base --method lora --rank $rank --dataset spider
+    python -m src.train --method lora --model t5-base --rank $rank
 done
 
 # Evaluate best checkpoint with RAG

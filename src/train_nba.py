@@ -36,10 +36,28 @@ from transformers import (
 from datasets import Dataset
 from peft import PeftModel
 
-from src.data_utils import load_nba_dataset
+try:
+    from src.data_utils import load_nba_dataset
+except ModuleNotFoundError:
+    from data_utils import load_nba_dataset
 
 
 SPLIT_PATH = Path("data/nba/nba_split.json")
+
+
+def _cuda_bf16_supported() -> bool:
+    return (
+        torch.cuda.is_available()
+        and hasattr(torch.cuda, "is_bf16_supported")
+        and torch.cuda.is_bf16_supported()
+    )
+
+
+def _mixed_precision_flags() -> tuple[bool, bool]:
+    if not torch.cuda.is_available():
+        return False, False
+    bf16 = _cuda_bf16_supported()
+    return bf16, not bf16
 
 
 def make_or_load_split(nba_examples, test_size=50, seed=42):
@@ -169,6 +187,9 @@ def main():
     test_ds = build_dataset(test, tokenizer)
 
     collator = DataCollatorForSeq2Seq(tokenizer, model=model, padding=True)
+    bf16, fp16 = _mixed_precision_flags()
+    precision = "bf16" if bf16 else "fp16" if fp16 else "off"
+    print(f"Mixed precision: {precision}")
 
     training_args = Seq2SeqTrainingArguments(
         output_dir=output_dir,
@@ -186,8 +207,8 @@ def main():
         metric_for_best_model="eval_loss",
         greater_is_better=False,
         predict_with_generate=False,
-        bf16=torch.cuda.is_available(),
-        fp16=False,
+        bf16=bf16,
+        fp16=fp16,
         report_to="none",
     )
 

@@ -18,8 +18,9 @@ Usage:
         --base-model t5-base \
         --n-train 10 --epochs 10
 
-The 30-example test split is held out and not seen during NBA training.
-Evaluate the resulting checkpoint with `evaluate.py --eval nba` afterward.
+The 50-example test split is held out and not seen during NBA training.
+Evaluate the resulting checkpoint with `evaluate.py --eval nba` afterward;
+that command now defaults to `--split test` so train-set leakage is avoided.
 """
 
 import argparse

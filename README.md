@@ -107,8 +107,12 @@ for rank in 4 8 16 32; do
     python -m src.train --method lora --model t5-base --rank $rank
 done
 
-# Evaluate best checkpoint with RAG
-python src/evaluate.py --checkpoint models/lora_r16_best --use_rag --eval_set nba
+# Evaluate best checkpoint with RAG (defaults to --split test, the 50-example
+# hold-out from train_nba.py; pass --split all for the legacy 200-q eval)
+python -m src.evaluate --checkpoint models/lora_r16_best/final --eval nba --use-rag
+
+# Re-score legacy eval JSONs onto the same 50-example test split (no regen)
+python -m src.rescore_nba eval/lora_t5-base_r16_nba_oracle.json --save
 
 # Launch demo
 python src/demo.py --checkpoint models/lora_r16_best

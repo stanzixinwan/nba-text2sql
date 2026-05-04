@@ -297,6 +297,23 @@ def load_nba_dataset(
     return data
 
 
+NBA_SPLIT_PATH = "data/nba/nba_split.json"
+
+
+def load_nba_split_ids(
+    split_path: str = NBA_SPLIT_PATH,
+) -> tuple[set[int], set[int]]:
+    """Load (train_ids, test_ids) created by train_nba.make_or_load_split().
+
+    Both sets contain integer indices into the original `nba_questions.json`
+    list (0-based). Use them to filter the output of `load_nba_dataset` /
+    `load_nba_dataset_with_rag` so evaluation does not leak training samples.
+    """
+    with open(split_path, "r", encoding="utf-8") as f:
+        split = json.load(f)
+    return set(split["train_ids"]), set(split["test_ids"])
+
+
 # ──────────────────────────────────────────────
 # 5. NBA schema documents for RAG
 # ──────────────────────────────────────────────

@@ -2,13 +2,17 @@
 evaluate.py — Evaluate a fine-tuned checkpoint on NBA and/or Spider.
 
 Supports any encoder-decoder model (t5, flan-t5, codet5) for both full
-fine-tuning and PEFT/LoRA checkpoints. Three NBA evaluation modes:
+fine-tuning and PEFT/LoRA checkpoints. Three NBA schema-input modes:
   - default:        full NBA schema in prompt
   - --oracle-tables: only schemas of gold tables (perfect retrieval upper bound)
   - --use-rag:       sentence-transformer + FAISS retrieval (top-k tables)
 
+NBA evaluation defaults to `--split test` (the 50-example hold-out from
+train_nba.py), so few-shot training samples never leak into the report.
+Pass `--split all` to reproduce the legacy 200-question evaluation.
+
 Usage:
-    # T5-base LoRA, RAG retrieval
+    # T5-base LoRA, RAG retrieval, on the held-out test split
     python -m src.evaluate --checkpoint models/lora_t5-base_r16/final \
         --eval nba --use-rag --top-k 3
 
@@ -16,9 +20,9 @@ Usage:
     python -m src.evaluate --checkpoint models/lora_flan-t5-large_r16/final \
         --base-model google/flan-t5-large --eval nba --oracle-tables
 
-    # Full fine-tune (no --base-model needed)
+    # Reproduce the old 200-question oracle eval (legacy)
     python -m src.evaluate --checkpoint models/full_flan-t5-base/final \
-        --eval both --max-examples 200
+        --eval nba --oracle-tables --split all
 """
 
 import argparse
@@ -30,7 +34,9 @@ import torch
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 from tqdm import tqdm
 
-from src.data_utils import load_nba_dataset, load_spider_splits
+from src.data_utils import (
+    NBA_SPLIT_PATH, load_nba_dataset, load_nba_split_ids, load_spider_splits,
+)
 from src.prompt_baseline import execution_accuracy, exact_match, generate_sql
 
 
@@ -135,6 +141,12 @@ def main():
     parser.add_argument("--use-rag", action="store_true",
                         help="Use RAG retrieval instead of full/oracle schema")
     parser.add_argument("--top-k", type=int, default=3)
+    parser.add_argument("--split", choices=["test", "train", "all"], default="test",
+                        help="Which NBA subset to evaluate on. Default 'test' "
+                             "uses the 50-example hold-out from train_nba.py "
+                             "(no train-set leakage).")
+    parser.add_argument("--split-path", default=NBA_SPLIT_PATH,
+                        help="Path to the NBA split JSON written by train_nba.py")
     args = parser.parse_args()
 
     if args.use_rag and args.oracle_tables:
@@ -157,13 +169,21 @@ def main():
     else:
         suffix = "_full"
 
+    # Append split tag so test/train results don't overwrite legacy 200-q files.
+    split_suffix = "" if args.split == "all" else f"_{args.split}"
+
     if args.eval in ("nba", "both"):
         nba = load_nba_examples(args)
+        if args.split != "all":
+            train_ids, test_ids = load_nba_split_ids(args.split_path)
+            keep = test_ids if args.split == "test" else train_ids
+            nba = [ex for i, ex in enumerate(nba) if i in keep]
+        print(f"NBA split: {args.split} ({len(nba)} examples)")
         if args.max_examples:
             nba = nba[:args.max_examples]
         results = evaluate(model, tokenizer, nba, args.nba_db, device,
-                           f"NBA / {run_name}{suffix}")
-        out = f"{args.output_dir}/{run_name}_nba{suffix}.json"
+                           f"NBA / {run_name}{suffix}{split_suffix}")
+        out = f"{args.output_dir}/{run_name}_nba{suffix}{split_suffix}.json"
         with open(out, "w", encoding="utf-8") as f:
             json.dump(results, f, indent=2, ensure_ascii=False)
         print(f"  Saved → {out}")

@@ -119,7 +119,7 @@ def rescore_file(path: Path, test_ids: set[int], questions: list[dict],
         out_path = output_dir / f"{path.stem}_test.json"
         with open(out_path, "w", encoding="utf-8") as f:
             json.dump(test_subset, f, indent=2, ensure_ascii=False)
-        print(f"  Saved → {out_path}")
+        print(f"  Saved -> {out_path}")
 
 
 def main():

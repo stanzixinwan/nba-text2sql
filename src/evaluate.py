@@ -186,7 +186,7 @@ def main():
         out = f"{args.output_dir}/{run_name}_nba{suffix}{split_suffix}.json"
         with open(out, "w", encoding="utf-8") as f:
             json.dump(results, f, indent=2, ensure_ascii=False)
-        print(f"  Saved → {out}")
+        print(f"  Saved -> {out}")
 
     if args.eval in ("spider", "both"):
         _, dev = load_spider_splits(max_examples=args.max_examples)
@@ -196,7 +196,7 @@ def main():
         out = f"{args.output_dir}/{run_name}_spider.json"
         with open(out, "w", encoding="utf-8") as f:
             json.dump(results, f, indent=2, ensure_ascii=False)
-        print(f"  Saved → {out}")
+        print(f"  Saved -> {out}")
 
 
 if __name__ == "__main__":

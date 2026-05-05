@@ -39,8 +39,10 @@ from peft import PeftModel
 
 try:
     from src.data_utils import load_nba_dataset
+    from src.gpu_env import require_cuda
 except ModuleNotFoundError:
     from data_utils import load_nba_dataset
+    from gpu_env import require_cuda
 
 
 SPLIT_PATH = Path("data/nba/nba_split.json")
@@ -158,6 +160,8 @@ def main():
                         help="Train with gold tables only (matches what oracle eval uses)")
     parser.add_argument("--run-name", default=None)
     args = parser.parse_args()
+
+    require_cuda()
 
     # Load NBA examples with oracle tables (only gold-relevant schemas)
     # — this matches the eval setting and keeps inputs short.

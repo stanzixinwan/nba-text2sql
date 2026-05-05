@@ -28,8 +28,10 @@ from datasets import Dataset
 
 try:
     from src.data_utils import load_spider_splits
+    from src.gpu_env import require_cuda
 except ModuleNotFoundError:
     from data_utils import load_spider_splits
+    from gpu_env import require_cuda
 
 
 def _cuda_bf16_supported() -> bool:
@@ -125,6 +127,8 @@ def main():
     parser.add_argument("--max-train", type=int, default=None)
     parser.add_argument("--run-name", default=None)
     args = parser.parse_args()
+
+    require_cuda()
 
     run_name = args.run_name or f"{args.method}_{args.model.split('/')[-1]}"
     if args.method == "lora":

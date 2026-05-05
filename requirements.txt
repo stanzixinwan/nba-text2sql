@@ -1,5 +1,8 @@
 # Core ML / NLP (see README Tech Stack)
-torch>=2.11.0
+# GPU: install PyTorch with CUDA *before* or instead of the PyPI CPU wheel:
+#   pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
+# Use Python 3.12/3.13; 3.14 has no official CUDA wheels yet. See GPU_SETUP.md.
+torch>=2.6.0
 transformers>=4.40
 sentencepiece>=0.2.0
 peft>=0.10.0

@@ -37,6 +37,7 @@ from tqdm import tqdm
 from src.data_utils import (
     NBA_SPLIT_PATH, load_nba_dataset, load_nba_split_ids, load_spider_splits,
 )
+from src.gpu_env import require_cuda
 from src.prompt_baseline import execution_accuracy, exact_match, generate_sql
 
 
@@ -152,7 +153,8 @@ def main():
     if args.use_rag and args.oracle_tables:
         parser.error("--use-rag and --oracle-tables are mutually exclusive")
 
-    device = "cuda" if torch.cuda.is_available() else "cpu"
+    require_cuda()
+    device = "cuda"
     print(f"Device: {device}")
 
     model, tokenizer = load_checkpoint(args.checkpoint, args.base_model)

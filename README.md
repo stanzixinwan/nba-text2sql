@@ -91,6 +91,17 @@ git clone https://github.com/mpope9/nba-sql.git
 cd nba-sql && python stats/nba_sql.py --database sqlite --sqlite-path ../data/raw/nba.sqlite
 ```
 
+### GPU (Windows, NVIDIA)
+
+Use **Python 3.12 or 3.13** with **PyTorch CUDA** — Python **3.14** does not ship official CUDA wheels yet, so `pip install torch` often resolves to **CPU-only**.
+
+```powershell
+.\scripts\setup_gpu_venv.ps1
+.\.venv\Scripts\Activate.ps1
+```
+
+Details: [GPU_SETUP.md](GPU_SETUP.md). Training (`train.py`, `train_nba.py`) and NBA evaluation (`evaluate.py`) **exit unless CUDA is available**, unless you set `NBA_TEXT2SQL_ALLOW_CPU=1` (debug only).
+
 ## Running Experiments
 
 ```bash

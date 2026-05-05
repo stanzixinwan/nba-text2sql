@@ -1,0 +1,15 @@
+file,run,model,method,mode,split,n_examples,n_train,exec_acc,exact_acc
+full_t5-base_nba_full_test.json,full_t5-base_nba_full_test,t5-base,full,full_schema,test,50,,0.0,0.0
+full_t5-base_nba_oracle_test.json,full_t5-base_nba_oracle_test,t5-base,full,oracle,test,50,0,0.04,0.0
+lora_codet5p-220m_r16_nba_n20_nba_oracle_test.json,lora_codet5p-220m_r16_nba_n20_nba_oracle_test,codet5p-220m,lora,oracle,test,50,20,0.12,0.06
+lora_codet5p-220m_r16_nba_n70_nba_oracle_test.json,lora_codet5p-220m_r16_nba_n70_nba_oracle_test,codet5p-220m,lora,oracle,test,50,70,0.26,0.24
+lora_codet5p-220m_r16_nba_nall_nba_oracle_test.json,lora_codet5p-220m_r16_nba_nall_nba_oracle_test,codet5p-220m,lora,oracle,test,50,all,0.46,0.42
+lora_codet5p-220m_r16_nba_nall_nba_rag_k1_test.json,lora_codet5p-220m_r16_nba_nall_nba_rag_k1_test,codet5p-220m,lora,rag,test,50,all,0.12,0.12
+lora_codet5p-220m_r16_nba_nall_nba_rag_k3_test.json,lora_codet5p-220m_r16_nba_nall_nba_rag_k3_test,codet5p-220m,lora,rag,test,50,all,0.08,0.08
+lora_codet5p-220m_r16_nba_nall_nba_rag_k5_test.json,lora_codet5p-220m_r16_nba_nall_nba_rag_k5_test,codet5p-220m,lora,rag,test,50,all,0.08,0.08
+lora_codet5p-220m_r16_nba_oracle_test.json,lora_codet5p-220m_r16_nba_oracle_test,codet5p-220m,lora,oracle,test,50,0,0.1,0.0
+lora_t5-base_r16_nba_n20_nba_oracle_test.json,lora_t5-base_r16_nba_n20_nba_oracle_test,t5-base,lora,oracle,test,50,20,0.04,0.02
+lora_t5-base_r16_nba_n70_nba_oracle_test.json,lora_t5-base_r16_nba_n70_nba_oracle_test,t5-base,lora,oracle,test,50,70,0.08,0.04
+lora_t5-base_r16_nba_nall_nba_oracle_test.json,lora_t5-base_r16_nba_nall_nba_oracle_test,t5-base,lora,oracle,test,50,all,0.16,0.16
+lora_t5-base_r16_nba_nall_nba_rag_k5_test.json,lora_t5-base_r16_nba_nall_nba_rag_k5_test,t5-base,lora,rag,test,50,all,0.02,0.0
+lora_t5-base_r16_nba_oracle_test.json,lora_t5-base_r16_nba_oracle_test,t5-base,lora,oracle,test,50,0,0.04,0.02

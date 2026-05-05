@@ -29,6 +29,7 @@ import random
 from pathlib import Path
 
 import torch
+import numpy as np
 from transformers import (
     AutoTokenizer, AutoModelForSeq2SeqLM,
     Seq2SeqTrainer, Seq2SeqTrainingArguments,
@@ -46,6 +47,13 @@ except ModuleNotFoundError:
 
 
 SPLIT_PATH = Path("data/nba/nba_split.json")
+
+
+def _set_seed(seed: int) -> None:
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
 
 
 def _cuda_bf16_supported() -> bool:
@@ -162,6 +170,7 @@ def main():
     args = parser.parse_args()
 
     require_cuda()
+    _set_seed(args.seed)
 
     # Load NBA examples with oracle tables (only gold-relevant schemas)
     # — this matches the eval setting and keeps inputs short.
@@ -180,11 +189,14 @@ def main():
 
     base_name = Path(args.base_checkpoint).parent.name
     run_name = args.run_name or f"{base_name}_nba_n{args.n_train}"
+    run_name += f"_s{args.seed}"
     output_dir = f"models/{run_name}"
     Path(output_dir).mkdir(parents=True, exist_ok=True)
 
     print(f"Run: {run_name}")
     print(f"Output: {output_dir}\n")
+    with open(f"{output_dir}/run_config.json", "w", encoding="utf-8") as f:
+        json.dump(vars(args), f, indent=2, ensure_ascii=False)
 
     model, tokenizer = load_base(args.base_checkpoint, args.base_model)
 
@@ -215,6 +227,8 @@ def main():
         bf16=bf16,
         fp16=fp16,
         report_to="none",
+        seed=args.seed,
+        data_seed=args.seed,
     )
 
     trainer = Seq2SeqTrainer(

@@ -1,0 +1,75 @@
+[
+  {
+    "file": "eval\\lora_codet5p-220m_r16_nba_nall_nba_oracle_test.json",
+    "total": 50,
+    "counts": {
+      "correct": 23,
+      "value": 15,
+      "structural": 9,
+      "schema_linking": 3
+    },
+    "rates": {
+      "correct": 0.46,
+      "value": 0.3,
+      "structural": 0.18,
+      "schema_linking": 0.06
+    },
+    "by_difficulty": {
+      "easy": {
+        "correct": 12,
+        "value": 4,
+        "structural": 1
+      },
+      "medium": {
+        "correct": 9,
+        "structural": 3,
+        "value": 5
+      },
+      "hard": {
+        "correct": 2,
+        "value": 3,
+        "structural": 5,
+        "schema_linking": 3
+      },
+      "extra_hard": {
+        "value": 3
+      }
+    }
+  },
+  {
+    "file": "eval\\lora_codet5p-220m_r16_nba_nall_nba_rag_k3_test.json",
+    "total": 50,
+    "counts": {
+      "schema_linking": 39,
+      "value": 4,
+      "correct": 4,
+      "structural": 3
+    },
+    "rates": {
+      "schema_linking": 0.78,
+      "value": 0.08,
+      "correct": 0.08,
+      "structural": 0.06
+    },
+    "by_difficulty": {
+      "easy": {
+        "schema_linking": 11,
+        "value": 2,
+        "structural": 2,
+        "correct": 2
+      },
+      "medium": {
+        "schema_linking": 13,
+        "correct": 2,
+        "value": 2
+      },
+      "hard": {
+        "schema_linking": 12,
+        "structural": 1
+      },
+      "extra_hard": {
+        "schema_linking": 3
+      }
+    }
+  }
+]

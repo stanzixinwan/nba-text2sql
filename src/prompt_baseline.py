@@ -18,7 +18,12 @@ import torch
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 from tqdm import tqdm
 
-from src.data_utils import load_nba_dataset, load_spider_splits
+from src.data_utils import (
+    NBA_SPLIT_PATH,
+    load_nba_dataset,
+    load_nba_split_ids,
+    load_spider_splits,
+)
 
 
 def execute_sql(sql: str, db_path: str, timeout: float = 5.0):
@@ -68,6 +73,27 @@ def generate_sql(model, tokenizer, input_text: str, device, max_length: int = 25
     return tokenizer.decode(outputs[0], skip_special_tokens=True)
 
 
+def with_few_shot_prefix(
+    question: str,
+    schema_input: str,
+    support_examples: list[dict],
+    k: int,
+) -> str:
+    """Append k exemplars before the current question."""
+    exemplars = support_examples[:k]
+    if not exemplars:
+        return schema_input
+    blocks = []
+    for ex in exemplars:
+        blocks.append(
+            "Example:\n"
+            f"Question: {ex['question']}\n"
+            f"SQL: {ex['gold_sql']}"
+        )
+    prefix = "\n\n".join(blocks)
+    return f"{prefix}\n\nNow answer:\nQuestion: {question}\n{schema_input}"
+
+
 def evaluate(model, tokenizer, examples, db_path, device, eval_name: str):
     results = []
     by_diff = defaultdict(lambda: {"total": 0, "exec": 0, "exact": 0})
@@ -114,8 +140,12 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--model", default="t5-base")
     parser.add_argument("--eval", choices=["nba", "spider"], required=True)
+    parser.add_argument("--mode", choices=["zero_shot", "few_shot"], default="zero_shot")
+    parser.add_argument("--few-shot-k", type=int, default=3)
     parser.add_argument("--nba-questions", default="data/nba/nba_questions.json")
     parser.add_argument("--nba-db", default="data/raw/nba.sqlite")
+    parser.add_argument("--split", choices=["test", "all"], default="test")
+    parser.add_argument("--split-path", default=NBA_SPLIT_PATH)
     parser.add_argument("--max-examples", type=int, default=None)
     parser.add_argument("--oracle-tables", action="store_true")
     parser.add_argument("--output", default=None)
@@ -131,16 +161,56 @@ def main():
     if args.eval == "nba":
         examples = load_nba_dataset(args.nba_questions, args.nba_db,
                                     use_oracle_tables=args.oracle_tables)
+        if args.split == "test":
+            train_ids, test_ids = load_nba_split_ids(args.split_path)
+            support = [ex for i, ex in enumerate(examples) if i in train_ids]
+            examples = [ex for i, ex in enumerate(examples) if i in test_ids]
+        else:
+            support = examples
+
+        if args.mode == "few_shot":
+            if args.few_shot_k <= 0:
+                raise ValueError("--few-shot-k must be > 0 for few_shot mode")
+            augmented = []
+            for ex in examples:
+                ex_copy = dict(ex)
+                ex_copy["input_text"] = with_few_shot_prefix(
+                    question=ex["question"],
+                    schema_input=ex["input_text"],
+                    support_examples=support,
+                    k=args.few_shot_k,
+                )
+                augmented.append(ex_copy)
+            examples = augmented
         if args.max_examples:
             examples = examples[:args.max_examples]
+        mode_name = "few-shot" if args.mode == "few_shot" else "zero-shot"
         results = evaluate(model, tokenizer, examples, args.nba_db, device,
-                           f"NBA zero-shot ({args.model})")
+                           f"NBA {mode_name} ({args.model})")
     else:
         _, dev = load_spider_splits(max_examples=args.max_examples)
+        if args.mode == "few_shot":
+            support = dev
+            augmented = []
+            for ex in dev:
+                ex_copy = dict(ex)
+                ex_copy["input_text"] = with_few_shot_prefix(
+                    question=ex.get("question", ex["input_text"]),
+                    schema_input=ex["input_text"],
+                    support_examples=support,
+                    k=args.few_shot_k,
+                )
+                augmented.append(ex_copy)
+            dev = augmented
+        mode_name = "few-shot" if args.mode == "few_shot" else "zero-shot"
         results = evaluate(model, tokenizer, dev, None, device,
-                           f"Spider zero-shot ({args.model})")
+                           f"Spider {mode_name} ({args.model})")
 
-    out = args.output or f"eval/baseline_{args.eval}_{args.model.split('/')[-1]}.json"
+    mode_tag = "fewshot" if args.mode == "few_shot" else "zeroshot"
+    split_tag = "" if args.eval == "spider" or args.split == "all" else f"_{args.split}"
+    out = args.output or (
+        f"eval/baseline_{args.eval}_{mode_tag}_{args.model.split('/')[-1]}{split_tag}.json"
+    )
     Path(out).parent.mkdir(parents=True, exist_ok=True)
     with open(out, "w", encoding="utf-8") as f:
         json.dump(results, f, indent=2, ensure_ascii=False)

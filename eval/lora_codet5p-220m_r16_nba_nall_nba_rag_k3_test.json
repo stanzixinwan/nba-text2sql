@@ -1,0 +1,652 @@
+[
+  {
+    "question": "What is LeBron James's height?",
+    "gold": "SELECT height FROM common_player_info WHERE display_first_last = 'LeBron James';",
+    "pred": "SELECT height FROM draft_combine_stats WHERE season = '2019' AND player_name = 'LeBron James'",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "easy",
+    "retrieved_tables": [
+      "draft_combine_stats",
+      "officials",
+      "common_player_info"
+    ]
+  },
+  {
+    "question": "How many players are currently active?",
+    "gold": "SELECT COUNT(*) FROM player WHERE is_active = 1;",
+    "pred": "SELECT COUNT(*) FROM inactive_players WHERE is_active = 1",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "easy",
+    "retrieved_tables": [
+      "inactive_players",
+      "player",
+      "play_by_play"
+    ]
+  },
+  {
+    "question": "How many home games did the Lakers play in the 2022-23 regular season?",
+    "gold": "SELECT COUNT(*) FROM game WHERE team_name_home = 'Los Angeles Lakers' AND season_id = '22022' AND season_type = 'Regular Season';",
+    "pred": "SELECT COUNT(*) FROM game_summary g JOIN game g ON g.game_id = g.game_id WHERE g.season = '22022' AND g.season_type = 'Regular Season' AND g.team_name_home = 'Los Angeles Lakers'",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "medium",
+    "retrieved_tables": [
+      "game_info",
+      "game_summary",
+      "game"
+    ]
+  },
+  {
+    "question": "Which team had the highest average home points per game in the 2022-23 regular season?",
+    "gold": "SELECT team_name_home, AVG(pts_home) AS avg_pts FROM game WHERE season_id = '22022' AND season_type = 'Regular Season' GROUP BY team_name_home ORDER BY avg_pts DESC LIMIT 1;",
+    "pred": "SELECT team_name_home, AVG(pts_home) AS avg_pts FROM other_stats WHERE season_id = '22022' AND season_type = 'Regular Season' GROUP BY team_name_home ORDER BY avg_pts DESC LIMIT 1",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "hard",
+    "retrieved_tables": [
+      "other_stats",
+      "line_score",
+      "game"
+    ]
+  },
+  {
+    "question": "Which teams had a home win rate above 70% in the 2022-23 regular season?",
+    "gold": "SELECT team_name_home, SUM(CASE WHEN wl_home = 'W' THEN 1 ELSE 0 END) * 1.0 / COUNT(*) AS win_rate FROM game WHERE season_id = '22022' AND season_type = 'Regular Season' GROUP BY team_name_home HAVING win_rate > 0.7;",
+    "pred": "SELECT team_name_home, COUNT(*) AS wins FROM other_stats WHERE season_id = '22022' AND season_type = 'Regular Season' AND wl_home = '70%'",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "hard",
+    "retrieved_tables": [
+      "other_stats",
+      "line_score",
+      "game"
+    ]
+  },
+  {
+    "question": "Find active players who were the number one overall pick in the draft.",
+    "gold": "SELECT c.display_first_last FROM common_player_info c JOIN draft_history d ON c.person_id = CAST(d.person_id AS TEXT) WHERE d.overall_pick = '1' AND c.rosterstatus = 'Active';",
+    "pred": "SELECT first_name, last_name, is_active FROM draft_history WHERE overall_pick = 1 GROUP BY first_name, last_name ORDER BY is_active DESC LIMIT 1",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "hard",
+    "retrieved_tables": [
+      "draft_history",
+      "inactive_players",
+      "player"
+    ]
+  },
+  {
+    "question": "Which team had the highest 3-point shooting percentage at home across all playoff games?",
+    "gold": "SELECT team_name_home, AVG(fg3_pct_home) AS avg_3p FROM game WHERE season_type = 'Playoffs' AND fg3_pct_home IS NOT NULL GROUP BY team_name_home ORDER BY avg_3p DESC LIMIT 1;",
+    "pred": "SELECT team_name_home, AVG(pts_off_to_home) AS shoot_rate FROM other_stats WHERE game_id = (SELECT game_id FROM game WHERE season_id = '2' AND wl_home = 'W' GROUP BY game_id) GROUP BY team_name_home ORDER BY shoot_rate DESC LIMIT 3",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "extra_hard",
+    "retrieved_tables": [
+      "other_stats",
+      "line_score",
+      "game"
+    ]
+  },
+  {
+    "question": "What different types of games are recorded in the NBA?",
+    "gold": "SELECT DISTINCT season_type FROM game ORDER BY season_type;",
+    "pred": "SELECT DISTINCT d.game_type FROM draft_history d JOIN game_summary g ON d.game_id = g.game_id WHERE g.season = '2014' AND g.overall_pick = '1'",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "easy",
+    "retrieved_tables": [
+      "draft_history",
+      "game_summary",
+      "other_stats"
+    ]
+  },
+  {
+    "question": "What arena do the Los Angeles Lakers play in?",
+    "gold": "SELECT arena FROM team_details WHERE abbreviation = 'LAL';",
+    "pred": "SELECT arena FROM team_details WHERE abbreviation = 'LOS'",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "easy",
+    "retrieved_tables": [
+      "officials",
+      "team_details",
+      "inactive_players"
+    ]
+  },
+  {
+    "question": "Which team had the most total home losses in the 2022-23 regular season?",
+    "gold": "SELECT team_name_home, COUNT(*) AS losses FROM game WHERE wl_home = 'L' AND season_id = '22022' AND season_type = 'Regular Season' GROUP BY team_name_home ORDER BY losses DESC LIMIT 1;",
+    "pred": "SELECT team_name_home, COUNT(*) AS losses FROM other_stats WHERE season_id = '22022' AND season_type = 'Regular Season' GROUP BY team_name_home ORDER BY losses DESC LIMIT 1",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "medium",
+    "retrieved_tables": [
+      "other_stats",
+      "line_score",
+      "game"
+    ]
+  },
+  {
+    "question": "How many games in the 2022-23 regular season ended with the home team scoring at least 130 points?",
+    "gold": "SELECT COUNT(*) FROM game WHERE season_id = '22022' AND season_type = 'Regular Season' AND pts_home >= 130;",
+    "pred": "SELECT COUNT(*) FROM other_stats g JOIN line_score ls ON g.game_id = ls.game_id WHERE g.season = '22022' AND g.season_id = '22022' AND g.pts_home >= 130 GROUP BY g.game_id HAVING COUNT(*) >= 1",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "medium",
+    "retrieved_tables": [
+      "other_stats",
+      "line_score",
+      "game_summary"
+    ]
+  },
+  {
+    "question": "What was the average weight of players at the 2022 NBA Draft Combine?",
+    "gold": "SELECT AVG(weight) FROM draft_combine_stats WHERE season = '2022';",
+    "pred": "SELECT AVG(weight) FROM draft_combine_stats WHERE season = '2022'",
+    "exec_match": true,
+    "exact_match": true,
+    "difficulty": "medium",
+    "retrieved_tables": [
+      "draft_combine_stats",
+      "draft_history",
+      "common_player_info"
+    ]
+  },
+  {
+    "question": "In the 2021-22 regular season, what was the average total points scored in a game (home + away)?",
+    "gold": "SELECT AVG(pts_home + pts_away) FROM game WHERE season_id = '22021' AND season_type = 'Regular Season' AND pts_home IS NOT NULL AND pts_away IS NOT NULL;",
+    "pred": "SELECT AVG(pts_home) FROM other_stats WHERE season_id = '22021' AND season_name = 'Regular Season' AND pts_home IS NOT NULL",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "medium",
+    "retrieved_tables": [
+      "other_stats",
+      "line_score",
+      "game"
+    ]
+  },
+  {
+    "question": "How many regular season games in 2022-23 were decided by overtime (non-empty ot period minutes)?",
+    "gold": "SELECT COUNT(*) FROM game WHERE season_id = '22022' AND season_type = 'Regular Season' AND min > 240;",
+    "pred": "SELECT COUNT(*) FROM game_summary g JOIN line_score ls ON g.game_id = ls.game_id WHERE g.season = '22022' AND g.season_type = 'Regular Season' AND ls.over_time IS NOT NULL",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "medium",
+    "retrieved_tables": [
+      "game_summary",
+      "line_score",
+      "game"
+    ]
+  },
+  {
+    "question": "What is the maximum single-game home team rebound total in the 2022-23 regular season?",
+    "gold": "SELECT MAX(reb_home) FROM game WHERE season_id = '22022' AND season_type = 'Regular Season';",
+    "pred": "SELECT MAX(team_rebounds_home) FROM other_stats WHERE season = '22022' AND season_id = '22022' AND team_rebounds_home IS NOT NULL",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "medium",
+    "retrieved_tables": [
+      "other_stats",
+      "draft_combine_stats",
+      "inactive_players"
+    ]
+  },
+  {
+    "question": "How many of the top 10 picks in the 2003 NBA Draft are on record?",
+    "gold": "SELECT COUNT(*) FROM draft_history WHERE season = '2003' AND CAST(overall_pick AS INTEGER) BETWEEN 1 AND 10;",
+    "pred": "SELECT COUNT(*) FROM draft_history WHERE season = '2003' AND round_number = '10' AND overall_pick = 1",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "medium",
+    "retrieved_tables": [
+      "draft_history",
+      "other_stats",
+      "draft_combine_stats"
+    ]
+  },
+  {
+    "question": "Which team had the best free throw percentage at home in the 2022-23 regular season, among teams with at least 41 home games?",
+    "gold": "SELECT team_name_home, AVG(ft_pct_home) AS avg_ft FROM game WHERE season_id = '22022' AND season_type = 'Regular Season' AND ft_pct_home IS NOT NULL GROUP BY team_name_home HAVING COUNT(*) >= 41 ORDER BY avg_ft DESC LIMIT 1;",
+    "pred": "SELECT team_name_home, AVG(ft_pct_home) AS avg_ft_pct FROM other_stats g JOIN game g ON g.game_id = g.game_id WHERE g.season_id = '22022' AND g.season_id = '22022' AND g.season_type = 'Regular Season' GROUP BY team_name_home ORDER BY avg_ft_pct DESC LIMIT 41",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "hard",
+    "retrieved_tables": [
+      "other_stats",
+      "line_score",
+      "game"
+    ]
+  },
+  {
+    "question": "How many 2022-23 regular season games had both teams score at least 120 points?",
+    "gold": "SELECT COUNT(*) FROM game WHERE season_id = '22022' AND season_type = 'Regular Season' AND pts_home >= 120 AND pts_away >= 120;",
+    "pred": "SELECT COUNT(*) FROM other_stats g JOIN line_score ls ON g.game_id = ls.game_id WHERE g.season = '22022' AND g.pts_paint_home >= 120 GROUP BY g.game_id HAVING COUNT(*) >= 120",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "hard",
+    "retrieved_tables": [
+      "other_stats",
+      "line_score",
+      "game_summary"
+    ]
+  },
+  {
+    "question": "In the 2021-22 regular season, how many home games did the Golden State Warriors win?",
+    "gold": "SELECT COUNT(*) FROM game WHERE team_name_home = 'Golden State Warriors' AND season_id = '22021' AND season_type = 'Regular Season' AND wl_home = 'W';",
+    "pred": "SELECT COUNT(*) FROM other_stats g JOIN game g ON g.game_id = g.game_id WHERE g.team_name_home = 'Golden State Warriors' AND g.season_id = '22021' AND g.season_type = 'Regular Season' AND g.wl_home = 'W'",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "hard",
+    "retrieved_tables": [
+      "other_stats",
+      "line_score",
+      "game"
+    ]
+  },
+  {
+    "question": "Find teams that lost at home by 30 or more points at least once in the 2022-23 regular season (home score minus away score <= -30).",
+    "gold": "SELECT DISTINCT team_name_home FROM game WHERE season_id = '22022' AND season_type = 'Regular Season' AND pts_home - pts_away <= -30 ORDER BY team_name_home LIMIT 10;",
+    "pred": "SELECT team_name_home, COUNT(*) AS losses FROM other_stats WHERE season_id = '22022' AND season_type = 'Regular Season' AND pts_off_to_home = 30 GROUP BY team_name_home ORDER BY losses DESC LIMIT 1",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "hard",
+    "retrieved_tables": [
+      "other_stats",
+      "line_score",
+      "game"
+    ]
+  },
+  {
+    "question": "How many players drafted in 2014 have player profile information on record?",
+    "gold": "SELECT COUNT(DISTINCT c.person_id) FROM common_player_info c JOIN draft_history d ON c.person_id = CAST(d.person_id AS TEXT) WHERE d.season = '2014';",
+    "pred": "SELECT COUNT(*) FROM draft_history WHERE draft_year = '2014' AND draft_round = '1'",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "hard",
+    "retrieved_tables": [
+      "draft_history",
+      "common_player_info",
+      "player"
+    ]
+  },
+  {
+    "question": "What is the most common position among active NBA players?",
+    "gold": "SELECT position, COUNT(*) AS cnt FROM common_player_info WHERE rosterstatus = 'Active' GROUP BY position ORDER BY cnt DESC LIMIT 1;",
+    "pred": "SELECT MAX(position) FROM inactive_players WHERE rosterstatus = 'Active'",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "hard",
+    "retrieved_tables": [
+      "inactive_players",
+      "draft_history",
+      "common_player_info"
+    ]
+  },
+  {
+    "question": "What was the league-wide average home points per game for the 2020-21, 2021-22, and 2022-23 regular seasons?",
+    "gold": "SELECT season_id, AVG(pts_home) AS league_avg_home_pts FROM game WHERE season_id IN ('22020', '22021', '22022') AND season_type = 'Regular Season' GROUP BY season_id ORDER BY season_id;",
+    "pred": "SELECT AVG(pts_home) FROM other_stats WHERE season = '22020' AND season = '22021' AND pts_home IS NOT NULL",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "extra_hard",
+    "retrieved_tables": [
+      "other_stats",
+      "game_summary",
+      "line_score"
+    ]
+  },
+  {
+    "question": "What is the city of the Chicago Bulls?",
+    "gold": "SELECT city FROM team WHERE full_name = 'Chicago Bulls';",
+    "pred": "SELECT city FROM team_history WHERE full_name = 'Chicago Bulls'",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "easy",
+    "retrieved_tables": [
+      "team_history",
+      "team",
+      "draft_history"
+    ]
+  },
+  {
+    "question": "List the names of all teams ordered alphabetically.",
+    "gold": "SELECT full_name FROM team ORDER BY full_name;",
+    "pred": "SELECT team_name FROM team ORDER BY team_name",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "easy",
+    "retrieved_tables": [
+      "team",
+      "team_history",
+      "common_player_info"
+    ]
+  },
+  {
+    "question": "What is Giannis Antetokounmpo's height?",
+    "gold": "SELECT height FROM common_player_info WHERE display_first_last = 'Giannis Antetokounmpo';",
+    "pred": "SELECT height_wo_shoes FROM draft_combine_stats WHERE season = '2019' AND first_name = 'Giannis' AND last_name = 'Antetokounmpo'",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "easy",
+    "retrieved_tables": [
+      "draft_combine_stats",
+      "officials",
+      "player"
+    ]
+  },
+  {
+    "question": "What is Luka Doncic's weight?",
+    "gold": "SELECT weight FROM common_player_info WHERE display_first_last = 'Luka Doncic';",
+    "pred": "SELECT weight FROM draft_combine_stats WHERE display_first_last = 'Luka Doncic'",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "easy",
+    "retrieved_tables": [
+      "draft_combine_stats",
+      "player",
+      "common_player_info"
+    ]
+  },
+  {
+    "question": "How many players are from Canada?",
+    "gold": "SELECT COUNT(*) FROM common_player_info WHERE country = 'Canada';",
+    "pred": "SELECT COUNT(*) FROM play_by_play WHERE country = 'Canada'",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "easy",
+    "retrieved_tables": [
+      "play_by_play",
+      "common_player_info",
+      "inactive_players"
+    ]
+  },
+  {
+    "question": "Who was the first overall pick in the 2018 draft?",
+    "gold": "SELECT player_name FROM draft_history WHERE season = '2018' AND overall_pick = 1;",
+    "pred": "SELECT first_name FROM draft_history WHERE season = '2018' AND overall_pick = 1",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "easy",
+    "retrieved_tables": [
+      "draft_history",
+      "draft_combine_stats",
+      "player"
+    ]
+  },
+  {
+    "question": "What arena do the Boston Celtics play in?",
+    "gold": "SELECT arena FROM team_details WHERE abbreviation = 'BOS';",
+    "pred": "SELECT first_name, last_name FROM officials WHERE first_name = 'Boston' AND last_name = 'Celtics'",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "easy",
+    "retrieved_tables": [
+      "officials",
+      "inactive_players",
+      "other_stats"
+    ]
+  },
+  {
+    "question": "Who is the head coach of the Denver Nuggets?",
+    "gold": "SELECT headcoach FROM team_details WHERE abbreviation = 'DEN';",
+    "pred": "SELECT headcoach FROM team_details WHERE abbreviation = 'DENV'",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "easy",
+    "retrieved_tables": [
+      "officials",
+      "team_history",
+      "team_details"
+    ]
+  },
+  {
+    "question": "What is the arena capacity of the Lakers' home arena?",
+    "gold": "SELECT arenacapacity FROM team_details WHERE abbreviation = 'LAL';",
+    "pred": "SELECT arenacapacity FROM team_details WHERE abbreviation = 'LAL'",
+    "exec_match": true,
+    "exact_match": true,
+    "difficulty": "easy",
+    "retrieved_tables": [
+      "officials",
+      "team_details",
+      "game_info"
+    ]
+  },
+  {
+    "question": "How many home games were played in the 2020-21 regular season?",
+    "gold": "SELECT COUNT(*) FROM game WHERE season_id = '22020' AND season_type = 'Regular Season';",
+    "pred": "SELECT COUNT(*) FROM game_summary g JOIN line_score ls ON g.game_id = ls.game_id WHERE g.season = '22020' AND g.season_type = 'Regular Season'",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "easy",
+    "retrieved_tables": [
+      "game_summary",
+      "game",
+      "line_score"
+    ]
+  },
+  {
+    "question": "How many playoff games were played in the 2021-22 season?",
+    "gold": "SELECT COUNT(*) FROM game WHERE season_id = '42021' AND season_type = 'Playoffs';",
+    "pred": "SELECT COUNT(*) FROM game_summary g JOIN other_stats o ON g.game_id = o.game_id WHERE g.season = '22021' AND o.season = '22021'",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "easy",
+    "retrieved_tables": [
+      "other_stats",
+      "game_summary",
+      "line_score"
+    ]
+  },
+  {
+    "question": "How many teams have a nickname starting with the letter S?",
+    "gold": "SELECT COUNT(*) FROM team WHERE nickname LIKE 'S%';",
+    "pred": "SELECT COUNT(*) FROM team WHERE nickname LIKE 'S%'",
+    "exec_match": true,
+    "exact_match": true,
+    "difficulty": "easy",
+    "retrieved_tables": [
+      "team",
+      "inactive_players",
+      "team_history"
+    ]
+  },
+  {
+    "question": "What position does Jayson Tatum play?",
+    "gold": "SELECT position FROM common_player_info WHERE display_first_last = 'Jayson Tatum';",
+    "pred": "SELECT position FROM player WHERE full_name = 'Jayson Tatum'",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "easy",
+    "retrieved_tables": [
+      "player",
+      "draft_combine_stats",
+      "draft_history"
+    ]
+  },
+  {
+    "question": "What was the average assists for the Warriors at home in the 2022-23 regular season?",
+    "gold": "SELECT AVG(ast_home) FROM game WHERE team_name_home = 'Golden State Warriors' AND season_id = '22022' AND season_type = 'Regular Season';",
+    "pred": "SELECT AVG(a.assists) FROM other_stats a JOIN draft_combine_stats b ON a.game_id = b.game_id WHERE a.team_name = 'Warriors' AND b.season = '22022' AND a.assists IS NOT NULL",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "medium",
+    "retrieved_tables": [
+      "other_stats",
+      "draft_combine_stats",
+      "draft_history"
+    ]
+  },
+  {
+    "question": "What were the top 5 teams by average home points in the 2022-23 regular season?",
+    "gold": "SELECT team_name_home, AVG(pts_home) AS avg_pts FROM game WHERE season_id = '22022' AND season_type = 'Regular Season' GROUP BY team_name_home ORDER BY avg_pts DESC LIMIT 5;",
+    "pred": "SELECT team_name_home, AVG(pts_home) AS avg_pts FROM other_stats WHERE season_id = '22022' AND season_type = 'Regular Season' GROUP BY team_name_home ORDER BY avg_pts DESC LIMIT 5",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "medium",
+    "retrieved_tables": [
+      "other_stats",
+      "line_score",
+      "game"
+    ]
+  },
+  {
+    "question": "What were the top 5 teams by total home rebounds in the 2022-23 regular season?",
+    "gold": "SELECT team_name_home, SUM(reb_home) AS total_reb FROM game WHERE season_id = '22022' AND season_type = 'Regular Season' GROUP BY team_name_home ORDER BY total_reb DESC LIMIT 5;",
+    "pred": "SELECT team_name_home, COUNT(*) AS rebounds FROM other_stats WHERE season_id = '22022' AND season_type = 'Regular Season' GROUP BY team_name_home ORDER BY rebounds DESC LIMIT 5",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "medium",
+    "retrieved_tables": [
+      "other_stats",
+      "line_score",
+      "game"
+    ]
+  },
+  {
+    "question": "How many games in the 2021-22 regular season had a home team score below 90?",
+    "gold": "SELECT COUNT(*) FROM game WHERE season_id = '22021' AND season_type = 'Regular Season' AND pts_home < 90;",
+    "pred": "SELECT COUNT(*) FROM other_stats g JOIN line_score ls ON g.game_id = ls.game_id WHERE g.season = '22021' AND g.season = '22022' AND g.home_team_id IS NOT NULL AND ls.pts_home > 90",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "medium",
+    "retrieved_tables": [
+      "other_stats",
+      "line_score",
+      "game_summary"
+    ]
+  },
+  {
+    "question": "How many draft picks did the Boston Celtics make in their history?",
+    "gold": "SELECT COUNT(*) FROM draft_history WHERE team_abbreviation = 'BOS';",
+    "pred": "SELECT COUNT(*) FROM draft_history WHERE team_name = 'Boston Celtics' AND team_abbreviation = 'BSB'",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "medium",
+    "retrieved_tables": [
+      "draft_history",
+      "team_history",
+      "other_stats"
+    ]
+  },
+  {
+    "question": "How many active players play for the Lakers?",
+    "gold": "SELECT COUNT(*) FROM common_player_info WHERE team_name = 'Lakers' AND rosterstatus = 'Active';",
+    "pred": "SELECT COUNT(*) FROM inactive_players WHERE team_abbreviation = 'LAL'",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "medium",
+    "retrieved_tables": [
+      "inactive_players",
+      "player",
+      "common_player_info"
+    ]
+  },
+  {
+    "question": "What was the average wingspan at the 2020 NBA Draft Combine?",
+    "gold": "SELECT AVG(wingspan) FROM draft_combine_stats WHERE season = '2020';",
+    "pred": "SELECT AVG(wingspan) FROM draft_combine_stats WHERE season = '2020'",
+    "exec_match": true,
+    "exact_match": true,
+    "difficulty": "medium",
+    "retrieved_tables": [
+      "draft_combine_stats",
+      "draft_history",
+      "common_player_info"
+    ]
+  },
+  {
+    "question": "How many home games in the 2022-23 regular season had at least 30 assists by the home team?",
+    "gold": "SELECT COUNT(*) FROM game WHERE season_id = '22022' AND season_type = 'Regular Season' AND ast_home >= 30;",
+    "pred": "SELECT COUNT(*) FROM other_stats g JOIN game g ON g.game_id = g.game_id WHERE g.season_id = '22022' AND g.season_type = 'Regular Season' AND g.pts_home >= 30 GROUP BY g.game_id HAVING COUNT(*) >= 30",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "medium",
+    "retrieved_tables": [
+      "other_stats",
+      "game",
+      "line_score"
+    ]
+  },
+  {
+    "question": "How many home games in the 2022-23 regular season had at least 15 three-pointers made by the home team?",
+    "gold": "SELECT COUNT(*) FROM game WHERE season_id = '22022' AND season_type = 'Regular Season' AND fg3m_home >= 15;",
+    "pred": "SELECT COUNT(*) FROM other_stats g JOIN game g ON g.game_id = g.game_id WHERE g.season_id = '22022' AND g.season_type = 'Regular Season' AND g.fg3m_home >= 15 GROUP BY g.game_id HAVING COUNT(*) >= 15",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "medium",
+    "retrieved_tables": [
+      "other_stats",
+      "game",
+      "line_score"
+    ]
+  },
+  {
+    "question": "Which team had the highest field goal percentage at home in the 2022-23 regular season?",
+    "gold": "SELECT team_name_home, AVG(fg_pct_home) AS avg_fg FROM game WHERE season_id = '22022' AND season_type = 'Regular Season' AND fg_pct_home IS NOT NULL GROUP BY team_name_home ORDER BY avg_fg DESC LIMIT 1;",
+    "pred": "SELECT team_name_home, AVG(pts_fb_home) AS avg_fb FROM other_stats WHERE season_id = '22022' AND season_type = 'Regular Season' GROUP BY team_name_home ORDER BY avg_fb DESC LIMIT 1",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "hard",
+    "retrieved_tables": [
+      "other_stats",
+      "line_score",
+      "game"
+    ]
+  },
+  {
+    "question": "Which team had the lowest turnover average at home in the 2022-23 regular season?",
+    "gold": "SELECT team_name_home, AVG(tov_home) AS avg_tov FROM game WHERE season_id = '22022' AND season_type = 'Regular Season' GROUP BY team_name_home ORDER BY avg_tov ASC LIMIT 1;",
+    "pred": "SELECT team_name, AVG(pts_turnovers_home) AS avg_turnovers FROM other_stats WHERE league_id = '22022' AND league_type = 'Regular Season' ORDER BY avg_turnovers DESC LIMIT 1",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "hard",
+    "retrieved_tables": [
+      "other_stats",
+      "line_score",
+      "inactive_players"
+    ]
+  },
+  {
+    "question": "How many active players were first-round draft picks?",
+    "gold": "SELECT COUNT(DISTINCT c.person_id) FROM common_player_info c JOIN draft_history d ON c.person_id = CAST(d.person_id AS TEXT) WHERE d.round_number = 1 AND c.rosterstatus = 'Active';",
+    "pred": "SELECT COUNT(*) FROM draft_history WHERE round_number = '1' AND CAST(overall_pick AS INTEGER) < 2",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "hard",
+    "retrieved_tables": [
+      "draft_history",
+      "inactive_players",
+      "player"
+    ]
+  },
+  {
+    "question": "Which 5 countries have produced the most NBA players?",
+    "gold": "SELECT country, COUNT(*) AS cnt FROM common_player_info GROUP BY country ORDER BY cnt DESC LIMIT 5;",
+    "pred": "SELECT country FROM common_player_info GROUP BY country ORDER BY COUNT(*) DESC LIMIT 5",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "hard",
+    "retrieved_tables": [
+      "draft_history",
+      "common_player_info",
+      "inactive_players"
+    ]
+  },
+  {
+    "question": "Which team had the largest decrease in average home scoring from 2021-22 to 2022-23?",
+    "gold": "SELECT a.team_name_home, (b.avg_pts - a.avg_pts) AS decrease FROM (SELECT team_name_home, AVG(pts_home) AS avg_pts FROM game WHERE season_id = '22022' AND season_type = 'Regular Season' GROUP BY team_name_home) a JOIN (SELECT team_name_home, AVG(pts_home) AS avg_pts FROM game WHERE season_id = '22021' AND season_type = 'Regular Season' GROUP BY team_name_home) b ON a.team_name_home = b.team_name_home ORDER BY decrease DESC LIMIT 1;",
+    "pred": "SELECT team_name_home, AVG(pts_home - pts_away) AS avg_pts FROM other_stats WHERE league_id = '22022' AND league_id = '22021' GROUP BY team_name_home ORDER BY avg_pts DESC LIMIT 1",
+    "exec_match": false,
+    "exact_match": false,
+    "difficulty": "extra_hard",
+    "retrieved_tables": [
+      "other_stats",
+      "line_score",
+      "game"
+    ]
+  }
+]

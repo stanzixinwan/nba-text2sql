@@ -16,9 +16,12 @@ Outputs go to models/<run_name>/.
 """
 
 import argparse
+import json
+import random
 from pathlib import Path
 
 import torch
+import numpy as np
 from transformers import (
     AutoTokenizer, AutoModelForSeq2SeqLM,
     Seq2SeqTrainer, Seq2SeqTrainingArguments,
@@ -53,6 +56,13 @@ def _preferred_cuda_dtype():
     if _cuda_bf16_supported():
         return torch.bfloat16
     return torch.float16
+
+
+def _set_seed(seed: int) -> None:
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
 
 
 def tokenize_dataset(examples, tokenizer, max_input=1024, max_target=256):
@@ -126,18 +136,23 @@ def main():
     parser.add_argument("--lr", type=float, default=1e-4)
     parser.add_argument("--max-train", type=int, default=None)
     parser.add_argument("--run-name", default=None)
+    parser.add_argument("--seed", type=int, default=42)
     args = parser.parse_args()
 
     require_cuda()
+    _set_seed(args.seed)
 
     run_name = args.run_name or f"{args.method}_{args.model.split('/')[-1]}"
     if args.method == "lora":
         run_name += f"_r{args.rank}"
+    run_name += f"_lr{args.lr:g}_s{args.seed}"
     output_dir = f"models/{run_name}"
     Path(output_dir).mkdir(parents=True, exist_ok=True)
 
     print(f"Run: {run_name}")
     print(f"Output: {output_dir}\n")
+    with open(f"{output_dir}/run_config.json", "w", encoding="utf-8") as f:
+        json.dump(vars(args), f, indent=2, ensure_ascii=False)
 
     print(f"Loading tokenizer: {args.model}")
     tokenizer = AutoTokenizer.from_pretrained(args.model)
@@ -177,6 +192,8 @@ def main():
         bf16=bf16,
         fp16=fp16,
         report_to="none",
+        seed=args.seed,
+        data_seed=args.seed,
     )
 
     trainer = Seq2SeqTrainer(

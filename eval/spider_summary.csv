@@ -1,0 +1,4 @@
+file,run,model,n_examples,exec_acc,exact_acc
+lora_codet5p-220m_r16_spider.json,lora_codet5p-220m_r16_spider,codet5p-220m,200,0.0,0.29
+full_t5-base_spider.json,full_t5-base_spider,t5-base,200,0.0,0.265
+lora_t5-base_r16_spider.json,lora_t5-base_r16_spider,t5-base,200,0.0,0.12

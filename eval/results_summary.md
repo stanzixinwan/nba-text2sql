@@ -2,7 +2,6 @@
 |---|---|---|---|---:|---:|---:|
 | baseline_nba_fewshot_t5-base_test.json | t5-base | baseline | other | - | 0.0000 | 0.0000 |
 | baseline_nba_zeroshot_t5-base_test.json | t5-base | baseline | other | - | 0.0000 | 0.0000 |
-| full_t5-base_nba_full_test.json | t5-base | full | full_schema | - | 0.0000 | 0.0000 |
 | full_t5-base_nba_oracle_test.json | t5-base | full | oracle | 0 | 0.0400 | 0.0000 |
 | lora_codet5p-220m_r16_nba_n20_nba_oracle_test.json | codet5p-220m | lora | oracle | 20 | 0.1200 | 0.0600 |
 | lora_codet5p-220m_r16_nba_n70_nba_oracle_test.json | codet5p-220m | lora | oracle | 70 | 0.2600 | 0.2400 |

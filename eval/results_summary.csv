@@ -1,7 +1,6 @@
 file,run,model,method,mode,split,n_examples,n_train,exec_acc,exact_acc
 baseline_nba_fewshot_t5-base_test.json,baseline_nba_fewshot_t5-base_test,t5-base,baseline,other,test,50,,0.0,0.0
 baseline_nba_zeroshot_t5-base_test.json,baseline_nba_zeroshot_t5-base_test,t5-base,baseline,other,test,50,,0.0,0.0
-full_t5-base_nba_full_test.json,full_t5-base_nba_full_test,t5-base,full,full_schema,test,50,,0.0,0.0
 full_t5-base_nba_oracle_test.json,full_t5-base_nba_oracle_test,t5-base,full,oracle,test,50,0,0.04,0.0
 lora_codet5p-220m_r16_nba_n20_nba_oracle_test.json,lora_codet5p-220m_r16_nba_n20_nba_oracle_test,codet5p-220m,lora,oracle,test,50,20,0.12,0.06
 lora_codet5p-220m_r16_nba_n70_nba_oracle_test.json,lora_codet5p-220m_r16_nba_n70_nba_oracle_test,codet5p-220m,lora,oracle,test,50,70,0.26,0.24

@@ -6,6 +6,8 @@ Outputs:
   - eval/results_summary.md
   - eval/fewshot_curve.csv
   - eval/rag_ablation.csv
+  - eval/spider_summary.csv
+  - eval/spider_summary.md
 """
 
 import argparse
@@ -99,10 +101,54 @@ def main() -> None:
         for r in rag:
             writer.writerow({k: r[k] for k in ["file", "model", "exec_acc", "exact_acc"]})
 
+    spider_files = sorted(eval_dir.glob("*_spider.json"))
+    spider_rows = []
+    for path in spider_files:
+        exec_acc, exact_acc, n = _load_scores(path)
+        lower = path.name.lower()
+        if "codet5p-220m" in lower:
+            model = "codet5p-220m"
+        elif "flan-t5-base" in lower:
+            model = "flan-t5-base"
+        elif "t5-base" in lower:
+            model = "t5-base"
+        else:
+            model = "unknown"
+        spider_rows.append({
+            "file": path.name,
+            "run": path.stem,
+            "model": model,
+            "n_examples": n,
+            "exec_acc": round(exec_acc, 4),
+            "exact_acc": round(exact_acc, 4),
+        })
+
+    spider_rows = sorted(spider_rows, key=lambda r: r["exact_acc"], reverse=True)
+    spider_csv = eval_dir / "spider_summary.csv"
+    with open(spider_csv, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(
+            f,
+            fieldnames=["file", "run", "model", "n_examples", "exec_acc", "exact_acc"],
+        )
+        writer.writeheader()
+        writer.writerows(spider_rows)
+
+    spider_md = eval_dir / "spider_summary.md"
+    with open(spider_md, "w", encoding="utf-8") as f:
+        f.write("| file | model | n_examples | exec_acc | exact_acc |\n")
+        f.write("|---|---|---:|---:|---:|\n")
+        for r in spider_rows:
+            f.write(
+                f"| {r['file']} | {r['model']} | {r['n_examples']} | "
+                f"{r['exec_acc']:.4f} | {r['exact_acc']:.4f} |\n"
+            )
+
     print(f"Saved -> {out_csv}")
     print(f"Saved -> {out_md}")
     print(f"Saved -> {eval_dir / 'fewshot_curve.csv'}")
     print(f"Saved -> {eval_dir / 'rag_ablation.csv'}")
+    print(f"Saved -> {spider_csv}")
+    print(f"Saved -> {spider_md}")
 
 
 if __name__ == "__main__":

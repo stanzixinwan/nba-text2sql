@@ -102,41 +102,6 @@ Use **Python 3.12 or 3.13** with **PyTorch CUDA** — Python **3.14** does not s
 
 Details: [GPU_SETUP.md](GPU_SETUP.md). Training (`train.py`, `train_nba.py`) and NBA evaluation (`evaluate.py`) **exit unless CUDA is available**, unless you set `NBA_TEXT2SQL_ALLOW_CPU=1` (debug only).
 
-## Running Experiments (High-Score Path)
-
-```bash
-# 0) Prompt baselines (same test split as model eval)
-python -m src.prompt_baseline --model t5-base --eval nba --mode zero_shot --split test --oracle-tables
-python -m src.prompt_baseline --model t5-base --eval nba --mode few_shot --few-shot-k 3 --split test --oracle-tables
-
-# 1) Spider training: method comparison
-python -m src.run_experiment_matrix --stage method_compare --model t5-base --epochs 3 --lr 1e-4 --seed 42 --dry-run
-# add --run to execute
-
-# 2) LoRA rank sweep
-python -m src.run_experiment_matrix --stage rank_sweep --model t5-base --epochs 3 --lr 1e-4 --seed 42 --dry-run
-# add --run to execute
-
-# 3) NBA adaptation points (includes n=10)
-python -m src.run_experiment_matrix --stage adaptation \
-  --base-checkpoint models/lora_t5-base_r16_lr0.0001_s42/final \
-  --base-model t5-base --seed 42 --dry-run
-# add --run to execute
-
-# 4) Evaluate a checkpoint (oracle/full/RAG)
-python -m src.evaluate --checkpoint models/lora_t5-base_r16_lr0.0001_s42/final --eval nba --oracle-tables --split test
-python -m src.evaluate --checkpoint models/lora_t5-base_r16_lr0.0001_s42/final --eval nba --use-rag --top-k 3 --split test
-
-# 5) Unified reports for write-up/slides
-python -m src.build_results_report --eval-dir eval
-python -m src.error_analysis eval/lora_t5-base_r16_nba_nall_nba_oracle_test.json --save-annotated
-
-# 6) Optional: re-score legacy 200-question JSONs on held-out test split
-python -m src.rescore_nba eval/lora_t5-base_r16_nba_oracle.json --save
-
-# 7) Launch Gradio demo
-python -m src.demo --checkpoint models/lora_t5-base_r16_nba_nall_s42/final --base-model t5-base
-```
 
 ### One-command command generation
 

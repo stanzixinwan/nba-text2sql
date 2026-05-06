@@ -38,7 +38,12 @@ from src.data_utils import (
     NBA_SPLIT_PATH, load_nba_dataset, load_nba_split_ids, load_spider_splits,
 )
 from src.gpu_env import require_cuda
-from src.prompt_baseline import execution_accuracy, exact_match, generate_sql
+from src.prompt_baseline import (
+    execution_accuracy,
+    exact_match,
+    generate_sql,
+    load_tokenizer_with_fallback,
+)
 
 
 def load_checkpoint(checkpoint_path: str, base_model: str = "t5-base"):
@@ -54,13 +59,13 @@ def load_checkpoint(checkpoint_path: str, base_model: str = "t5-base"):
     if is_peft:
         from peft import PeftModel
         print(f"Loading PEFT adapter from {checkpoint_path} on top of {base_model}")
-        tokenizer = AutoTokenizer.from_pretrained(base_model, use_fast=False)
+        tokenizer = load_tokenizer_with_fallback(checkpoint_path, base_model)
         model = AutoModelForSeq2SeqLM.from_pretrained(base_model)
         model = PeftModel.from_pretrained(model, checkpoint_path)
         model = model.merge_and_unload()
     else:
         print(f"Loading full model from {checkpoint_path}")
-        tokenizer = AutoTokenizer.from_pretrained(checkpoint_path, use_fast=False)
+        tokenizer = load_tokenizer_with_fallback(checkpoint_path)
         model = AutoModelForSeq2SeqLM.from_pretrained(checkpoint_path)
 
     return model, tokenizer

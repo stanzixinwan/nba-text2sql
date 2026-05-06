@@ -26,6 +26,33 @@ from src.data_utils import (
 )
 
 
+def load_tokenizer_with_fallback(*model_name_or_paths: str):
+    """
+    Try one or more tokenizer sources with slow->fast fallback.
+    Useful when base-model tokenizer metadata is incompatible but adapter-local files work.
+    """
+    errors = []
+    for model_name_or_path in model_name_or_paths:
+        try:
+            return AutoTokenizer.from_pretrained(model_name_or_path, use_fast=False)
+        except Exception as slow_exc:
+            try:
+                print(
+                    "Tokenizer load with use_fast=False failed; "
+                    f"retrying with use_fast=True for {model_name_or_path}.\n"
+                    f"  Reason: {slow_exc}"
+                )
+                return AutoTokenizer.from_pretrained(model_name_or_path, use_fast=True)
+            except Exception as fast_exc:
+                errors.append((model_name_or_path, slow_exc, fast_exc))
+                continue
+    details = "\n".join(
+        f"- {src}\n  slow: {slow}\n  fast: {fast}"
+        for src, slow, fast in errors
+    )
+    raise RuntimeError(f"Unable to load tokenizer from any source:\n{details}")
+
+
 def execute_sql(sql: str, db_path: str, timeout: float = 5.0):
     try:
         conn = sqlite3.connect(db_path, timeout=timeout)
@@ -154,7 +181,7 @@ def main():
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Device: {device}")
     print(f"Loading {args.model}...")
-    tokenizer = AutoTokenizer.from_pretrained(args.model, use_fast=False)
+    tokenizer = load_tokenizer_with_fallback(args.model)
     model = AutoModelForSeq2SeqLM.from_pretrained(args.model).to(device)
     model.eval()
 

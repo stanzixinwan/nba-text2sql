@@ -20,5 +20,5 @@
 | lora_t5-base_r16_nba_nall_nba_rag_k5_test.json | t5-base | lora | rag | all | 0.0200 | 0.0000 |
 | lora_t5-base_r16_nba_oracle_test.json | t5-base | lora | oracle | 0 | 0.0400 | 0.0200 |
 | lora_t5-base_r4_nba_oracle_test.json | t5-base | lora | oracle | 0 | 0.0200 | 0.0000 |
-| lora_t5-base_r8_nba_oracle_test.json | t5-base | lora | oracle | 0 | 0.0000 | 0.0000 |
+| lora_t5-base_r8_nba_oracle_test.json | t5-base | lora | oracle | 0 | 0.0200 | 0.0000 |
 | qlora_t5-base_lr0.0001_s42_nba_oracle_test.json | t5-base | qlora | oracle | 0 | 0.0200 | 0.0000 |

@@ -3,7 +3,7 @@ full_t5-base_nba_oracle_test.json,t5-base,0,0.04,0.0
 lora_codet5p-220m_r16_nba_oracle_test.json,codet5p-220m,0,0.1,0.0
 lora_t5-base_r16_nba_oracle_test.json,t5-base,0,0.04,0.02
 lora_t5-base_r4_nba_oracle_test.json,t5-base,0,0.02,0.0
-lora_t5-base_r8_nba_oracle_test.json,t5-base,0,0.0,0.0
+lora_t5-base_r8_nba_oracle_test.json,t5-base,0,0.02,0.0
 qlora_t5-base_lr0.0001_s42_nba_oracle_test.json,t5-base,0,0.02,0.0
 lora_codet5p-220m_r16_nba_n10_s42_nba_oracle_test.json,codet5p-220m,10,0.0,0.0
 lora_t5-base_r16_nba_n10_s42_nba_oracle_test.json,t5-base,10,0.0,0.0

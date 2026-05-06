@@ -19,5 +19,5 @@ lora_t5-base_r16_nba_nall_nba_rag_k3_test.json,lora_t5-base_r16_nba_nall_nba_rag
 lora_t5-base_r16_nba_nall_nba_rag_k5_test.json,lora_t5-base_r16_nba_nall_nba_rag_k5_test,t5-base,lora,rag,test,50,all,0.02,0.0
 lora_t5-base_r16_nba_oracle_test.json,lora_t5-base_r16_nba_oracle_test,t5-base,lora,oracle,test,50,0,0.04,0.02
 lora_t5-base_r4_nba_oracle_test.json,lora_t5-base_r4_nba_oracle_test,t5-base,lora,oracle,test,50,0,0.02,0.0
-lora_t5-base_r8_nba_oracle_test.json,lora_t5-base_r8_nba_oracle_test,t5-base,lora,oracle,test,50,0,0.0,0.0
+lora_t5-base_r8_nba_oracle_test.json,lora_t5-base_r8_nba_oracle_test,t5-base,lora,oracle,test,50,0,0.02,0.0
 qlora_t5-base_lr0.0001_s42_nba_oracle_test.json,qlora_t5-base_lr0.0001_s42_nba_oracle_test,t5-base,qlora,oracle,test,50,0,0.02,0.0

@@ -131,7 +131,7 @@ def main():
     parser.add_argument("--method", choices=["full", "lora", "qlora"], required=True)
     parser.add_argument("--rank", type=int, default=16, help="LoRA rank")
     parser.add_argument("--epochs", type=int, default=3)
-    parser.add_argument("--batch-size", type=int, default=8)
+    parser.add_argument("--batch-size", type=int, default=4)
     parser.add_argument("--grad-accum", type=int, default=2)
     parser.add_argument("--lr", type=float, default=1e-4)
     parser.add_argument("--max-train", type=int, default=None)

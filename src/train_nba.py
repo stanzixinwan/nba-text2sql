@@ -41,9 +41,11 @@ from peft import PeftModel
 try:
     from src.data_utils import load_nba_dataset
     from src.gpu_env import require_cuda
+    from src.prompt_baseline import load_tokenizer_with_fallback
 except ModuleNotFoundError:
     from data_utils import load_nba_dataset
     from gpu_env import require_cuda
+    from prompt_baseline import load_tokenizer_with_fallback
 
 
 SPLIT_PATH = Path("data/nba/nba_split.json")
@@ -131,7 +133,10 @@ def load_base(base_checkpoint: str, base_model: str):
     ckpt = Path(base_checkpoint)
     is_peft = (ckpt / "adapter_config.json").exists()
 
-    tokenizer = AutoTokenizer.from_pretrained(base_model if is_peft else base_checkpoint)
+    if is_peft:
+        tokenizer = load_tokenizer_with_fallback(base_checkpoint, base_model)
+    else:
+        tokenizer = load_tokenizer_with_fallback(base_checkpoint)
 
     if is_peft:
         print(f"Loading PEFT base from {base_checkpoint} on {base_model}, then merging")

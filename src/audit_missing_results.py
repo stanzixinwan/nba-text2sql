@@ -4,10 +4,11 @@ audit_missing_results.py — Check missing expected eval outputs.
 
 import argparse
 import csv
+from fnmatch import fnmatch
 from pathlib import Path
 
 
-EXPECTED = [
+EXPECTED_PATTERNS = [
     "baseline_nba_zeroshot_t5-base_test.json",
     "baseline_nba_fewshot_t5-base_test.json",
     "full_t5-base_nba_oracle_test.json",
@@ -15,8 +16,8 @@ EXPECTED = [
     "lora_t5-base_r8_nba_oracle_test.json",
     "lora_t5-base_r16_nba_oracle_test.json",
     "lora_t5-base_r32_nba_oracle_test.json",
-    "qlora_t5-base_nba_oracle_test.json",
-    "lora_t5-base_r16_nba_n10_nba_oracle_test.json",
+    "qlora_t5-base*_nba_oracle_test.json",
+    "lora_t5-base_r16_nba_n10*_nba_oracle_test.json",
     "lora_t5-base_r16_nba_n20_nba_oracle_test.json",
     "lora_t5-base_r16_nba_n70_nba_oracle_test.json",
     "lora_t5-base_r16_nba_nall_nba_oracle_test.json",
@@ -26,6 +27,7 @@ EXPECTED = [
     "lora_codet5p-220m_r16_nba_nall_nba_rag_k1_test.json",
     "lora_codet5p-220m_r16_nba_nall_nba_rag_k3_test.json",
     "lora_codet5p-220m_r16_nba_nall_nba_rag_k5_test.json",
+    "lora_codet5p-220m_r16_nba_n10*_nba_oracle_test.json",
 ]
 
 
@@ -39,8 +41,9 @@ def main() -> None:
     existing = {p.name for p in eval_dir.glob("*.json")}
 
     rows = []
-    for name in EXPECTED:
-        rows.append({"file": name, "status": "present" if name in existing else "missing"})
+    for pattern in EXPECTED_PATTERNS:
+        is_present = any(fnmatch(filename, pattern) for filename in existing)
+        rows.append({"file": pattern, "status": "present" if is_present else "missing"})
 
     missing = [r for r in rows if r["status"] == "missing"]
 

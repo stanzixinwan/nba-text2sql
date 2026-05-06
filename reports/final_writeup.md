@@ -137,6 +137,19 @@ For `lora_codet5p-220m_r16_nba_nall`:
 
 In this configuration, RAG underperforms oracle schema by a wide margin, suggesting retrieval misses are a major bottleneck.
 
+### 5.4 Spider controls (same 200-example slice)
+
+Spider controls were refreshed to align the method comparison with current checkpoints:
+
+- LoRA CodeT5 r16: exact 0.29
+- Full T5-base: exact 0.265
+- QLoRA T5-base: exact 0.14
+- LoRA T5-base r16: exact 0.12
+- LoRA T5-base r4: exact 0.07
+- LoRA T5-base r8: exact 0.00
+
+Across these runs, execution accuracy remains 0.00 on this quick 200-example protocol, so Spider-side comparison is currently driven by exact match rather than execution.
+
 ## 6. Analysis and Discussion
 
 ### 6.1 What worked

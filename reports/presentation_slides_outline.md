@@ -23,6 +23,7 @@
 - Show `eval/results_summary.md` key rows.
 - Highlight best run: `lora_codet5p-220m_r16_nba_nall_nba_oracle_test`.
 - Emphasize exec accuracy as primary practical metric.
+- Add a compact Spider control table from `eval/spider_summary.md` (CodeT5 LoRA r16 > full T5 > QLoRA T5 > LoRA T5 ranks).
 
 ## Slide 6 — Cross-domain Adaptation Curve
 - Plot from `eval/fewshot_curve.csv`.

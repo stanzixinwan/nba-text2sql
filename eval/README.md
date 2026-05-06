@@ -39,4 +39,4 @@ This folder contains model evaluation outputs and derived analysis artifacts.
 - `*_test.json`: held-out NBA test split (50 examples)
 - `*_oracle*`: oracle-table schema mode
 - `*_rag_k{n}*`: RAG retrieval mode with top-k tables
-- `*_nba_n{n}*`: NBA adaptation train size (`n20`, `n70`, `nall`, etc.)
+- `*_nba_n{n}*`: NBA adaptation train size (`n10`, `n20`, `n70`, `nall`, etc.)

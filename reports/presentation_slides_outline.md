@@ -17,7 +17,7 @@
 ## Slide 4 — Methods Compared
 - Full fine-tune, LoRA, QLoRA.
 - Model families: T5-base and CodeT5+ (220M).
-- Adaptation curve setup: n=0/10/20/70/all.
+- Adaptation curve setup: n=0/20/70/all.
 
 ## Slide 5 — Main Results (Table)
 - Show `eval/results_summary.md` key rows.

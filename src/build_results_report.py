@@ -30,7 +30,12 @@ def _label_from_filename(name: str) -> dict:
     return {
         "run": name.replace(".json", ""),
         "model": "codet5p-220m" if "codet5p-220m" in name else "t5-base" if "t5-base" in name else "unknown",
-        "method": "full" if name.startswith("full_") else "lora" if name.startswith("lora_") else "baseline",
+        "method": (
+            "full" if name.startswith("full_")
+            else "lora" if name.startswith("lora_")
+            else "qlora" if name.startswith("qlora_")
+            else "baseline"
+        ),
         "mode": "rag" if "_rag_" in name else "oracle" if "_oracle_" in name else "full_schema" if "_full_" in name else "other",
         "split": "test" if name.endswith("_test.json") else "all",
     }

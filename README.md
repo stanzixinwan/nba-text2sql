@@ -63,7 +63,7 @@ nba-text2sql/
 | Best model + RAG         |     ✓      |    ✓     |
 | Best model + RAG + few-shot NBA | —     |    ✓     |
 
-**Cross-domain curve:** Best Spider-trained model, evaluated on NBA with 0 / 10 / 50 / all NBA examples for few-shot adaptation.
+**Cross-domain curve:** Best Spider-trained model, evaluated on NBA with 0 / 20 / 70 / all NBA examples for few-shot adaptation.
 
 ## Timeline
 

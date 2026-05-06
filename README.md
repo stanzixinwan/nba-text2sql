@@ -21,7 +21,7 @@ PyTorch · HuggingFace Transformers · PEFT (LoRA/QLoRA) · Datasets · Accelera
 ## Datasets
 
 - **Spider** (training): `xlangai/spider` on HuggingFace. 10,181 questions, 200 databases, 138 domains.
-- **NBA** (domain evaluation): SQLite DB built from [nba-sql](https://github.com/mpope9/nba-sql). ~10 tables (players, teams, games, player_game_log, etc.). Self-authored ~80–100 question/SQL pairs stratified by difficulty.
+- **NBA** (domain evaluation): SQLite DB built from [nba-sql](https://github.com/mpope9/nba-sql). ~10 tables (players, teams, games, player_game_log, etc.). Self-authored ~200 question/SQL pairs stratified by difficulty.
 
 ## Models
 

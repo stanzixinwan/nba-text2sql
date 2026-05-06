@@ -21,7 +21,8 @@ def _print_and_run(commands: list[str], run: bool) -> None:
     for cmd in commands:
         print(cmd)
         if run:
-            completed = subprocess.run(shlex.split(cmd), check=False)
+            argv = shlex.split(cmd, posix=(sys.platform != "win32"))
+            completed = subprocess.run(argv, check=False)
             if completed.returncode != 0:
                 raise RuntimeError(f"Command failed ({completed.returncode}): {cmd}")
 

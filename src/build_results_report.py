@@ -42,7 +42,7 @@ def _label_from_filename(name: str) -> dict:
 
 
 def _parse_n_train(name: str) -> str:
-    m = re.search(r"_nba_n(10|20|70|all)_", name)
+    m = re.search(r"_nba_n(10|20|70|all)(?:_s\d+)?_", name)
     if m:
         return m.group(1)
     if "_nba_oracle_test" in name:

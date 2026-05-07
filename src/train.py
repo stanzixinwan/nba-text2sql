@@ -37,6 +37,19 @@ except ModuleNotFoundError:
     from gpu_env import require_cuda
 
 
+def load_tokenizer_with_fallback(model_name_or_path: str):
+    """Load tokenizer with slow->fast fallback for CodeT5 variants."""
+    try:
+        return AutoTokenizer.from_pretrained(model_name_or_path, use_fast=False)
+    except Exception as slow_exc:
+        print(
+            "Tokenizer load with use_fast=False failed; "
+            f"retrying with use_fast=True for {model_name_or_path}.\n"
+            f"  Reason: {slow_exc}"
+        )
+        return AutoTokenizer.from_pretrained(model_name_or_path, use_fast=True)
+
+
 def _cuda_bf16_supported() -> bool:
     return (
         torch.cuda.is_available()
@@ -128,6 +141,11 @@ def main():
     parser.add_argument("--model", default="t5-base",
                         help="HF model id, e.g. t5-base, google/flan-t5-base, "
                              "google/flan-t5-large, Salesforce/codet5-base")
+    parser.add_argument(
+        "--tokenizer",
+        default=None,
+        help="Optional tokenizer source if model tokenizer metadata is broken.",
+    )
     parser.add_argument("--method", choices=["full", "lora", "qlora"], required=True)
     parser.add_argument("--rank", type=int, default=16, help="LoRA rank")
     parser.add_argument("--epochs", type=int, default=3)
@@ -154,8 +172,9 @@ def main():
     with open(f"{output_dir}/run_config.json", "w", encoding="utf-8") as f:
         json.dump(vars(args), f, indent=2, ensure_ascii=False)
 
-    print(f"Loading tokenizer: {args.model}")
-    tokenizer = AutoTokenizer.from_pretrained(args.model)
+    tokenizer_src = args.tokenizer or args.model
+    print(f"Loading tokenizer: {tokenizer_src}")
+    tokenizer = load_tokenizer_with_fallback(tokenizer_src)
 
     print("Loading Spider data...")
     train, dev = load_spider_splits(max_examples=args.max_train)

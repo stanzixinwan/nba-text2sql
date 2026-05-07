@@ -139,13 +139,14 @@ def load_base(base_checkpoint: str, base_model: str):
         tokenizer = load_tokenizer_with_fallback(base_checkpoint)
 
     if is_peft:
-        print(f"Loading PEFT base from {base_checkpoint} on {base_model}, then merging")
+        # Keep LoRA: merging then full fine-tuning on tiny NBA sets destroys generation.
+        # Train adapter weights only; merge once after training when saving final/.
+        print(f"Loading PEFT base from {base_checkpoint} on {base_model} (LoRA continued, base frozen)")
         model = AutoModelForSeq2SeqLM.from_pretrained(base_model)
-        model = PeftModel.from_pretrained(model, base_checkpoint)
-        model = model.merge_and_unload()
-        # Re-enable gradients on all parameters for full fine-tuning
-        for p in model.parameters():
-            p.requires_grad = True
+        model = PeftModel.from_pretrained(
+            model, base_checkpoint, is_trainable=True
+        )
+        model.print_trainable_parameters()
     else:
         print(f"Loading full model from {base_checkpoint}")
         model = AutoModelForSeq2SeqLM.from_pretrained(base_checkpoint)
@@ -249,7 +250,10 @@ def main():
     trainer.train()
 
     print(f"\nSaving final model to {output_dir}/final")
-    trainer.save_model(f"{output_dir}/final")
+    to_save = trainer.model
+    if isinstance(to_save, PeftModel):
+        to_save = to_save.merge_and_unload()
+    to_save.save_pretrained(f"{output_dir}/final")
     tokenizer.save_pretrained(f"{output_dir}/final")
     print("Done.")
     print(f"\nNext: evaluate on the held-out NBA test split.")

@@ -1,0 +1,8 @@
+file,run,model,n_examples,exec_acc,exec_ci_low,exec_ci_high,exact_acc,exact_ci_low,exact_ci_high
+lora_codet5p-220m_r16_bs4_r16_lr0.0001_s42_spider.json,lora_codet5p-220m_r16_bs4_r16_lr0.0001_s42_spider,codet5p-220m,200,0.0,0.0,0.0,0.325,0.26,0.39
+lora_codet5p-220m_r16_spider.json,lora_codet5p-220m_r16_spider,codet5p-220m,200,0.0,0.0,0.0,0.29,0.23,0.355
+full_t5-base_spider.json,full_t5-base_spider,t5-base,200,0.0,0.0,0.0,0.265,0.205,0.325
+qlora_t5-base_lr0.0001_s42_bs4_lr0.0001_s42_spider.json,qlora_t5-base_lr0.0001_s42_bs4_lr0.0001_s42_spider,t5-base,200,0.0,0.0,0.0,0.175,0.125,0.23
+lora_t5-base_r8_spider.json,lora_t5-base_r8_spider,t5-base,200,0.0,0.0,0.0,0.145,0.1,0.195
+lora_t5-base_r16_spider.json,lora_t5-base_r16_spider,t5-base,200,0.0,0.0,0.0,0.12,0.075,0.165
+lora_t5-base_r4_spider.json,lora_t5-base_r4_spider,t5-base,200,0.0,0.0,0.0,0.07,0.035,0.105

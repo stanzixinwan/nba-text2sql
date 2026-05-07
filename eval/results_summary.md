@@ -1,0 +1,19 @@
+| file | model | method | mode | n_train | exec_acc | exec_ci | exact_acc | exact_ci |
+|---|---|---|---|---:|---:|---|---:|---|
+| baseline_nba_fewshot_t5-base_test.json | t5-base | baseline | other | - | 0.0000 | [0.0000, 0.0000] | 0.0000 | [0.0000, 0.0000] |
+| baseline_nba_zeroshot_t5-base_test.json | t5-base | baseline | other | - | 0.0000 | [0.0000, 0.0000] | 0.0000 | [0.0000, 0.0000] |
+| full_t5-base_nba_oracle_test.json | t5-base | full | oracle | 0 | 0.0400 | [0.0000, 0.1000] | 0.0000 | [0.0000, 0.0000] |
+| lora_codet5p-220m_r16_bs4_r16_lr0.0001_s42_nba_oracle_test.json | codet5p-220m | lora | oracle | 0 | 0.0000 | [0.0000, 0.0000] | 0.0000 | [0.0000, 0.0000] |
+| lora_codet5p-220m_r16_nba_n10_s42_nba_oracle_test.json | codet5p-220m | lora | oracle | 10 | 0.0600 | [0.0000, 0.1400] | 0.0200 | [0.0000, 0.0600] |
+| lora_codet5p-220m_r16_nba_n20_s42_nba_oracle_test.json | codet5p-220m | lora | oracle | 20 | 0.1400 | [0.0600, 0.2400] | 0.0600 | [0.0000, 0.1400] |
+| lora_codet5p-220m_r16_nba_n70_s42_nba_oracle_test.json | codet5p-220m | lora | oracle | 70 | 0.1800 | [0.0800, 0.3000] | 0.0600 | [0.0000, 0.1400] |
+| lora_codet5p-220m_r16_nba_nall_s42_nba_oracle_test.json | codet5p-220m | lora | oracle | all | 0.2400 | [0.1395, 0.3600] | 0.1600 | [0.0600, 0.2600] |
+| lora_codet5p-220m_r16_nba_oracle_test.json | codet5p-220m | lora | oracle | 0 | 0.1000 | [0.0200, 0.2000] | 0.0000 | [0.0000, 0.0000] |
+| lora_t5-base_r16_nba_n10_s42_nba_oracle_test.json | t5-base | lora | oracle | 10 | 0.0200 | [0.0000, 0.0600] | 0.0000 | [0.0000, 0.0000] |
+| lora_t5-base_r16_nba_n20_s42_nba_oracle_test.json | t5-base | lora | oracle | 20 | 0.0200 | [0.0000, 0.0600] | 0.0000 | [0.0000, 0.0000] |
+| lora_t5-base_r16_nba_n70_s42_nba_oracle_test.json | t5-base | lora | oracle | 70 | 0.1000 | [0.0200, 0.1800] | 0.0600 | [0.0000, 0.1400] |
+| lora_t5-base_r16_nba_nall_s42_nba_oracle_test.json | t5-base | lora | oracle | all | 0.1200 | [0.0400, 0.2200] | 0.1000 | [0.0200, 0.1800] |
+| lora_t5-base_r16_nba_oracle_test.json | t5-base | lora | oracle | 0 | 0.0400 | [0.0000, 0.1000] | 0.0200 | [0.0000, 0.0600] |
+| lora_t5-base_r4_nba_oracle_test.json | t5-base | lora | oracle | 0 | 0.0200 | [0.0000, 0.0600] | 0.0000 | [0.0000, 0.0000] |
+| lora_t5-base_r8_nba_oracle_test.json | t5-base | lora | oracle | 0 | 0.0200 | [0.0000, 0.0600] | 0.0000 | [0.0000, 0.0000] |
+| qlora_t5-base_lr0.0001_s42_bs4_lr0.0001_s42_nba_oracle_test.json | t5-base | qlora | oracle | 0 | 0.0600 | [0.0000, 0.1400] | 0.0200 | [0.0000, 0.0600] |

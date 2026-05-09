@@ -23,6 +23,7 @@
 \usepackage{multirow}
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage{pgfplots}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{xcolor}
@@ -31,6 +32,7 @@
 \usepackage{url}
 \usepackage[hidelinks,colorlinks=true,linkcolor=blue!50!black,
             urlcolor=blue!50!black,citecolor=blue!50!black]{hyperref}
+\pgfplotsset{compat=1.18}
 
 % --- Listings (SQL) ---
 \definecolor{lstBg}{HTML}{F7F7F7}
@@ -330,6 +332,49 @@ Model & Method & Exact match & 95\% CI \\
 \end{tabular}
 \end{table}
 
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=0.98\linewidth,
+  height=6.2cm,
+  ybar,
+  bar width=9pt,
+  ymin=0, ymax=0.42,
+  ylabel={Exact match},
+  symbolic x coords={CodeT5+ bs4 LoRA16,CodeT5+ LoRA16,T5 Full,T5 LoRA32,T5 QLoRA,T5 LoRA8,T5 LoRA16,T5 LoRA4},
+  xtick=data,
+  xticklabel style={rotate=25,anchor=east,font=\scriptsize},
+  ymajorgrids=true,
+  grid style={gray!20},
+  legend style={at={(0.02,0.98)},anchor=north west,font=\scriptsize,draw=none,fill=none},
+  nodes near coords,
+  nodes near coords style={font=\scriptsize, /pgf/number format/fixed, /pgf/number format/precision=3},
+  every node near coord/.append style={yshift=1pt}
+]
+\addplot+[
+  fill=blue!35,
+  draw=blue!60!black,
+  error bars/.cd,
+  y dir=both,
+  y explicit
+] coordinates {
+  (CodeT5+ bs4 LoRA16,0.325) +- (0,0.065)
+  (CodeT5+ LoRA16,0.290) +- (0,0.060)
+  (T5 Full,0.265) +- (0,0.0625)
+  (T5 LoRA32,0.215) +- (0,0.0575)
+  (T5 QLoRA,0.175) +- (0,0.055)
+  (T5 LoRA8,0.145) +- (0,0.050)
+  (T5 LoRA16,0.120) +- (0,0.0425)
+  (T5 LoRA4,0.070) +- (0,0.035)
+};
+\legend{Exact match $\pm$ 95\% CI}
+\end{axis}
+\end{tikzpicture}
+\caption{Spider controls from Table~\ref{tab:spider}: exact match with 95\% bootstrap CI.}
+\label{fig:spider-controls-ci}
+\end{figure}
+
 The two \codet{} runs lead by a comfortable margin, consistent with the
 code-aware pre-training. Within \tfive{}, full fine-tune $>$ rank-32 LoRA $>$
 QLoRA $>$ smaller LoRA ranks; the gap from $r{=}16$ to $r{=}32$ is real but
@@ -369,6 +414,60 @@ Backbone (LoRA $r{=}16$) & $n_{\text{train}}$ & Exec acc.\ (CI) & Exact (CI) \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=0.98\linewidth,
+  height=6.0cm,
+  ymin=0, ymax=0.40,
+  xmin=-2, xmax=152,
+  xlabel={$n_{\text{train}}$ on NBA},
+  ylabel={Execution accuracy},
+  xtick={0,10,20,70,150},
+  ymajorgrids=true,
+  grid style={gray!20},
+  legend style={at={(0.03,0.97)},anchor=north west,font=\scriptsize,draw=none,fill=none}
+]
+\addplot+[
+  color=blue!70!black,
+  mark=*,
+  mark size=2.6pt,
+  thick,
+  error bars/.cd,
+  y dir=both,
+  y explicit
+] coordinates {
+  (0,0.10) +- (0,0.08)
+  (10,0.06) +- (0,0.06)
+  (20,0.14) +- (0,0.09)
+  (70,0.18) +- (0,0.11)
+  (150,0.24) +- (0,0.12)
+};
+\addlegendentry{\codet{}-220M LoRA $r=16$}
+
+\addplot+[
+  color=red!75!black,
+  mark=square*,
+  mark size=2.4pt,
+  thick,
+  error bars/.cd,
+  y dir=both,
+  y explicit
+] coordinates {
+  (0,0.04) +- (0,0.06)
+  (10,0.02) +- (0,0.04)
+  (20,0.02) +- (0,0.04)
+  (70,0.10) +- (0,0.09)
+  (150,0.12) +- (0,0.10)
+};
+\addlegendentry{\tfive{} LoRA $r=16$}
+\end{axis}
+\end{tikzpicture}
+\caption{NBA few-shot adaptation curve from Table~\ref{tab:fewshot}: execution accuracy with 95\% bootstrap CI (all = 150 examples).}
+\label{fig:fewshot-exec-ci}
+\end{figure}
 
 The headline finding for the \emph{Training} focus: \codet{} adapts more
 sample-efficiently than \tfive{} (the gap at $n{=}\text{all}$ is 0.24 vs 0.12

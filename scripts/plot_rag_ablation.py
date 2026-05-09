@@ -69,7 +69,7 @@ def plot_recall_vs_exec(rows: list[dict], out_base: Path) -> None:
         ax.set_ylabel("Execution accuracy")
         ax.set_title(tag)
         ax.set_xlim(-0.05, 1.05)
-        ax.set_ylim(-0.05, 1.05)
+        ax.set_ylim(0.0, 0.2)
         ax.legend(fontsize=8)
         ax.grid(True, alpha=0.3)
     fig.suptitle("Retrieval recall vs downstream exec accuracy")

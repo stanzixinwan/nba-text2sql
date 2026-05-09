@@ -1,145 +1,170 @@
-# NBA Text-to-SQL with PEFT & RAG
+# NBA Text-to-SQL (PEFT + RAG)
 
-End-to-end text-to-SQL system that translates natural language questions into executable SQL. Trained on Spider, evaluated on a custom NBA statistics database. Systematic comparison of full fine-tuning vs. LoRA vs. QLoRA, with a RAG pipeline for schema retrieval.
+End-to-end text-to-SQL project for COSI 115b. The repository includes data processing, training, evaluation, and demo scripts for translating natural language basketball questions into executable SQL.
 
-**Course:** COSI 115b Fundamentals of NLP II | **Deadline:** May 6, 2026
+## Project Snapshot
 
----
+- **Task:** text-to-SQL generation (natural language -> SQL).
+- **Primary training data:** Spider.
+- **Domain evaluation data:** custom NBA SQLite dataset and NBA question/SQL pairs.
+- **Modeling focus:** full fine-tuning vs LoRA vs QLoRA, plus schema retrieval (RAG).
+- **Main evaluation metrics:** execution accuracy and exact match.
 
-## Goals
+## Environment Setup
 
-1. Build a working text-to-SQL pipeline (data → train → eval → demo)
-2. Systematically compare training regimes: prompt engineering, full fine-tuning, LoRA, QLoRA
-3. Study cross-domain generalization from Spider (general) → NBA (domain)
-4. Quantify RAG's contribution to schema linking accuracy
-5. Ship a Gradio demo answering natural language NBA questions
-
-## Tech Stack
-
-PyTorch · HuggingFace Transformers · PEFT (LoRA/QLoRA) · Datasets · Accelerate · sentence-transformers · FAISS · Gradio · SQLite · sqlparse
-
-## Datasets
-
-- **Spider** (training): `xlangai/spider` on HuggingFace. 10,181 questions, 200 databases, 138 domains.
-- **NBA** (domain evaluation): SQLite DB built from [nba-sql](https://github.com/mpope9/nba-sql). ~10 tables (players, teams, games, player_game_log, etc.). Self-authored ~200 question/SQL pairs stratified by difficulty.
-
-## Models
-
-- `t5-base` (primary)
-- `Salesforce/codet5-base` (comparison — code-pretrained)
-
-## Project Structure
-
-```
-nba-text2sql/
-├── data/
-│   ├── raw/              # Spider download, NBA sqlite
-│   ├── processed/        # Unified train/dev/test JSON
-│   └── nba/              # Self-authored NBA question/SQL pairs
-├── src/
-│   ├── data_utils.py     # Loading, schema serialization, input formatting
-│   ├── rag.py            # sentence-transformer + FAISS schema retrieval
-│   ├── train.py          # Full fine-tune + LoRA/QLoRA training loop
-│   ├── evaluate.py       # Execution accuracy, exact match, error taxonomy
-│   ├── prompt_baseline.py # Zero-shot & few-shot baselines
-│   └── demo.py           # Gradio interface
-├── notebooks/            # Exploratory analysis, result plots
-├── models/               # Saved checkpoints (gitignored)
-├── eval/                 # Result JSONs, confusion matrices, plots
-├── requirements.txt
-└── README.md
-```
-
-## Experimental Matrix
-
-| Condition                | Spider dev | NBA eval |
-|--------------------------|:----------:|:--------:|
-| Zero-shot T5             |     ✓      |    ✓     |
-| Few-shot T5              |     ✓      |    ✓     |
-| Full fine-tune T5        |     ✓      |    ✓     |
-| LoRA T5 (rank 4/8/16/32) |     ✓      |    ✓     |
-| QLoRA T5                 |     ✓      |    ✓     |
-| LoRA CodeT5              |     ✓      |    ✓     |
-| Best model + RAG         |     ✓      |    ✓     |
-| Best model + RAG + few-shot NBA | —     |    ✓     |
-
-**Cross-domain curve:** Best Spider-trained model, evaluated on NBA with 0 / 20 / 70 / all NBA examples for few-shot adaptation.
-
-## Timeline
-
-| Week | Dates | Milestones |
-|------|-------|------------|
-| 1 | Apr 1–7 | Repo setup · Spider + NBA data loaded · NBA Q/SQL pairs authored · zero/few-shot baselines working |
-| 2 | Apr 8–14 | Full fine-tune T5-base on Spider · RAG pipeline built · RAG on/off comparison |
-| 3 | Apr 15–21 | LoRA/QLoRA ablations (rank, LR, modules) · T5 vs CodeT5 · few-shot NBA adaptation curve |
-| 4 | Apr 22–28 | NBA evaluation + error taxonomy · Gradio demo · start write-up with all tables/figures |
-| 5 | Apr 29–May 6 | Polish write-up · clean repo · slides · present May 6 |
-
-## Setup
+### 1) Create environment and install dependencies
 
 ```bash
-git clone <repo>
-cd nba-text2sql
-python -m venv venv && source venv/bin/activate
+python -m venv .venv
+# Linux/macOS:
+source .venv/bin/activate
+# Windows PowerShell:
+# .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
-
-# Download Spider via HuggingFace (automatic on first use)
-python src/data_utils.py --download spider
-
-# Build NBA SQLite database (takes ~30 min for current season, hours for full history)
-git clone https://github.com/mpope9/nba-sql.git
-cd nba-sql && python stats/nba_sql.py --database sqlite --sqlite-path ../data/raw/nba.sqlite
 ```
 
-### GPU (Windows, NVIDIA)
+### 2) GPU requirement
 
-Use **Python 3.12 or 3.13** with **PyTorch CUDA** — Python **3.14** does not ship official CUDA wheels yet, so `pip install torch` often resolves to **CPU-only**.
+`src/train.py`, `src/train_nba.py`, and `src/evaluate.py` require CUDA by default.
+
+- Recommended on Windows/NVIDIA: Python 3.12 or 3.13.
+- For debug-only CPU runs, set:
 
 ```powershell
-.\scripts\setup_gpu_venv.ps1
-.\.venv\Scripts\Activate.ps1
+$env:NBA_TEXT2SQL_ALLOW_CPU=1
 ```
 
-Details: [GPU_SETUP.md](GPU_SETUP.md). Training (`train.py`, `train_nba.py`) and NBA evaluation (`evaluate.py`) **exit unless CUDA is available**, unless you set `NBA_TEXT2SQL_ALLOW_CPU=1` (debug only).
+For additional Windows GPU setup details, see `GPU_SETUP.md`.
 
+## Data Preparation
 
-### One-command command generation
+### Spider
 
-- Generate all commands for a stage without running:
-  - `python -m src.run_experiment_matrix --stage rank_sweep --dry-run`
-  - `python -m src.run_experiment_matrix --stage method_compare --dry-run`
-  - `python -m src.run_experiment_matrix --stage adaptation --dry-run`
-- Execute by swapping `--dry-run` to `--run`.
+Spider is downloaded automatically on first training/evaluation use via HuggingFace datasets.
 
-## Metrics
+### NBA SQLite database
 
-- **Execution accuracy** — generated SQL returns the same result as gold SQL when executed
-- **Exact match** — SQL string matches gold after canonicalization
-- **Stratified accuracy** — split by Spider difficulty (easy/medium/hard/extra)
-- **Error taxonomy** — schema linking errors, structural errors, value prediction errors, aggregation errors
+Build `data/raw/nba.sqlite` from [nba-sql](https://github.com/mpope9/nba-sql):
 
-## Deliverables
+```bash
+git clone https://github.com/mpope9/nba-sql.git
+cd nba-sql
+python stats/nba_sql.py --database sqlite --sqlite-path ../data/raw/nba.sqlite
+cd ..
+```
 
-- [x] Proposal (Apr 1)
-- [x] GitHub repository with reproducible scripts
-- [x] NBA held-out test split evaluation protocol
-- [x] Gradio demo (`src/demo.py`)
-- [x] Write-up (>=4 pages PDF)
-- [x] Presentation slides (8–10 min)
+Expected local files for NBA experiments:
 
-## Reproducibility Notes
+- `data/raw/nba.sqlite`
+- `data/nba/nba_questions.json`
 
-- All comparisons should use `--split test` for NBA to avoid train-set leakage.
-- `src/train.py` and `src/train_nba.py` now save `run_config.json` per run.
-- Run names include learning rate and seed for traceability.
-- Aggregated tables for paper/slides are auto-generated by `src/build_results_report.py`.
-- RAG: `python -m src.rag --build` (dense FAISS) and `python -m src.rag --build-bm25`; evaluate with `--use-rag --rag-backend dense|bm25|hybrid --top-k K`. Full retrieval + NBA test sweep: `python scripts/run_rag_retrieval_ablation.py` (or `python scripts/run_rag_retrieval_ablation.py --aggregate-only` to rebuild CSVs from `eval/*_nba_rag_*_test.json`). Figures: `python scripts/plot_rag_ablation.py`.
+## Train and Evaluate
 
-## References
+### A) Prompt baseline (no fine-tuning)
 
-- Yu et al. 2018 — Spider: A Large-Scale Human-Labeled Dataset for Text-to-SQL
-- Hu et al. 2021 — LoRA: Low-Rank Adaptation of Large Language Models
-- Dettmers et al. 2023 — QLoRA: Efficient Finetuning of Quantized LLMs
-- Lewis et al. 2020 — Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks
-- Raffel et al. 2020 — T5: Exploring the Limits of Transfer Learning
-- Wang et al. 2021 — CodeT5: Identifier-aware Unified Pre-trained Encoder-Decoder
+```bash
+python -m src.prompt_baseline --model t5-base --eval nba --split test --output eval/baseline_nba_zeroshot_t5-base_test.json
+```
+
+### B) Spider training (full / LoRA / QLoRA)
+
+```bash
+# Full fine-tuning
+python -m src.train --method full --model t5-base --epochs 3 --seed 42
+
+# LoRA
+python -m src.train --method lora --model t5-base --rank 16 --epochs 3 --lr 1e-4 --seed 42
+
+# QLoRA
+python -m src.train --method qlora --model t5-base --rank 16 --epochs 3 --lr 1e-4 --seed 42
+```
+
+Training outputs are saved under `models/<run_name>/final`.
+
+### C) NBA test evaluation (default held-out split)
+
+```bash
+python -m src.evaluate --checkpoint models/<run_name>/final --eval nba --split test
+```
+
+Evaluation outputs are saved under `eval/` (for example, `eval/<run_name>_nba_full_test.json`).
+
+### D) RAG retrieval + NBA evaluation
+
+```bash
+# Build retrieval indices
+python -m src.rag --build
+python -m src.rag --build-bm25
+
+# Evaluate with dense retrieval
+python -m src.evaluate --checkpoint models/<run_name>/final --eval nba --use-rag --rag-backend dense --top-k 3 --split test
+
+# Optional: bm25 or hybrid retrieval
+python -m src.evaluate --checkpoint models/<run_name>/final --eval nba --use-rag --rag-backend bm25 --top-k 3 --split test
+python -m src.evaluate --checkpoint models/<run_name>/final --eval nba --use-rag --rag-backend hybrid --top-k 3 --split test
+```
+
+### E) NBA adaptation (few-shot domain fine-tuning)
+
+```bash
+python -m src.train_nba --base-checkpoint models/<spider_run>/final --base-model t5-base --n-train 10 --epochs 10 --seed 42
+python -m src.train_nba --base-checkpoint models/<spider_run>/final --base-model t5-base --n-train 20 --epochs 10 --seed 42
+python -m src.train_nba --base-checkpoint models/<spider_run>/final --base-model t5-base --n-train 70 --epochs 10 --seed 42
+python -m src.train_nba --base-checkpoint models/<spider_run>/final --base-model t5-base --n-train all --epochs 10 --seed 42
+```
+
+Then evaluate each adapted checkpoint on held-out NBA test:
+
+```bash
+python -m src.evaluate --checkpoint models/<adapted_run>/final --eval nba --oracle-tables --split test
+```
+
+## Reproduce Main Results
+
+Use this sequence to regenerate core tables from `eval/*.json`:
+
+1. Run baseline and trained-model evaluations on NBA test split (`--split test`).
+2. Run RAG variants (`dense`, `bm25`, `hybrid`) if comparing retrieval.
+3. Run adaptation checkpoints (`n=10/20/70/all`) and evaluate on NBA test split.
+4. Build aggregate report:
+
+```bash
+python -m src.build_results_report --eval-dir eval --glob "*_test.json"
+```
+
+Primary aggregated outputs:
+
+- `eval/results_summary.csv`
+- `eval/results_summary.md`
+- `eval/fewshot_curve.csv`
+- `eval/rag_ablation.csv`
+- `eval/spider_summary.csv`
+- `eval/spider_summary.md`
+
+## Demo (Optional for Review)
+
+```bash
+python -m src.demo --checkpoint models/<run_name>/final --base-model t5-base --nba-db data/raw/nba.sqlite
+```
+
+## Repository Map (Review-Relevant)
+
+```text
+src/data_utils.py            data loading and schema serialization
+src/train.py                Spider-stage training (full/LoRA/QLoRA)
+src/train_nba.py            NBA adaptation training
+src/evaluate.py             NBA/Spider evaluation
+src/prompt_baseline.py      zero-shot/few-shot prompting baseline
+src/rag.py                  dense/BM25/hybrid schema retrieval
+src/build_results_report.py aggregate CSV/Markdown result tables
+src/demo.py                 Gradio demo app
+data/                       NBA inputs and SQLite database
+models/                     checkpoints (generated locally)
+eval/                       evaluation JSON and summary outputs
+```
+
+## Known Limitations
+
+- SQL equivalence is approximated by execution match and normalized exact match; semantically equivalent but differently formatted SQL can still fail exact match.
+- Spider execution accuracy is not computed in `src.evaluate.py` (exact match only) because per-database execution setup is not wired there.
+- RAG quality depends on table-level retrieval; column-level retrieval and reranking are not included.

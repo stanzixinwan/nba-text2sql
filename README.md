@@ -124,8 +124,8 @@ Details: [GPU_SETUP.md](GPU_SETUP.md). Training (`train.py`, `train_nba.py`) and
 - [x] GitHub repository with reproducible scripts
 - [x] NBA held-out test split evaluation protocol
 - [x] Gradio demo (`src/demo.py`)
-- [ ] Write-up (>=4 pages PDF)
-- [ ] Presentation slides (8–10 min)
+- [x] Write-up (>=4 pages PDF)
+- [x] Presentation slides (8–10 min)
 
 ## Reproducibility Notes
 

@@ -10,6 +10,8 @@ datasets>=2.18.0
 accelerate>=0.28.0
 sentence-transformers>=2.6.0
 faiss-cpu>=1.8.0
+rank-bm25>=0.2.2
+matplotlib>=3.8.0
 gradio>=4.0.0
 sqlparse>=0.4.4
 tqdm

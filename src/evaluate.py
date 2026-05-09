@@ -5,7 +5,7 @@ Supports any encoder-decoder model (t5, flan-t5, codet5) for both full
 fine-tuning and PEFT/LoRA checkpoints. Three NBA schema-input modes:
   - default:        full NBA schema in prompt
   - --oracle-tables: only schemas of gold tables (perfect retrieval upper bound)
-  - --use-rag:       sentence-transformer + FAISS retrieval (top-k tables)
+  - --use-rag:       schema retrieval (top-k tables): --rag-backend dense|bm25|hybrid
 
 NBA evaluation defaults to `--split test` (the 50-example hold-out from
 train_nba.py), so few-shot training samples never leak into the report.
@@ -87,15 +87,19 @@ def evaluate(model, tokenizer, examples, db_path, device, eval_name: str):
         by_diff[diff]["exec"] += int(ex_exec)
         by_diff[diff]["exact"] += int(ex_exact)
 
-        results.append({
+        row = {
             "question": ex.get("question", ex["input_text"][:100]),
             "gold": gold_sql,
             "pred": pred_sql,
             "exec_match": ex_exec,
             "exact_match": ex_exact,
             "difficulty": diff,
-            "retrieved_tables": ex.get("retrieved_tables"),  # only set in RAG mode
-        })
+            "retrieved_tables": ex.get("retrieved_tables"),
+            "tables_used": ex.get("tables_used"),
+            "retrieval_recall": ex.get("retrieval_recall"),
+            "perfect_retrieval": ex.get("perfect_retrieval"),
+        }
+        results.append({k: v for k, v in row.items() if v is not None})
 
     n = len(results)
     total_exec = sum(r["exec_match"] for r in results)
@@ -118,9 +122,14 @@ def load_nba_examples(args):
     """Pick the NBA loader based on flags. Mutually exclusive: oracle vs RAG."""
     if args.use_rag:
         from src.rag import load_nba_dataset_with_rag
-        print(f"NBA mode: RAG retrieval (top-{args.top_k})")
+        print(
+            f"NBA mode: RAG backend={args.rag_backend!r} top-{args.top_k}"
+        )
         return load_nba_dataset_with_rag(
-            args.nba_questions, args.nba_db, top_k=args.top_k
+            args.nba_questions,
+            args.nba_db,
+            backend=args.rag_backend,
+            top_k=args.top_k,
         )
     elif args.oracle_tables:
         print("NBA mode: oracle tables (gold tables_used only)")
@@ -146,6 +155,12 @@ def main():
                         help="Restrict NBA schema to gold tables (perfect retrieval)")
     parser.add_argument("--use-rag", action="store_true",
                         help="Use RAG retrieval instead of full/oracle schema")
+    parser.add_argument(
+        "--rag-backend",
+        default="dense",
+        choices=["dense", "bm25", "hybrid"],
+        help="Retriever when --use-rag (build indices via python -m src.rag --build [--build-bm25])",
+    )
     parser.add_argument("--top-k", type=int, default=3)
     parser.add_argument("--split", choices=["test", "train", "all"], default="test",
                         help="Which NBA subset to evaluate on. Default 'test' "
@@ -170,7 +185,7 @@ def main():
 
     # Filename suffix to distinguish runs
     if args.use_rag:
-        suffix = f"_rag_k{args.top_k}"
+        suffix = f"_rag_{args.rag_backend}_k{args.top_k}"
     elif args.oracle_tables:
         suffix = "_oracle"
     else:

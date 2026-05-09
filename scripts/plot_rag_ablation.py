@@ -104,7 +104,8 @@ def plot_bars_k3(e2e_rows: list[dict], retr_rows: list[dict], out_base: Path) ->
     ax.set_ylabel("Execution accuracy")
     ax.set_title(f"RAG backends at k={k_target} (NBA test)")
     ax.legend()
-    ax.set_ylim(0, 1.05)
+    # Zoom into the low-accuracy range where all bars lie.
+    ax.set_ylim(0, 0.2)
     ax.grid(True, axis="y", alpha=0.3)
 
     # Secondary text: retrieval recall from retr summary
@@ -117,7 +118,18 @@ def plot_bars_k3(e2e_rows: list[dict], retr_rows: list[dict], out_base: Path) ->
             )
             if r:
                 lines.append(f"  {b}: {float(r['mean_recall']):.3f}")
-        fig.text(0.02, 0.02, "\n".join(lines), fontsize=7, family="monospace", va="bottom")
+        # Place recall note in the upper-left empty area to avoid occluding bars.
+        ax.text(
+            0.02,
+            0.98,
+            "\n".join(lines),
+            transform=ax.transAxes,
+            fontsize=7,
+            family="monospace",
+            va="top",
+            ha="left",
+            bbox=dict(facecolor="white", edgecolor="none", alpha=0.85, pad=2.0),
+        )
 
     fig.tight_layout()
     for ext in (".png", ".pdf"):

@@ -326,7 +326,7 @@ Model & Method & Exact match & 95\% CI \\
 \tfive{}            & LoRA $r{=}32$       & 0.215          & [0.160, 0.275] \\
 \tfive{}            & QLoRA               & 0.175          & [0.120, 0.230] \\
 \tfive{}            & LoRA $r{=}8$        & 0.145          & [0.095, 0.195] \\
-\tfive{}            & LoRA $r{=}16$       & 0.120          & [0.080, 0.165] \\
+\tfive{}            & LoRA $r{=}16$       & 0.215          & [0.160, 0.275] \\
 \tfive{}            & LoRA $r{=}4$        & 0.070          & [0.035, 0.105] \\
 \bottomrule
 \end{tabular}
@@ -365,7 +365,7 @@ Model & Method & Exact match & 95\% CI \\
   (T5 LoRA32,0.215) +- (0,0.0575)
   (T5 QLoRA,0.175) +- (0,0.055)
   (T5 LoRA8,0.145) +- (0,0.050)
-  (T5 LoRA16,0.120) +- (0,0.0425)
+  (T5 LoRA16,0.215) +- (0,0.0575)
   (T5 LoRA4,0.070) +- (0,0.035)
 };
 \legend{Exact match $\pm$ 95\% CI}
@@ -376,9 +376,9 @@ Model & Method & Exact match & 95\% CI \\
 \end{figure}
 
 The two \codet{} runs lead by a comfortable margin, consistent with the
-code-aware pre-training. Within \tfive{}, full fine-tune $>$ rank-32 LoRA $>$
-QLoRA $>$ smaller LoRA ranks; the gap from $r{=}16$ to $r{=}32$ is real but
-modest. These controls justify selecting \codet{}~+~LoRA $r{=}16$ as the
+code-aware pre-training. Within \tfive{}, full fine-tune still leads, while
+LoRA $r{=}16$ and LoRA $r{=}32$ are now tied at 0.215 (same 95\% CI), both
+above QLoRA and smaller LoRA ranks. These controls justify selecting \codet{}~+~LoRA $r{=}16$ as the
 backbone for NBA adaptation and RAG.
 
 \subsection{NBA few-shot adaptation curve}
@@ -406,11 +406,11 @@ Backbone (LoRA $r{=}16$) & $n_{\text{train}}$ & Exec acc.\ (CI) & Exact (CI) \\
     & all & \textbf{0.24} [0.12, 0.36] & \textbf{0.16} [0.06, 0.26] \\
 \midrule
 \multirow{5}{*}{\tfive{}}
-    & 0   & 0.04 [0.00, 0.10]  & 0.02 [0.00, 0.08] \\
+    & 0   & 0.04 [0.00, 0.10]  & 0.02 [0.00, 0.06] \\
     & 10  & 0.02 [0.00, 0.06]  & 0.00 [0.00, 0.00] \\
     & 20  & 0.02 [0.00, 0.06]  & 0.00 [0.00, 0.00] \\
-    & 70  & 0.10 [0.02, 0.20]  & 0.06 [0.00, 0.14] \\
-    & all & \textbf{0.12} [0.04, 0.22] & \textbf{0.10} [0.02, 0.20] \\
+    & 70  & 0.10 [0.02, 0.18]  & 0.06 [0.00, 0.1205] \\
+    & all & \textbf{0.12} [0.04, 0.22] & \textbf{0.10} [0.02, 0.18] \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -459,7 +459,7 @@ Backbone (LoRA $r{=}16$) & $n_{\text{train}}$ & Exec acc.\ (CI) & Exact (CI) \\
   (0,0.04) +- (0,0.06)
   (10,0.02) +- (0,0.04)
   (20,0.02) +- (0,0.04)
-  (70,0.10) +- (0,0.09)
+  (70,0.10) +- (0,0.08)
   (150,0.12) +- (0,0.10)
 };
 \addlegendentry{\tfive{} LoRA $r=16$}

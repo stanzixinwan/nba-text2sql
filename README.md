@@ -141,16 +141,16 @@ Primary aggregated outputs:
 - `eval/spider_summary.csv`
 - `eval/spider_summary.md`
 
-## Demo (Optional for Review)
+## Demo
 
 ```bash
 python -m src.demo --checkpoint models/<run_name>/final --base-model t5-base --nba-db data/raw/nba.sqlite
 ```
 
-## Repository Map (Review-Relevant)
+## Repository Map
 
 ```text
-src/data_utils.py            data loading and schema serialization
+src/data_utils.py           data loading and schema serialization
 src/train.py                Spider-stage training (full/LoRA/QLoRA)
 src/train_nba.py            NBA adaptation training
 src/evaluate.py             NBA/Spider evaluation
